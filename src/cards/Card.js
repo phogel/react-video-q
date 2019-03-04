@@ -7,6 +7,10 @@ const StyledCard = styled.section`
   border-radius: 20px;
   height: 300px;
   width: 300px;
+  color: #fefdfd;
+  > h3 {
+    font-size: 24px;
+  }
 `
 
 const TagList = styled.ul`
