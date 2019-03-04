@@ -34,11 +34,10 @@ const TagList = styled.ul`
 const Tag = styled.li`
   display: inline-block;
   margin: 0 10px 10px 0;
-  padding: 2px 6px;
-  background: #333;
-  border-radius: 6px;
-  color: white;
-  font-size: 0.8em;
+  padding: 4px 8px;
+  background: rgba(26, 26, 26, 0.57);
+  border-radius: 10px;
+  font-size: 0.75em;
 `
 
 Card.propTypes = {
