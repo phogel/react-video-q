@@ -1,7 +1,6 @@
-import React, { Component } from 'react'
+import React from 'react'
+import Card from '../cards/Card.js'
 
-export default class App extends Component {
-  render() {
-    return <div />
-  }
+export default function App() {
+  return <Card />
 }
