@@ -5,14 +5,23 @@ import PropTypes from 'prop-types'
 const StyledCard = styled.div`
   padding: 18px 18px 0;
   border-radius: 20px;
-  height: 300px;
-  width: 300px;
   color: #fefdfd;
   display: grid;
+  height: 300px;
   align-content: end;
   background-repeat: no-repeat;
   background-size: cover;
   background-position: center;
+  scroll-snap-align: start;
+  animation: fade-in 20s;
+  @keyframes fade-in {
+    from {
+      background-size: 200%;
+    }
+    to {
+      background-size: 300%;
+    }
+  }
 `
 
 const StyledTitle = styled.h3`
@@ -22,7 +31,7 @@ const StyledTitle = styled.h3`
   white-space: nowrap;
   text-overflow: ellipsis;
   font-size: 24px;
-  margin: 0;
+  margin-bottom: 5px;
 `
 
 const TagList = styled.ul`
@@ -30,17 +39,18 @@ const TagList = styled.ul`
   width: 100%;
   flex-wrap: wrap;
   padding: 0;
-  height: 60px;
+  margin: 0;
   overflow: scroll;
 `
 
 const Tag = styled.li`
   display: inline-block;
-  margin: 0 10px 10px 0;
+  margin: 0 8px 6px 0;
   padding: 4px 8px;
   background: rgba(26, 26, 26, 0.57);
   border-radius: 10px;
   font-size: 0.75em;
+  height: 22px;
 `
 
 Card.propTypes = {
@@ -71,13 +81,13 @@ export default function Card({ backgroundImageUrl, title, tags }) {
   }
 
   return (
-    <div css="padding: 10px 0 0; scroll-snap-align: start;">
-      <StyledCard
-        style={{ backgroundImage: 'url(' + backgroundImageUrl + ')' }}
-      >
-        <StyledTitle>{title}</StyledTitle>
-        {tags && <TagList>{tags.map(renderTag)}</TagList>}
-      </StyledCard>
-    </div>
+    <StyledCard
+      style={{
+        backgroundImage: 'url(' + backgroundImageUrl + ')',
+      }}
+    >
+      <StyledTitle>{title}</StyledTitle>
+      {tags && <TagList>{tags.map(renderTag)}</TagList>}
+    </StyledCard>
   )
 }

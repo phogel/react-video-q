@@ -2,6 +2,7 @@ import React from 'react'
 import Card from '../cards/Card.js'
 import GlobalStyle from './GlobalStyle'
 import { Helmet } from 'react-helmet'
+import CardsContainer from '../cards/CardsContainer.js'
 
 export default function App() {
   return (
@@ -17,9 +18,16 @@ export default function App() {
           rel="stylesheet"
         />
       </Helmet>
-      <Card />
-      <Card backgroundImageUrl={'http://via.placeholder.com/500/'} />
-      <Card />
+      <CardsContainer>
+        <Card />
+        <Card backgroundImageUrl={'http://via.placeholder.com/500/'} />
+        <Card />
+        <Card />
+        <Card />
+        <Card />
+        <Card />
+        <Card />
+      </CardsContainer>
       <GlobalStyle />
     </React.Fragment>
   )
