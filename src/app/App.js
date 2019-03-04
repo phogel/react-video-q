@@ -8,13 +8,17 @@ export default function App() {
     <React.Fragment>
       <Helmet>
         <title>video-q</title>
-        <meta name="Learn videos with video-q" content="Your app to keep track of learned videos" />
-        <meta name="theme-color" content="#008f68" />
+        <meta
+          name="Learn videos with video-q"
+          content="Your app to keep track of learned videos"
+        />
         <link
-          href="https://fonts.googleapis.com/css?family=Roboto"
+          href="https://fonts.googleapis.com/css?family=Roboto:400,700"
           rel="stylesheet"
         />
       </Helmet>
+      <Card />
+      <Card backgroundImageUrl={'http://via.placeholder.com/500/'} />
       <Card />
       <GlobalStyle />
     </React.Fragment>

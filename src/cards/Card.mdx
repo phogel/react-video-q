@@ -7,10 +7,14 @@ menu: Components
 
 import Card from './Card'
 import { Playground, PropsTable } from 'docz'
-import imageUrl from '@https://via.placeholder.com/300'
+import imageUrl from '../images/card_placeholder.png'
 
 <PropsTable of={Card} />
 
 <Playground>
-  <Card title="My card" tags={['one', 'two']} thumbnail={imageUrl} />
+  <Card
+    title="My card"
+    tags={['Tag 1', 'Tag 2']}
+    style={{ backgroundImage: imageUrl }}
+  />
 </Playground>

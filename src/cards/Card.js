@@ -13,10 +13,6 @@ const StyledCard = styled.div`
   background-repeat: no-repeat;
   background-size: cover;
   background-position: center;
-  > h3 {
-    font-size: 24px;
-    margin: 0;
-  }
 `
 
 const StyledTitle = styled.h3`
@@ -25,6 +21,8 @@ const StyledTitle = styled.h3`
   overflow: hidden;
   white-space: nowrap;
   text-overflow: ellipsis;
+  font-size: 24px;
+  margin: 0;
 `
 
 const TagList = styled.ul`
@@ -32,6 +30,8 @@ const TagList = styled.ul`
   width: 100%;
   flex-wrap: wrap;
   padding: 0;
+  height: 60px;
+  overflow: scroll;
 `
 
 const Tag = styled.li`
@@ -44,15 +44,25 @@ const Tag = styled.li`
 `
 
 Card.propTypes = {
+  backgroundImageUrl: PropTypes.string,
   title: PropTypes.string,
   tags: PropTypes.arrayOf(PropTypes.string),
 }
 
 Card.defaultProps = {
-  title:
-    'No title defined No title defined No title defined No title defined No title',
+  title: 'No title defined',
   backgroundImageUrl: 'https://i.ytimg.com/vi/-OcuDiZBW6c/maxresdefault.jpg',
-  tags: ['No tags', 'defined', 'yet'],
+  tags: [
+    'No tags',
+    'defined',
+    'yet',
+    'No tags',
+    'defined',
+    'yet',
+    'No tags',
+    'defined',
+    'yet',
+  ],
 }
 
 export default function Card({ backgroundImageUrl, title, tags }) {
