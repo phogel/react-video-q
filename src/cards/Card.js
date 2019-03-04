@@ -10,6 +10,9 @@ const StyledCard = styled.div`
   color: #fefdfd;
   display: grid;
   align-content: end;
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
   > h3 {
     font-size: 24px;
     margin: 0;
@@ -49,7 +52,7 @@ Card.defaultProps = {
   title:
     'No title defined No title defined No title defined No title defined No title',
   backgroundImageUrl: 'https://i.ytimg.com/vi/-OcuDiZBW6c/maxresdefault.jpg',
-  tags: ['No', 'tags', 'defined', 'yet'],
+  tags: ['No tags', 'defined', 'yet'],
 }
 
 export default function Card({ backgroundImageUrl, title, tags }) {
