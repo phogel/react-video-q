@@ -8,5 +8,6 @@ export default styled.section`
   padding: 25px 25px;
   overflow-y: scroll;
   scroll-snap-type: y mandatory;
+  scroll-padding: 25px;
   -webkit-overflow-scrolling: touch;
 `
