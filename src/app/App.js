@@ -21,12 +21,6 @@ export default function App() {
       <CardsContainer>
         <Card />
         <Card backgroundImageUrl={'http://via.placeholder.com/500/'} />
-        <Card />
-        <Card />
-        <Card />
-        <Card />
-        <Card />
-        <Card />
       </CardsContainer>
       <GlobalStyle />
     </React.Fragment>

@@ -3,7 +3,7 @@ import styled from 'styled-components'
 import PropTypes from 'prop-types'
 
 const StyledCard = styled.div`
-  padding: 18px 18px 0;
+  padding: 18px 18px 6px;
   border-radius: 20px;
   color: #fefdfd;
   display: grid;
@@ -13,15 +13,6 @@ const StyledCard = styled.div`
   background-size: cover;
   background-position: center;
   scroll-snap-align: start;
-  animation: fade-in 20s;
-  @keyframes fade-in {
-    from {
-      background-size: 200%;
-    }
-    to {
-      background-size: 300%;
-    }
-  }
 `
 
 const StyledTitle = styled.h3`
