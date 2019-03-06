@@ -1,6 +1,11 @@
 import React from 'react'
 import styled from 'styled-components'
 import PropTypes from 'prop-types'
+import { Link } from 'react-router-dom'
+
+const StyledLink = styled(Link)`
+  text-decoration: none;
+`
 
 const StyledCard = styled.div`
   padding: 18px 18px 6px;
@@ -23,6 +28,7 @@ const StyledTitle = styled.h3`
   text-overflow: ellipsis;
   font-size: 24px;
   margin-bottom: 5px;
+  text-shadow: 0px 1px 4px rgba(0, 0, 0, 0.25);
 `
 
 const TagList = styled.ul`
@@ -66,19 +72,21 @@ Card.defaultProps = {
   ],
 }
 
-export default function Card({ backgroundImageUrl, title, tags }) {
+export default function Card({ backgroundImageUrl, title, tags, id }) {
   function renderTag(text, index) {
     return <Tag key={index}>{text}</Tag>
   }
 
   return (
-    <StyledCard
-      style={{
-        backgroundImage: 'url(' + backgroundImageUrl + ')',
-      }}
-    >
-      <StyledTitle>{title}</StyledTitle>
-      {tags && <TagList>{tags.map(renderTag)}</TagList>}
-    </StyledCard>
+    <StyledLink to={`/videos/${id}`}>
+      <StyledCard
+        style={{
+          backgroundImage: 'url(' + backgroundImageUrl + ')',
+        }}
+      >
+        <StyledTitle>{title}</StyledTitle>
+        {tags && <TagList>{tags.map(renderTag)}</TagList>}
+      </StyledCard>
+    </StyledLink>
   )
 }
