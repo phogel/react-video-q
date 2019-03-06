@@ -2,8 +2,8 @@ import React, { useState } from 'react'
 import Card from '../cards/Card.js'
 import GlobalStyle from './GlobalStyle'
 import { Helmet } from 'react-helmet'
-import CardsContainer from '../cards/CardsContainer.js'
-import CardsDetailPage from '../cards/CardsDetailPage'
+import CardsContainer from '../cards/CardsContainer'
+import CardDetailPage from '../cards/CardDetailPage'
 import uid from 'uid'
 import { BrowserRouter as Router, Route } from 'react-router-dom'
 import styled from 'styled-components'
@@ -19,7 +19,7 @@ export default function App() {
       title: 'Title1',
       tags: ['tag1', 'tag2', 'tag3'],
       notes:
-        'Lorem, ipsum dolor sit amet consectetur dipisicing elit. Voluptates officiis nulla, molestiae tenetur. officiis nulla, molestiae tenetur. offi?',
+        'Lorem, ipsum dolor sit amet consectetur dipisicing elit. Voluptates officiis nulla, molestiae tenetur. officiis nulla, molestiae tenetur. offi?Lorem, ipsum dolor sit amet consectetur dipisicing elit. Voluptates officiis nulla, molestiae tenetur. officiis nulla, molestiae tenetur. offi?Lorem, ipsum dolor sit amet consectetur dipisicing elit. Voluptates officiis nulla, molestiae tenetur. officiis nulla, molestiae tenetur. offi?Lorem, ipsum dolor sit amet consectetur dipisicing elit. Voluptates officiis nulla, molestiae tenetur. officiis nulla, molestiae tenetur. offi?Lorem, ipsum dolor sit amet consectetur dipisicing elit. Voluptates officiis nulla, molestiae tenetur. officiis nulla, molestiae tenetur. offi?Lorem, ipsum dolor sit amet consectetur dipisicing elit. Voluptates officiis nulla, molestiae tenetur. officiis nulla, molestiae tenetur. offi?Lorem, ipsum dolor sit amet consectetur dipisicing elit. Voluptates officiis nulla, molestiae tenetur. officiis nulla, molestiae tenetur. offi?Lorem, ipsum dolor sit amet consectetur dipisicing elit. Voluptates officiis nulla, molestiae tenetur. officiis nulla, molestiae tenetur. offi?Lorem, ipsum dolor sit amet consectetur dipisicing elit. Voluptates officiis nulla, molestiae tenetur. officiis nulla, molestiae tenetur. offi?Lorem, ipsum dolor sit amet consectetur dipisicing elit. Voluptates officiis nulla, molestiae tenetur. officiis nulla, molestiae tenetur. offi?Lorem, ipsum dolor sit amet consectetur dipisicing elit. Voluptates officiis nulla, molestiae tenetur. officiis nulla, molestiae tenetur. offi?Lorem, ipsum dolor sit amet consectetur dipisicing elit. Voluptates officiis nulla, molestiae tenetur. officiis nulla, molestiae tenetur. offi?Lorem, ipsum dolor sit amet consectetur dipisicing elit. Voluptates officiis nulla, molestiae tenetur. officiis nulla, molestiae tenetur. offi?Lorem, ipsum dolor sit amet consectetur dipisicing elit. Voluptates officiis nulla, molestiae tenetur. officiis nulla, molestiae tenetur. offi?Lorem, ipsum dolor sit amet consectetur dipisicing elit. Voluptates officiis nulla, molestiae tenetur. officiis nulla, molestiae tenetur. offi?Lorem, ipsum dolor sit amet consectetur dipisicing elit. Voluptates officiis nulla, molestiae tenetur. officiis nulla, molestiae tenetur. offi?',
       uploadDate: '2019-03-05T10:51',
       id: uid(),
       backgroundImageUrl: 'http://via.placeholder.com/500x300/',
@@ -82,7 +82,7 @@ export default function App() {
 
   return (
     <Router>
-      <div>
+      <React.Fragment>
         <Helmet>
           <title>video-q</title>
           <meta
@@ -96,7 +96,7 @@ export default function App() {
         </Helmet>
         <Route
           exact
-          path="/"
+          path="/ludwig"
           render={() => (
             <Grid>
               <CardsContainer>
@@ -117,14 +117,14 @@ export default function App() {
         <Route
           path="/videos/:id"
           render={({ match }) => (
-            <CardsDetailPage
+            <CardDetailPage
               id={match.params.id}
               card={cards.find(card => card.id === match.params.id)}
             />
           )}
         />
         <GlobalStyle />
-      </div>
+      </React.Fragment>
     </Router>
   )
 }

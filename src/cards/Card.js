@@ -28,6 +28,7 @@ const StyledTitle = styled.h3`
   text-overflow: ellipsis;
   font-size: 24px;
   margin-bottom: 5px;
+  text-shadow: 0px 1px 4px rgba(0, 0, 0, 0.25);
 `
 
 const TagList = styled.ul`
