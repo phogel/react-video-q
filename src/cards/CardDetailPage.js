@@ -2,7 +2,7 @@ import React from 'react'
 import styled from 'styled-components'
 import { MdExpandMore } from 'react-icons/md'
 
-const Grid = styled.div`
+const Grid = styled.section`
   display: grid;
   grid-template-rows: auto auto auto 1fr auto;
   height: 100vh;
@@ -33,7 +33,7 @@ const VideoEmbed = styled.div`
   }
 `
 
-const StyledTitle = styled.div`
+const StyledTitle = styled.h3`
   display: block;
   width: 250px;
   overflow: hidden;
@@ -69,7 +69,8 @@ const StyledNotes = styled.div`
 `
 
 const CategoryButtonContainer = styled.div`
-  display: flex;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
   justify-content: space-evenly;
   margin-bottom: 20px;
   align-items: center;

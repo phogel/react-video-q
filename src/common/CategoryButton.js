@@ -1,4 +1,4 @@
-/*import React from 'react'
+import React from 'react'
 import styled from 'styled-components'
 
 const Icon = ({
@@ -24,4 +24,3 @@ const Icon = ({
 )
 
 export default Icon
-*/
