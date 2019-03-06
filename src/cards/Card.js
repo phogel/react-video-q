@@ -80,6 +80,7 @@ export default function Card({ backgroundImageUrl, title, tags, id }) {
   return (
     <StyledLink to={`/videos/${id}`}>
       <StyledCard
+        className={'card'}
         style={{
           backgroundImage: 'url(' + backgroundImageUrl + ')',
         }}

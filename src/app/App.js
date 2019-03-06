@@ -86,8 +86,8 @@ export default function App() {
         <Helmet>
           <title>video-q</title>
           <meta
-            name="Learn videos with video-q"
-            content="Your app to keep track of learned videos"
+            name="description"
+            content="Learn videos with VIDEO-Q: your app to keep track of learned videos. Check it out now!"
           />
           <link
             href="https://fonts.googleapis.com/css?family=Roboto:400,700"
