@@ -1,0 +1,35 @@
+import React from 'react'
+import styled from 'styled-components'
+import Icon from '../common/Icon'
+
+const IconGrid = styled.div`
+  display: grid;
+  grid-auto-rows: auto;
+  text-align: center;
+  font-size: 12px;
+`
+
+export default function ButtonLearningQueue({ status, onClick }) {
+  let line1 = 'Move to'
+  let line2 = 'learning queue'
+  let color = '#C4C4C4'
+
+  if (status === 1) {
+    line1 = <strong>In learning</strong>
+    line2 = <strong>queue</strong>
+    color = '#EFA5D4'
+  }
+
+  return (
+    <IconGrid onClick={onClick}>
+      <Icon
+        style={{ marginBottom: '10px' }}
+        fill={color}
+        height="45px"
+        name="learning-queue"
+      />
+      <div>{line1}</div>
+      <div>{line2}</div>
+    </IconGrid>
+  )
+}

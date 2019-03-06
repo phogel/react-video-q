@@ -4,10 +4,10 @@ export default styled.section`
   grid-template-columns: repeat(auto-fill, minmax(300px, auto));
   align-content: flex-start;
   justify-content: space-around;
-  grid-gap: 25px;
+  grid-gap: 37px;
   padding: 25px 25px;
   overflow-y: scroll;
   scroll-snap-type: y mandatory;
-  scroll-padding: 25px;
+  scroll-padding: 37px;
   -webkit-overflow-scrolling: touch;
 `

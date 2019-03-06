@@ -1,22 +1,30 @@
 import React from 'react'
 import styled from 'styled-components'
 import { MdExpandMore } from 'react-icons/md'
-import Icon from '../common/Icon'
+import ButtonLearningQueue from './ButtonLearningQueue'
+import ButtonLearned from './ButtonLearned'
+import ButtonRefreshQueue from './ButtonRefreshQueue'
 
 const Grid = styled.section`
   display: grid;
+  position: relative;
   grid-template-rows: auto auto auto 1fr auto;
   height: 100vh;
   width: 100vw;
+  margin: 0 auto;
+  max-width: 500px;
+  background: #fcfcfc;
   & > * {
     margin: 20px 30px 0 30px;
   }
   overflow: hidden;
+  box-shadow: 0 1px 15px rgba(0, 0, 0, 0.06), 0 1px 5px rgba(0, 0, 0, 0.14);
+  transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
 `
 
 const BackButton = styled.div`
   margin: 0;
-  position: fixed;
+  position: absolute;
   top: 5px;
   left: 5px;
   height: 30px;
@@ -29,7 +37,7 @@ const VideoEmbed = styled.div`
   margin: 0;
   text-align: center;
   > img {
-    width: 100vw;
+    width: 100%;
     max-height: 30vh;
   }
 `
@@ -73,54 +81,50 @@ const CategoryButtonContainer = styled.div`
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   justify-content: center;
-  align-items: center;
+  align-items: flex-start;
   margin-bottom: 20px;
-  align-items: center;
+  user-select: none;
+  cursor: pointer;
 `
 
-const CategoryButton = styled.div`
-  width: 33vw;
-  max-width: 100px;
-  height: auto;
-  text-align: center;
-  font-size: 12px;
-`
+export default function CardsDetailPage(props) {
+  const { card, status } = props
 
-export default function CardsDetailPage({ card }) {
   function goBack() {
     window.history.back()
   }
   function renderTag(text, index) {
     return <Tag key={index}>{text}</Tag>
   }
+
+  function onLearningClick() {
+    props.onClick(card.id, 1)
+  }
+  function onLearnedClick() {
+    props.onClick(card.id, 2)
+  }
+  function onRefreshClick() {
+    props.onClick(card.id, 3)
+  }
+
   return (
-    <Grid>
-      <BackButton onClick={goBack}>
-        <MdExpandMore color={'#FCFCFC'} size={'30px'} />
-      </BackButton>
-      <VideoEmbed>
-        <img src={card.backgroundImageUrl} alt={card.title} />
-      </VideoEmbed>
-      <StyledTitle>{card.title + ' ' + card.id}</StyledTitle>
-      {card.tags && <TagList>{card.tags.map(renderTag)}</TagList>}
-      <StyledNotes>{card.notes}</StyledNotes>
-      <CategoryButtonContainer>
-        <CategoryButton>
-          <Icon fill="#C4C4C4" height="45px" name="learning-queue" />
-          Move to <br />
-          learning queue
-        </CategoryButton>
-        <CategoryButton>
-          <Icon fill="#C4C4C4" height="45px" name="learned" />
-          Mark as <br />
-          learned
-        </CategoryButton>
-        <CategoryButton>
-          <Icon fill="#C4C4C4" height="45px" name="refresh-queue" />
-          Move to <br />
-          refresh queue
-        </CategoryButton>
-      </CategoryButtonContainer>
-    </Grid>
+    <React.Fragment>
+      <Grid>
+        <BackButton onClick={goBack}>
+          <MdExpandMore color={'#FCFCFC'} size={'30px'} />
+        </BackButton>
+        <VideoEmbed>
+          <img src={card.backgroundImageUrl} alt={card.title} />
+        </VideoEmbed>
+        <StyledTitle>{card.title + ' ' + card.id}</StyledTitle>
+        {card.tags && <TagList>{card.tags.map(renderTag)}</TagList>}
+        <StyledNotes>{card.notes}</StyledNotes>
+        <CategoryButtonContainer>
+          <ButtonLearningQueue status={status} onClick={onLearningClick} />
+          <ButtonLearned status={status} onClick={onLearnedClick} />
+          <ButtonRefreshQueue status={status} onClick={onRefreshClick} />
+        </CategoryButtonContainer>
+      </Grid>
+    </React.Fragment>
   )
 }

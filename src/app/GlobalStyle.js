@@ -8,7 +8,7 @@ export default createGlobalStyle`
   body {
     font-family: 'Roboto', sans-serif;
     margin: 0;
-    background: #fcfcfc;
+    background: rgb(250, 250, 250);
     color: #1A1A1A;
   }
 
