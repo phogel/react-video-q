@@ -80,7 +80,7 @@ const CategoryButton = styled.div`
   max-width: 100px;
   height: auto;
   text-align: center;
-  font-size: 14px;
+  font-size: 12px;
 `
 
 export default function CardsDetailPage({ card }) {
@@ -96,13 +96,16 @@ export default function CardsDetailPage({ card }) {
         <MdExpandMore color={'#FCFCFC'} size={'30px'} />
       </BackButton>
       <VideoEmbed>
-        <img src={card.backgroundImageUrl} />
+        <img src={card.backgroundImageUrl} alt={card.title} />
       </VideoEmbed>
       <StyledTitle>{card.title + ' ' + card.id}</StyledTitle>
       {card.tags && <TagList>{card.tags.map(renderTag)}</TagList>}
       <StyledNotes>{card.notes}</StyledNotes>
       <CategoryButtonContainer>
-        <CategoryButton>Move to learning queue</CategoryButton>
+        <CategoryButton>
+          Move to <br />
+          learning queue
+        </CategoryButton>
         <CategoryButton>
           Mark as <br />
           learned
