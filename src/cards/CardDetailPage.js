@@ -1,6 +1,7 @@
 import React from 'react'
 import styled from 'styled-components'
 import { MdExpandMore } from 'react-icons/md'
+import Icon from '../common/Icon'
 
 const Grid = styled.section`
   display: grid;
@@ -71,7 +72,8 @@ const StyledNotes = styled.div`
 const CategoryButtonContainer = styled.div`
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  justify-content: space-evenly;
+  justify-content: center;
+  align-items: center;
   margin-bottom: 20px;
   align-items: center;
 `
@@ -104,14 +106,17 @@ export default function CardsDetailPage({ card }) {
       <StyledNotes>{card.notes}</StyledNotes>
       <CategoryButtonContainer>
         <CategoryButton>
+          <Icon fill="#C4C4C4" height="45px" name="learning-queue" />
           Move to <br />
           learning queue
         </CategoryButton>
         <CategoryButton>
+          <Icon fill="#C4C4C4" height="45px" name="learned" />
           Mark as <br />
           learned
         </CategoryButton>
         <CategoryButton>
+          <Icon fill="#C4C4C4" height="45px" name="refresh-queue" />
           Move to <br />
           refresh queue
         </CategoryButton>
