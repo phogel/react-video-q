@@ -5,6 +5,7 @@ import { Link } from 'react-router-dom'
 
 const StyledLink = styled(Link)`
   text-decoration: none;
+  user-select: none;
 `
 
 const StyledCard = styled.div`

@@ -8,6 +8,8 @@ import YouTubeVideo from '../YouTube/YouTubeVideo'
 
 const Grid = styled.section`
   display: grid;
+  user-select: none;
+  grid-gap: 20px;
   position: relative;
   grid-template-rows: auto auto auto 1fr auto;
   height: 100vh;
@@ -32,18 +34,17 @@ const BackButton = styled.div`
 `
 
 const StyledTitle = styled.h3`
-  padding: 20px 30px 0 30px;
+  padding: 0 30px 0 30px;
   display: block;
   font-size: 22px;
   font-weight: bold;
 `
 
 const TagList = styled.ul`
-  padding: 20px 30px 0 30px;
+  padding: 0 30px 0 30px;
   display: flex;
   width: 100%;
   flex-wrap: wrap;
-  margin-top: 10px;
 `
 
 const Tag = styled.li`
@@ -58,7 +59,7 @@ const Tag = styled.li`
 `
 
 const StyledNotes = styled.div`
-  padding: 20px 30px 0 30px;
+  padding: 0 30px 0 30px;
   font-size: 16px;
   overflow: scroll;
   line-height: 24px;
@@ -66,16 +67,12 @@ const StyledNotes = styled.div`
 
 const CategoryButtonContainer = styled.section`
   display: grid;
-  padding: 20px 30px 0 30px;
+  padding: 0 30px 0 30px;
   grid-template-columns: repeat(3, 1fr);
   justify-content: center;
   align-items: flex-start;
   margin-bottom: 20px;
   user-select: none;
-  &:focus {
-    outline: none;
-  }
-  cursor: pointer;
 `
 
 export default function CardsDetailPage(props) {

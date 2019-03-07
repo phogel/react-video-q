@@ -7,6 +7,7 @@ const IconGrid = styled.div`
   grid-auto-rows: auto;
   text-align: center;
   font-size: 12px;
+  user-select: none;
 `
 
 export default function ButtonRefreshQueue({ status, onClick }) {
