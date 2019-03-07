@@ -1,12 +1,12 @@
-import React, { useState } from 'react'
-import Card from '../cards/Card.js'
+import React, { useState, useEffect } from 'react'
 import GlobalStyle from './GlobalStyle'
 import { Helmet } from 'react-helmet'
 import CardsContainer from '../cards/CardsContainer'
 import CardDetailPage from '../cards/CardDetailPage'
-import uid from 'uid'
+import CardsRender from '../cards/CardsRender'
 import { BrowserRouter as Router, Route } from 'react-router-dom'
 import styled from 'styled-components'
+import { getDataFromStorage, saveDataToStorage } from '../services'
 
 const Grid = styled.div`
   display: grid;
@@ -14,71 +14,33 @@ const Grid = styled.div`
 `
 
 export default function App() {
-  const [cards, setCards] = useState([
-    {
-      title: 'Title1',
-      tags: ['tag1', 'tag2', 'tag3'],
-      notes:
-        'Lorem, ipsum dolor sit amet consectetur dipisicing elit. Voluptates officiis nulla, molestiae tenetur. officiis nulla, molestiae tenetur. ffi?Lorem, ipsum dolor sit amet consectetur dipisicing elit.',
-      uploadDate: '2019-03-05T10:51',
-      id: uid(),
-      backgroundImageUrl: 'http://via.placeholder.com/500x300/',
-    },
-    {
-      title: 'Title2',
-      tags: ['tag1', 'tag2', 'tag3'],
-      notes:
-        'Lorem, ipsum dolor sit amet consectetur dipisicing elit. Voluptates officiis nulla, molestiae tenetur. officiis nulla, molestiae tenetur. offi?',
-      uploadDate: '2019-03-05T10:51',
-      id: uid(),
-      backgroundImageUrl: 'http://via.placeholder.com/500/',
-    },
-    {
-      title: 'Title3',
-      tags: ['tag1', 'tag2', 'tag3'],
-      notes:
-        'Lorem, ipsum dolor sit amet consectetur dipisicing elit. Voluptates officiis nulla, molestiae tenetur. officiis nulla, molestiae tenetur. offi?',
-      uploadDate: '2019-03-05T10:51',
-      id: uid(),
-      backgroundImageUrl: 'http://via.placeholder.com/500/',
-    },
-    {
-      title: 'Title4',
-      tags: ['tag1', 'tag2', 'tag3'],
-      notes:
-        'Lorem, ipsum dolor sit amet consectetur dipisicing elit. Voluptates officiis nulla, molestiae tenetur. officiis nulla, molestiae tenetur. offi?',
-      uploadDate: '2019-03-05T10:51',
-      id: uid(),
-      backgroundImageUrl: 'http://via.placeholder.com/500/',
-    },
-    {
-      title: 'Title5',
-      tags: ['tag1', 'tag2', 'tag3'],
-      notes:
-        'Lorem, ipsum dolor sit amet consectetur dipisicing elit. Voluptates officiis nulla, molestiae tenetur. officiis nulla, molestiae tenetur. offi?',
-      uploadDate: '2019-03-05T10:51',
-      id: uid(),
-      backgroundImageUrl: 'http://via.placeholder.com/500/',
-    },
-    {
-      title: 'Title6',
-      tags: ['tag1', 'tag2', 'tag3'],
-      notes:
-        'Lorem, ipsum dolor sit amet consectetur dipisicing elit. Voluptates officiis nulla, molestiae tenetur. officiis nulla, molestiae tenetur. offi?',
-      uploadDate: '2019-03-05T10:51',
-      id: uid(),
-      backgroundImageUrl: 'http://via.placeholder.com/500/',
-    },
-    {
-      title: 'Title7',
-      tags: ['tag1', 'tag2', 'tag3'],
-      notes:
-        'Lorem, ipsum dolor sit amet consectetur dipisicing elit. Voluptates officiis nulla, molestiae tenetur. officiis nulla, molestiae tenetur. offi?',
-      uploadDate: '2019-03-05T10:51',
-      id: uid(),
-      backgroundImageUrl: 'http://via.placeholder.com/500/',
-    },
-  ])
+  const [cards, setCards] = useState(getDataFromStorage())
+
+  // useEffect(() => {
+  //   saveDataToStorage(cards)
+  // }, [])
+
+  // useEffect(() => {
+  //   saveDataToStorage(cards)
+  // }, [cards])
+
+  function clickHandler(id, status) {
+    const card = cards.find(card => card.id === id)
+    const index = cards.indexOf(card)
+    if (status === cards[index].status) {
+      setCards([
+        ...cards.slice(0, index),
+        { ...cards[index], status: 0 },
+        ...cards.slice(index + 1),
+      ])
+    } else {
+      setCards([
+        ...cards.slice(0, index),
+        { ...cards[index], status: status },
+        ...cards.slice(index + 1),
+      ])
+    }
+  }
 
   return (
     <Router>
@@ -100,16 +62,7 @@ export default function App() {
           render={() => (
             <Grid>
               <CardsContainer>
-                {cards.map(card => (
-                  <Card
-                    title={card.title}
-                    tags={card.tags}
-                    backgroundImageUrl={card.backgroundImageUrl}
-                    id={card.id}
-                    uploadDate={card.uploadDate}
-                    key={card.id}
-                  />
-                ))}
+                <CardsRender cards={cards.filter(card => card.status === 0)} />
               </CardsContainer>
             </Grid>
           )}
@@ -118,6 +71,8 @@ export default function App() {
           path="/videos/:id"
           render={({ match }) => (
             <CardDetailPage
+              onClick={clickHandler}
+              status={cards.find(card => card.id === match.params.id).status}
               id={match.params.id}
               card={cards.find(card => card.id === match.params.id)}
             />
