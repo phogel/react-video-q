@@ -14,17 +14,19 @@ export default function ButtonRefreshQueue({ status, onClick }) {
   let line1 = 'Move to'
   let line2 = 'refresh queue'
   let color = '#C4C4C4'
+  let shadow = 'drop-shadow( 0 1px 1px #ddd)'
 
   if (status === 3) {
     line1 = <strong>In refresh</strong>
     line2 = <strong>queue</strong>
     color = '#FF328B'
+    shadow = ''
   }
 
   return (
     <IconGrid onClick={onClick}>
       <Icon
-        style={{ marginBottom: '10px' }}
+        style={{ marginBottom: '10px', filter: shadow }}
         fill={color}
         height="45px"
         name="refresh-queue"
