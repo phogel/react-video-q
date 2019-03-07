@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useReducer, useEffect } from 'react'
 import GlobalStyle from './GlobalStyle'
 import { Helmet } from 'react-helmet'
 import CardsContainer from '../cards/CardsContainer'
@@ -14,31 +14,44 @@ const Grid = styled.div`
 `
 
 export default function App() {
-  const [cards, setCards] = useState(getDataFromStorage())
+  const [state, dispatch] = useReducer(
+    (state, action) => {
+      const { type, payload } = action
+      switch (type) {
+        case 'reset-status':
+          return {
+            cards: [
+              ...state.cards.slice(0, payload.index),
+              { ...state.cards[payload.index], status: 0 },
+              ...state.cards.slice(payload.index + 1),
+            ],
+          }
+        case 'update-status':
+          return {
+            cards: [
+              ...state.cards.slice(0, payload.index),
+              { ...state.cards[payload.index], status: payload.status },
+              ...state.cards.slice(payload.index + 1),
+            ],
+          }
+        default:
+          return state
+      }
+    },
+    { cards: getDataFromStorage() }
+  )
 
-  // useEffect(() => {
-  //   saveDataToStorage(cards)
-  // }, [])
-
-  // useEffect(() => {
-  //   saveDataToStorage(cards)
-  // }, [cards])
+  useEffect(() => {
+    saveDataToStorage(state.cards)
+  }, [state.cards])
 
   function clickHandler(id, status) {
-    const card = cards.find(card => card.id === id)
-    const index = cards.indexOf(card)
-    if (status === cards[index].status) {
-      setCards([
-        ...cards.slice(0, index),
-        { ...cards[index], status: 0 },
-        ...cards.slice(index + 1),
-      ])
+    const card = state.cards.find(card => card.id === id)
+    const index = state.cards.indexOf(card)
+    if (status === state.cards[index].status) {
+      dispatch({ type: 'reset-status', payload: { index } })
     } else {
-      setCards([
-        ...cards.slice(0, index),
-        { ...cards[index], status: status },
-        ...cards.slice(index + 1),
-      ])
+      dispatch({ type: 'update-status', payload: { index, status } })
     }
   }
 
@@ -62,7 +75,9 @@ export default function App() {
           render={() => (
             <Grid>
               <CardsContainer>
-                <CardsRender cards={cards.filter(card => card.status === 0)} />
+                <CardsRender
+                  cards={state.cards.filter(card => card.status === 0)}
+                />
               </CardsContainer>
             </Grid>
           )}
@@ -72,9 +87,11 @@ export default function App() {
           render={({ match }) => (
             <CardDetailPage
               onClick={clickHandler}
-              status={cards.find(card => card.id === match.params.id).status}
+              status={
+                state.cards.find(card => card.id === match.params.id).status
+              }
               id={match.params.id}
-              card={cards.find(card => card.id === match.params.id)}
+              card={state.cards.find(card => card.id === match.params.id)}
             />
           )}
         />

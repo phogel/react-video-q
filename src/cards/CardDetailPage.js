@@ -93,6 +93,7 @@ export default function CardsDetailPage(props) {
   function goBack() {
     window.history.back()
   }
+
   function renderTag(text, index) {
     return <Tag key={index}>{text}</Tag>
   }
