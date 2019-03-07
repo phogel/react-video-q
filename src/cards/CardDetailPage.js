@@ -4,6 +4,7 @@ import { MdExpandMore } from 'react-icons/md'
 import ButtonLearningQueue from './ButtonLearningQueue'
 import ButtonLearned from './ButtonLearned'
 import ButtonRefreshQueue from './ButtonRefreshQueue'
+import YouTubeVideo from '../YouTube/YouTubeVideo'
 
 const Grid = styled.section`
   display: grid;
@@ -14,10 +15,6 @@ const Grid = styled.section`
   margin: 0 auto;
   max-width: 500px;
   background: #fcfcfc;
-  & > * {
-    margin: 20px 30px 0 30px;
-  }
-  overflow: hidden;
   box-shadow: 0 1px 15px rgba(0, 0, 0, 0.06), 0 1px 5px rgba(0, 0, 0, 0.14);
   transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
 `
@@ -31,32 +28,21 @@ const BackButton = styled.div`
   width: 30px;
   opacity: 0.75;
   background: black;
-`
-
-const VideoEmbed = styled.div`
-  margin: 0;
-  text-align: center;
-  > img {
-    width: 100%;
-    max-height: 30vh;
-  }
+  z-index: 2;
 `
 
 const StyledTitle = styled.h3`
+  padding: 20px 30px 0 30px;
   display: block;
-  width: 250px;
-  overflow: hidden;
-  white-space: nowrap;
-  text-overflow: ellipsis;
   font-size: 22px;
   font-weight: bold;
 `
 
 const TagList = styled.ul`
+  padding: 20px 30px 0 30px;
   display: flex;
   width: 100%;
   flex-wrap: wrap;
-  padding: 0;
   margin-top: 10px;
 `
 
@@ -72,18 +58,23 @@ const Tag = styled.li`
 `
 
 const StyledNotes = styled.div`
+  padding: 20px 30px 0 30px;
   font-size: 16px;
   overflow: scroll;
   line-height: 24px;
 `
 
-const CategoryButtonContainer = styled.div`
+const CategoryButtonContainer = styled.section`
   display: grid;
+  padding: 20px 30px 0 30px;
   grid-template-columns: repeat(3, 1fr);
   justify-content: center;
   align-items: flex-start;
   margin-bottom: 20px;
   user-select: none;
+  &:focus {
+    outline: none;
+  }
   cursor: pointer;
 `
 
@@ -114,9 +105,7 @@ export default function CardsDetailPage(props) {
         <BackButton onClick={goBack}>
           <MdExpandMore color={'#FCFCFC'} size={'30px'} />
         </BackButton>
-        <VideoEmbed>
-          <img src={card.backgroundImageUrl} alt={card.title} />
-        </VideoEmbed>
+        <YouTubeVideo videoId={card.id} />
         <StyledTitle>{card.title + ' ' + card.id}</StyledTitle>
         {card.tags && <TagList>{card.tags.map(renderTag)}</TagList>}
         <StyledNotes>{card.notes}</StyledNotes>

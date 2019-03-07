@@ -7,7 +7,7 @@ const defaultData = [
     notes:
       'Lorem, ipsum dolor sit amet consectetur dipisicing elit. Voluptates officiis nulla, molestiae tenetur. officiis nulla, molestiae tenetur. ffi?Lorem, ipsum dolor sit amet consectetur dipisicing elit.',
     uploadDate: '2019-03-05T10:51',
-    id: uid(),
+    id: 'GTsEfTfprsk',
     backgroundImageUrl: 'http://via.placeholder.com/500x300/',
     status: 0,
   },
@@ -17,7 +17,7 @@ const defaultData = [
     notes:
       'Lorem, ipsum dolor sit amet consectetur dipisicing elit. Voluptates officiis nulla, molestiae tenetur. officiis nulla, molestiae tenetur. offi?',
     uploadDate: '2019-03-05T10:51',
-    id: uid(),
+    id: 'upTlp-poWoI',
     backgroundImageUrl: 'http://via.placeholder.com/500/',
     status: 0,
   },
@@ -27,7 +27,7 @@ const defaultData = [
     notes:
       'Lorem, ipsum dolor sit amet consectetur dipisicing elit. Voluptates officiis nulla, molestiae tenetur. officiis nulla, molestiae tenetur. offi?',
     uploadDate: '2019-03-05T10:51',
-    id: uid(),
+    id: 'Q1FWRhT4rTk',
     backgroundImageUrl: 'http://via.placeholder.com/500/',
     status: 0,
   },
@@ -37,7 +37,7 @@ const defaultData = [
     notes:
       'Lorem, ipsum dolor sit amet consectetur dipisicing elit. Voluptates officiis nulla, molestiae tenetur. officiis nulla, molestiae tenetur. offi?',
     uploadDate: '2019-03-05T10:51',
-    id: uid(),
+    id: 'U-JofUEsbD0',
     backgroundImageUrl: 'http://via.placeholder.com/500/',
     status: 0,
   },
@@ -47,17 +47,18 @@ const defaultData = [
     notes:
       'Lorem, ipsum dolor sit amet consectetur dipisicing elit. Voluptates officiis nulla, molestiae tenetur. officiis nulla, molestiae tenetur. offi?',
     uploadDate: '2019-03-05T10:51',
-    id: uid(),
+    id: 'ogzxiPx3Isc',
     backgroundImageUrl: 'http://via.placeholder.com/500/',
     status: 0,
   },
   {
-    title: 'Title6',
+    title:
+      'Title6 this is the cooles video of them all with a very long title which is annoying',
     tags: ['tag1', 'tag2', 'tag3'],
     notes:
       'Lorem, ipsum dolor sit amet consectetur dipisicing elit. Voluptates officiis nulla, molestiae tenetur. officiis nulla, molestiae tenetur. offi?',
     uploadDate: '2019-03-05T10:51',
-    id: uid(),
+    id: 'KmayR29pKbQ',
     backgroundImageUrl: 'http://via.placeholder.com/500/',
     status: 0,
   },
