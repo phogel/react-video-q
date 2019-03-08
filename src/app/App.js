@@ -7,12 +7,12 @@ import { BrowserRouter as Router, Route } from 'react-router-dom'
 import styled from 'styled-components'
 import { getDataFromStorage, saveDataToStorage } from '../services'
 import PageTitle from '../common/PageTitle'
-import Filter from '../common/Filter'
+import Nav from '../common/Nav'
 
 const Grid = styled.section`
   display: grid;
   height: 100vh;
-  grid-template-rows: auto auto 48px;
+  grid-template-rows: 20px auto 48px;
 `
 
 export default function App() {
@@ -77,11 +77,11 @@ export default function App() {
           path="/"
           render={() => (
             <Grid>
-              <PageTitle name="Not learned yet" status="0" />
+              <PageTitle name="Not learned yet" status={0} />
               <CardsContainer
                 cards={state.cards.filter(card => card.status === 0)}
               />
-              <Filter />
+              <Nav status={0} />
             </Grid>
           )}
         />
@@ -89,11 +89,11 @@ export default function App() {
           path="/learningqueue"
           render={() => (
             <Grid>
-              <PageTitle name="Learning queue" status="1" />
+              <PageTitle name="Learning queue" status={1} />
               <CardsContainer
                 cards={state.cards.filter(card => card.status === 1)}
               />
-              <Filter />
+              <Nav status={1} />
             </Grid>
           )}
         />
@@ -101,11 +101,11 @@ export default function App() {
           path="/learned"
           render={() => (
             <Grid>
-              <PageTitle name="Learned" status="2" />
+              <PageTitle name="Learned" status={2} />
               <CardsContainer
                 cards={state.cards.filter(card => card.status === 2)}
               />
-              <Filter />
+              <Nav status={2} />
             </Grid>
           )}
         />
@@ -113,11 +113,11 @@ export default function App() {
           path="/refreshqueue"
           render={() => (
             <Grid>
-              <PageTitle name="Refresh Queue" status="3" />
+              <PageTitle name="Refresh Queue" status={3} />
               <CardsContainer
                 cards={state.cards.filter(card => card.status === 3)}
               />
-              <Filter />
+              <Nav status={3} />
             </Grid>
           )}
         />

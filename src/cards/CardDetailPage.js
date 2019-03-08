@@ -8,7 +8,6 @@ import YouTubeVideo from '../YouTube/YouTubeVideo'
 
 const Grid = styled.section`
   display: grid;
-  user-select: none;
   grid-gap: 20px;
   position: relative;
   grid-template-rows: auto auto auto 1fr auto;
@@ -30,7 +29,8 @@ const BackButton = styled.div`
   width: 30px;
   opacity: 0.75;
   background: black;
-  z-index: 2;
+  z-index: 10;
+  border-radius: 5px;
 `
 
 const StyledTitle = styled.h3`
