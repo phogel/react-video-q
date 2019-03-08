@@ -15,6 +15,7 @@ const StyledCard = styled.div`
   display: grid;
   height: 300px;
   align-content: end;
+  background-image: url(${p => p.backgroundImageUrl});
   background-repeat: no-repeat;
   background-size: cover;
   background-position: center;
@@ -80,12 +81,7 @@ export default function Card({ backgroundImageUrl, title, tags, id }) {
 
   return (
     <StyledLink to={`/videos/${id}`}>
-      <StyledCard
-        className={'card'}
-        style={{
-          backgroundImage: 'url(' + backgroundImageUrl + ')',
-        }}
-      >
+      <StyledCard className={'card'} backgroundImageUrl={backgroundImageUrl}>
         <StyledTitle>{title}</StyledTitle>
         {tags && <TagList>{tags.map(renderTag)}</TagList>}
       </StyledCard>

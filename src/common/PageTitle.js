@@ -20,6 +20,6 @@ function bgColor(status) {
   } else return { background: '#2DDBE3' }
 }
 
-export default function PageTitle({ name, status }) {
-  return <StyledTitle style={bgColor(status)}>{name}</StyledTitle>
+export default function PageTitle({ title, status }) {
+  return <StyledTitle style={bgColor(status)}>{title}</StyledTitle>
 }

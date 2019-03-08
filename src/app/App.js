@@ -8,11 +8,12 @@ import styled from 'styled-components'
 import { getDataFromStorage, saveDataToStorage } from '../services'
 import PageTitle from '../common/PageTitle'
 import Nav from '../common/Nav'
+import Header from '../common/Header'
 
 const Grid = styled.section`
   display: grid;
   height: 100vh;
-  grid-template-rows: 20px auto 48px;
+  grid-template-rows: 48px 20px auto 48px;
 `
 
 export default function App() {
@@ -77,7 +78,8 @@ export default function App() {
           path="/"
           render={() => (
             <Grid>
-              <PageTitle name="Not learned yet" status={0} />
+              <Header />
+              <PageTitle title="Not learned yet" status={0} />
               <CardsContainer
                 cards={state.cards.filter(card => card.status === 0)}
               />
@@ -89,7 +91,8 @@ export default function App() {
           path="/learningqueue"
           render={() => (
             <Grid>
-              <PageTitle name="Learning queue" status={1} />
+              <Header />
+              <PageTitle title="Learning queue" status={1} />
               <CardsContainer
                 cards={state.cards.filter(card => card.status === 1)}
               />
@@ -101,7 +104,8 @@ export default function App() {
           path="/learned"
           render={() => (
             <Grid>
-              <PageTitle name="Learned" status={2} />
+              <Header />
+              <PageTitle title="Learned" status={2} />
               <CardsContainer
                 cards={state.cards.filter(card => card.status === 2)}
               />
@@ -113,7 +117,8 @@ export default function App() {
           path="/refreshqueue"
           render={() => (
             <Grid>
-              <PageTitle name="Refresh Queue" status={3} />
+              <Header />
+              <PageTitle title="Refresh Queue" status={3} />
               <CardsContainer
                 cards={state.cards.filter(card => card.status === 3)}
               />
