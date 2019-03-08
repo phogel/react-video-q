@@ -96,9 +96,19 @@ export default function CardsDetailPage(props) {
     props.onClick(card.id, 3)
   }
 
+  function bgColor(status) {
+    if (status === 1) {
+      return { background: 'rgb(250, 239, 246)' }
+    } else if (status === 2) {
+      return { background: 'rgb(212, 244,238)' }
+    } else if (status === 3) {
+      return { background: 'rgb(249,216,231)' }
+    } else return { background: '#fcfcfc' }
+  }
+
   return (
     <React.Fragment>
-      <Grid>
+      <Grid style={bgColor(status)}>
         <BackButton onClick={goBack}>
           <MdExpandMore color={'#FCFCFC'} size={'30px'} />
         </BackButton>
