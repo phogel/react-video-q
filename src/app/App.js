@@ -1,16 +1,18 @@
 import React, { useReducer, useEffect } from 'react'
 import GlobalStyle from './GlobalStyle'
 import { Helmet } from 'react-helmet'
-import CardsContainer from '../cards/CardsContainer'
 import CardDetailPage from '../cards/CardDetailPage'
-import CardsRender from '../cards/CardsRender'
+import CardsContainer from '../cards/CardsContainer'
 import { BrowserRouter as Router, Route } from 'react-router-dom'
 import styled from 'styled-components'
 import { getDataFromStorage, saveDataToStorage } from '../services'
+import PageTitle from '../common/PageTitle'
+import Filter from '../common/Filter'
 
-const Grid = styled.div`
+const Grid = styled.section`
   display: grid;
   height: 100vh;
+  grid-template-rows: auto auto 48px;
 `
 
 export default function App() {
@@ -69,16 +71,53 @@ export default function App() {
             rel="stylesheet"
           />
         </Helmet>
+
         <Route
           exact
           path="/"
           render={() => (
             <Grid>
-              <CardsContainer>
-                <CardsRender
-                  cards={state.cards.filter(card => card.status === 0)}
-                />
-              </CardsContainer>
+              <PageTitle name="Not learned yet" status="0" />
+              <CardsContainer
+                cards={state.cards.filter(card => card.status === 0)}
+              />
+              <Filter />
+            </Grid>
+          )}
+        />
+        <Route
+          path="/learningqueue"
+          render={() => (
+            <Grid>
+              <PageTitle name="Learning queue" status="1" />
+              <CardsContainer
+                cards={state.cards.filter(card => card.status === 1)}
+              />
+              <Filter />
+            </Grid>
+          )}
+        />
+        <Route
+          path="/learned"
+          render={() => (
+            <Grid>
+              <PageTitle name="Learned" status="2" />
+              <CardsContainer
+                cards={state.cards.filter(card => card.status === 2)}
+              />
+              <Filter />
+            </Grid>
+          )}
+        />
+        <Route
+          path="/refreshqueue"
+          render={() => (
+            <Grid>
+              <PageTitle name="Refresh Queue" status="3" />
+              <CardsContainer
+                cards={state.cards.filter(card => card.status === 3)}
+              />
+              <Filter />
             </Grid>
           )}
         />
