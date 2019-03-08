@@ -65,7 +65,7 @@ export default function App() {
             content="Learn videos with VIDEO-Q: your app to keep track of learned videos. Check it out now!"
           />
           <link
-            href="https://fonts.googleapis.com/css?family=Roboto:400,700"
+            href="https://fonts.googleapis.com/css?family=Dosis:700|Roboto:400,700"
             rel="stylesheet"
           />
         </Helmet>
