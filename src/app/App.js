@@ -1,44 +1,59 @@
-import React, { useState, useEffect } from 'react'
+import React, { useReducer, useEffect } from 'react'
 import GlobalStyle from './GlobalStyle'
 import { Helmet } from 'react-helmet'
-import CardsContainer from '../cards/CardsContainer'
 import CardDetailPage from '../cards/CardDetailPage'
-import CardsRender from '../cards/CardsRender'
+import CardsContainer from '../cards/CardsContainer'
 import { BrowserRouter as Router, Route } from 'react-router-dom'
 import styled from 'styled-components'
 import { getDataFromStorage, saveDataToStorage } from '../services'
+import PageTitle from '../common/PageTitle'
+import Nav from '../common/Nav'
 
-const Grid = styled.div`
+const Grid = styled.section`
   display: grid;
   height: 100vh;
+  grid-template-rows: 20px auto 48px;
 `
 
 export default function App() {
-  const [cards, setCards] = useState(getDataFromStorage())
+  const [state, dispatch] = useReducer(
+    (state, action) => {
+      const { type, payload } = action
+      switch (type) {
+        case 'reset-status':
+          return {
+            cards: [
+              ...state.cards.slice(0, payload.index),
+              { ...state.cards[payload.index], status: 0 },
+              ...state.cards.slice(payload.index + 1),
+            ],
+          }
+        case 'update-status':
+          return {
+            cards: [
+              ...state.cards.slice(0, payload.index),
+              { ...state.cards[payload.index], status: payload.status },
+              ...state.cards.slice(payload.index + 1),
+            ],
+          }
+        default:
+          return state
+      }
+    },
+    { cards: getDataFromStorage() }
+  )
 
-  // useEffect(() => {
-  //   saveDataToStorage(cards)
-  // }, [])
-
-  // useEffect(() => {
-  //   saveDataToStorage(cards)
-  // }, [cards])
+  useEffect(() => {
+    saveDataToStorage(state.cards)
+  }, [state.cards])
 
   function clickHandler(id, status) {
-    const card = cards.find(card => card.id === id)
-    const index = cards.indexOf(card)
-    if (status === cards[index].status) {
-      setCards([
-        ...cards.slice(0, index),
-        { ...cards[index], status: 0 },
-        ...cards.slice(index + 1),
-      ])
+    const card = state.cards.find(card => card.id === id)
+    const index = state.cards.indexOf(card)
+    if (status === state.cards[index].status) {
+      dispatch({ type: 'reset-status', payload: { index } })
     } else {
-      setCards([
-        ...cards.slice(0, index),
-        { ...cards[index], status: status },
-        ...cards.slice(index + 1),
-      ])
+      dispatch({ type: 'update-status', payload: { index, status } })
     }
   }
 
@@ -52,18 +67,57 @@ export default function App() {
             content="Learn videos with VIDEO-Q: your app to keep track of learned videos. Check it out now!"
           />
           <link
-            href="https://fonts.googleapis.com/css?family=Roboto:400,700"
+            href="https://fonts.googleapis.com/css?family=Dosis:700|Roboto:400,700"
             rel="stylesheet"
           />
         </Helmet>
+
         <Route
           exact
           path="/"
           render={() => (
             <Grid>
-              <CardsContainer>
-                <CardsRender cards={cards.filter(card => card.status === 0)} />
-              </CardsContainer>
+              <PageTitle name="Not learned yet" status={0} />
+              <CardsContainer
+                cards={state.cards.filter(card => card.status === 0)}
+              />
+              <Nav status={0} />
+            </Grid>
+          )}
+        />
+        <Route
+          path="/learningqueue"
+          render={() => (
+            <Grid>
+              <PageTitle name="Learning queue" status={1} />
+              <CardsContainer
+                cards={state.cards.filter(card => card.status === 1)}
+              />
+              <Nav status={1} />
+            </Grid>
+          )}
+        />
+        <Route
+          path="/learned"
+          render={() => (
+            <Grid>
+              <PageTitle name="Learned" status={2} />
+              <CardsContainer
+                cards={state.cards.filter(card => card.status === 2)}
+              />
+              <Nav status={2} />
+            </Grid>
+          )}
+        />
+        <Route
+          path="/refreshqueue"
+          render={() => (
+            <Grid>
+              <PageTitle name="Refresh Queue" status={3} />
+              <CardsContainer
+                cards={state.cards.filter(card => card.status === 3)}
+              />
+              <Nav status={3} />
             </Grid>
           )}
         />
@@ -72,9 +126,11 @@ export default function App() {
           render={({ match }) => (
             <CardDetailPage
               onClick={clickHandler}
-              status={cards.find(card => card.id === match.params.id).status}
+              status={
+                state.cards.find(card => card.id === match.params.id).status
+              }
               id={match.params.id}
-              card={cards.find(card => card.id === match.params.id)}
+              card={state.cards.find(card => card.id === match.params.id)}
             />
           )}
         />

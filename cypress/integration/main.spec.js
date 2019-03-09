@@ -38,6 +38,8 @@ describe('App', () => {
       cy.get('section')
         .find('a')
         .find('div')
+        .find('h3')
+        .should('equal', 'Title1')
         .click()
     })
 
@@ -56,6 +58,12 @@ describe('App', () => {
     it('has three tags', () => {
       cy.get('section')
         .find('ul > li')
+        .should('have.length', 3)
+    })
+
+    it('has buttons', () => {
+      cy.get('section')
+        .find('svg')
         .should('have.length', 3)
     })
   })

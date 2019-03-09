@@ -1,5 +1,8 @@
+import React from 'react'
+import Card from './Card'
 import styled from 'styled-components'
-export default styled.section`
+
+const CardContainer = styled.section`
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(300px, auto));
   align-content: flex-start;
@@ -11,3 +14,20 @@ export default styled.section`
   scroll-padding: 37px;
   -webkit-overflow-scrolling: touch;
 `
+
+export default function CardsRender({ cards }) {
+  return (
+    <CardContainer>
+      {cards.map(card => (
+        <Card
+          key={card.id}
+          title={card.title}
+          tags={card.tags}
+          backgroundImageUrl={card.backgroundImageUrl}
+          id={card.id}
+          uploadDate={card.uploadDate}
+        />
+      ))}
+    </CardContainer>
+  )
+}
