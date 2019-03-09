@@ -78,7 +78,7 @@ export default function App() {
           path="/"
           render={() => (
             <Grid>
-              <Header />
+              <Header cards={state.cards} />
               <PageTitle title="Not learned yet" status={0} />
               <CardsContainer
                 cards={state.cards.filter(card => card.status === 0)}
@@ -91,7 +91,7 @@ export default function App() {
           path="/learningqueue"
           render={() => (
             <Grid>
-              <Header />
+              <Header cards={state.cards} />
               <PageTitle title="Learning queue" status={1} />
               <CardsContainer
                 cards={state.cards.filter(card => card.status === 1)}
@@ -104,7 +104,7 @@ export default function App() {
           path="/learned"
           render={() => (
             <Grid>
-              <Header />
+              <Header cards={state.cards} />
               <PageTitle title="Learned" status={2} />
               <CardsContainer
                 cards={state.cards.filter(card => card.status === 2)}
@@ -117,7 +117,7 @@ export default function App() {
           path="/refreshqueue"
           render={() => (
             <Grid>
-              <Header />
+              <Header cards={state.cards} />
               <PageTitle title="Refresh Queue" status={3} />
               <CardsContainer
                 cards={state.cards.filter(card => card.status === 3)}

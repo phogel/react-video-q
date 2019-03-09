@@ -1,7 +1,8 @@
 import React from 'react'
 import styled from 'styled-components'
 import logo from '../images/logo.svg'
-import { BrowserRouter as Route, Router, Link } from 'react-router-dom'
+import { Link } from 'react-router-dom'
+import SearchBar from '../search/SearchBar'
 
 const StyledHeader = styled.header`
   display: flex;
@@ -15,12 +16,13 @@ const StyledLink = styled(Link)`
   height: 24px;
 `
 
-export default function Header() {
+export default function Header({ cards }) {
   return (
     <StyledHeader>
-      <StyledLink exact to="/">
+      <StyledLink to="/">
         <img src={logo} alt="video-q" />
       </StyledLink>
+      <SearchBar cards={cards} />
     </StyledHeader>
   )
 }
