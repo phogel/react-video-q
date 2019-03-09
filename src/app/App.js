@@ -9,11 +9,17 @@ import { getDataFromStorage, saveDataToStorage } from '../services'
 import PageTitle from '../common/PageTitle'
 import Nav from '../common/Nav'
 import Header from '../common/Header'
+import SearchBar from '../search/SearchBar'
 
 const Grid = styled.section`
   display: grid;
   height: 100vh;
   grid-template-rows: 48px 20px auto 48px;
+`
+const SearchGrid = styled.section`
+  display: grid;
+  height: 100vh;
+  grid-template-rows: 48px auto 20px auto 48px;
 `
 
 export default function App() {
@@ -72,7 +78,19 @@ export default function App() {
             rel="stylesheet"
           />
         </Helmet>
-
+        {/* card.description.includes */}
+        <Route
+          path="/search"
+          render={() => (
+            <SearchGrid>
+              <Header />
+              <SearchBar cards={state.cards} />
+              <PageTitle title="Search within all cards" status={''} />
+              <CardsContainer cards={state.cards} />
+              <Nav status={''} />
+            </SearchGrid>
+          )}
+        />
         <Route
           exact
           path="/"

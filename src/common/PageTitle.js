@@ -11,13 +11,15 @@ const StyledTitle = styled.div`
 `
 
 function bgColor(status) {
-  if (status === 1) {
+  if (status === 0) {
+    return { background: '#2DDBE3' }
+  } else if (status === 1) {
     return { background: '#EFA5D4' }
   } else if (status === 2) {
     return { background: '#00CCA9' }
   } else if (status === 3) {
     return { background: '#FF328B' }
-  } else return { background: '#2DDBE3' }
+  } else return { background: '#8A8A8A' }
 }
 
 export default function PageTitle({ title, status }) {
