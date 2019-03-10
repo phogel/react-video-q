@@ -8,6 +8,16 @@ const StyledTitle = styled.div`
   font-family: 'Dosis', sans-serif;
   display: flex;
   justify-content: center;
+  /* animation: move-down 0.7s;
+
+  @keyframes move-down {
+    0% {
+      transform: translateY(-3rem);
+    }
+    100% {
+      transform: translateY(0);
+    }
+  } */
 `
 
 function bgColor(status) {

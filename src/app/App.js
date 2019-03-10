@@ -19,7 +19,8 @@ const Grid = styled.section`
 const SearchGrid = styled.section`
   display: grid;
   height: 100vh;
-  grid-template-rows: 48px auto 20px auto 48px;
+  grid-template-rows: 48px 48px 20px auto 48px;
+  transition: 2s;
 `
 
 export default function App() {
@@ -64,6 +65,11 @@ export default function App() {
     }
   }
 
+  function searchLogic(event) {
+    console.log(event)
+    return state.cards.filter(card => card.title.includes(event))
+  }
+
   return (
     <Router>
       <React.Fragment>
@@ -78,15 +84,14 @@ export default function App() {
             rel="stylesheet"
           />
         </Helmet>
-        {/* card.description.includes */}
         <Route
           path="/search"
           render={() => (
             <SearchGrid>
               <Header />
-              <SearchBar cards={state.cards} />
+              <SearchBar onInput={searchLogic} />
               <PageTitle title="All videos" status={''} />
-              <CardsContainer cards={state.cards} />
+              <CardsContainer cards={searchLogic()} />
               <Nav status={''} />
             </SearchGrid>
           )}

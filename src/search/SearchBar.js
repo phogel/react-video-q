@@ -10,6 +10,17 @@ const Grid = styled.div`
   align-items: center;
   background: #1a1a1a;
   padding: 0 10px 10px 10px;
+  animation: move-down 0.7s;
+  z-index: 0;
+
+  @keyframes move-down {
+    0% {
+      transform: translateY(-3rem);
+    }
+    100% {
+      transform: translateY(0);
+    }
+  }
 `
 
 const StyledInput = styled.input`
@@ -17,6 +28,9 @@ const StyledInput = styled.input`
   height: 32px;
   border: 1px solid rgba(196, 196, 196, 0.66);
   border-radius: 50px;
+  :focus {
+    outline: none;
+  }
 `
 const BackButton = styled.div`
   margin: 0;
@@ -30,14 +44,14 @@ function goBack() {
   window.history.back()
 }
 
-function searchLogic(cards) {
-  console.log('hello')
-}
+export default function SearchBar({ onInput }) {
+  function onInputChange(event) {
+    onInput(event.target.value)
+  }
 
-export default function SearchBar({ cards }) {
   return (
     <Grid>
-      <StyledInput type="text" onInput={searchLogic(cards)} />
+      <StyledInput type="text" onInput={onInputChange} />
       <BackButton onClick={goBack}>
         <MdClose color={'#8A8A8A'} size={'30px'} />
       </BackButton>
