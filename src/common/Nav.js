@@ -6,13 +6,13 @@ import Icon from './Icon'
 const StyledNav = styled.nav`
   display: grid;
   grid-auto-flow: column;
+  background: #1a1a1a;
 `
 
 const StyledLink = styled(Link)`
   display: flex;
   justify-content: center;
   align-items: center;
-  background: #1a1a1a;
   text-decoration: none;
 `
 
