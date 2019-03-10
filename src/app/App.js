@@ -85,7 +85,7 @@ export default function App() {
             <SearchGrid>
               <Header />
               <SearchBar cards={state.cards} />
-              <PageTitle title="Search within all cards" status={''} />
+              <PageTitle title="All videos" status={''} />
               <CardsContainer cards={state.cards} />
               <Nav status={''} />
             </SearchGrid>

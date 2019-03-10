@@ -14,7 +14,7 @@ const Grid = styled.div`
 
 const StyledInput = styled.input`
   width: 100%;
-  height: 36px;
+  height: 32px;
   border: 1px solid rgba(196, 196, 196, 0.66);
   border-radius: 50px;
 `
