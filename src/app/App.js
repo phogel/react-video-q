@@ -64,16 +64,16 @@ export default function App() {
   function filteredCards(event) {
     return state.cards.filter(
       card =>
-        card.title.toLowerCase().includes(searchString) |
+        card.title.toLowerCase().includes(searchString.toLowerCase()) |
         card.tags
           .join()
           .toLowerCase()
-          .includes(searchString)
+          .includes(searchString.toLowerCase())
     )
   }
 
   function onSearchChange(event) {
-    setSearchString(event.target.value.toLowerCase())
+    setSearchString(event.target.value)
     console.log(searchString)
   }
 
