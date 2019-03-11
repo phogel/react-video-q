@@ -62,14 +62,16 @@ export default function App() {
   const [searchString, setSearchString] = useState('')
 
   function filteredCards(event) {
-    return state.cards.filter(
-      card =>
-        card.title.toLowerCase().includes(searchString.toLowerCase()) |
-        card.tags
-          .join()
-          .toLowerCase()
-          .includes(searchString.toLowerCase())
-    )
+    return state.cards
+      .filter(
+        card =>
+          card.title.toLowerCase().includes(searchString.toLowerCase()) |
+          card.tags
+            .join()
+            .toLowerCase()
+            .includes(searchString.toLowerCase())
+      )
+      .sort((a, b) => a.status - b.status)
   }
 
   function onSearchChange(event) {
