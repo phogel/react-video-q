@@ -60,6 +60,7 @@ const StyledIcon = styled(Icon)`
   transform: translate(50%);
   right: 25px;
   top: 10px;
+  height: 25px;
 `
 
 Card.propTypes = {
@@ -93,11 +94,27 @@ export default function Card({ backgroundImageUrl, title, tags, id, status }) {
     if (status === 0) {
       return ''
     } else if (status === 1) {
-      return <StyledIcon fill="#EFA5D4" height="30px" name="learning-queue" />
+      return (
+        <StyledIcon
+          fill="#EFA5D4"
+          height="30px"
+          width="50px"
+          name="learning-queue"
+        />
+      )
     } else if (status === 2) {
-      return <StyledIcon fill="#00CCA9" height="30px" name="learned" />
+      return (
+        <StyledIcon fill="#00CCA9" height="30px" width="50px" name="learned" />
+      )
     } else if (status === 3) {
-      return <StyledIcon fill="#FF328B" height="30px" name="refresh-queue" />
+      return (
+        <StyledIcon
+          fill="#FF328B"
+          height="30px"
+          width="50px"
+          name="refresh-queue"
+        />
+      )
     }
   }
 

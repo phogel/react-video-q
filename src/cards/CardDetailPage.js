@@ -5,12 +5,13 @@ import ButtonLearningQueue from './ButtonLearningQueue'
 import ButtonLearned from './ButtonLearned'
 import ButtonRefreshQueue from './ButtonRefreshQueue'
 import YouTubeVideo from '../YouTube/YouTubeVideo'
+import Switch from '../common/Switch'
 
 const Grid = styled.section`
   display: grid;
   grid-gap: 20px;
   position: relative;
-  grid-template-rows: auto auto auto 1fr auto;
+  grid-template-rows: auto auto auto 1fr auto auto;
   height: 100vh;
   width: 100vw;
   margin: 0 auto;
@@ -116,6 +117,7 @@ export default function CardsDetailPage(props) {
         <StyledTitle>{card.title + ' ' + card.id}</StyledTitle>
         {card.tags && <TagList>{card.tags.map(renderTag)}</TagList>}
         <StyledNotes>{card.notes}</StyledNotes>
+        {card.status === 2 ? <Switch /> : <div />}
         <CategoryButtonContainer>
           <ButtonLearningQueue status={status} onClick={onLearningClick} />
           <ButtonLearned status={status} onClick={onLearnedClick} />

@@ -76,7 +76,7 @@ export default function SearchBar({ onSearchChange, searchString }) {
         type="search"
         ref={txt1}
         placeholder="Enter title or tag"
-        onInput={onSearchChange}
+        onChange={onSearchChange}
       />
       <BackButton onClick={goBack}>
         <MdKeyboardArrowRight color={'#8A8A8A'} size={'30px'} />

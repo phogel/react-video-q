@@ -76,7 +76,6 @@ export default function App() {
 
   function onSearchChange(event) {
     setSearchString(event.target.value)
-    console.log(searchString)
   }
 
   return (
