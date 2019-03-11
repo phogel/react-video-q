@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useRef, useEffect } from 'react'
 import styled from 'styled-components'
 import { MdKeyboardArrowRight } from 'react-icons/md'
 import logo from '../images/logo.svg'
@@ -63,10 +63,17 @@ function goBack() {
 }
 
 export default function SearchBar({ onSearchChange }) {
+  const txt1 = useRef(null)
+
+  useEffect(() => {
+    txt1.current.focus()
+  }, [])
+
   return (
     <Grid>
       <StyledInput
         type="search"
+        ref={txt1}
         placeholder="Enter title or tag"
         onInput={onSearchChange}
       />
