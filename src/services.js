@@ -2,8 +2,8 @@ import uid from 'uid'
 
 const defaultData = [
   {
-    title: 'Title1',
-    tags: ['tag1', 'tag2', 'tag3'],
+    title: 'Head roll',
+    tags: ['Pablo & Raquel', 'Bachaturo', '2018'],
     notes:
       'Lorem, ipsum dolor sit amet consectetur dipisicing elit. Voluptates officiis nulla, molestiae tenetur. officiis nulla, molestiae tenetur. ffi?Lorem, ipsum dolor sit amet consectetur dipisicing elit.Lorem, ipsum dolor sit amet consectetur dipisicing elit. Voluptates officiis nulla, molestiae tenetur. officiis nulla, molestiae tenetur. ffi?Lorem, ipsum dolor sit amet consectetur dipisicing elit.Lorem, ipsum dolor sit amet consectetur dipisicing elit. Voluptates officiis nulla, molestiae tenetur. officiis nulla, molestiae tenetur. ffi?Lorem, ipsum dolor sit amet consectetur dipisicing elit.Lorem, ipsum dolor sit amet consectetur dipisicing elit. Voluptates officiis nulla, molestiae tenetur. officiis nulla, molestiae tenetur. ffi?Lorem, ipsum dolor sit amet consectetur dipisicing elit.',
     uploadDate: '2019-03-05T10:51',
@@ -12,8 +12,8 @@ const defaultData = [
     status: 0,
   },
   {
-    title: 'Title2',
-    tags: ['tag1', 'tag2', 'tag3'],
+    title: 'Hip roll',
+    tags: ['Abdel & Lety', 'Youtube', '2018'],
     notes:
       'Lorem, ipsum dolor sit amet consectetur dipisicing elit. Voluptates officiis nulla, molestiae tenetur. officiis nulla, molestiae tenetur. offi?',
     uploadDate: '2019-03-05T10:51',

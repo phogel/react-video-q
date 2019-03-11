@@ -10,7 +10,7 @@ const Grid = styled.div`
   align-items: center;
   background: #1a1a1a;
   padding: 0 10px 10px 10px;
-  animation: move-down 0.7s;
+  animation: move-down 0.7s ease-out;
   z-index: 0;
 
   @keyframes move-down {
@@ -44,14 +44,10 @@ function goBack() {
   window.history.back()
 }
 
-export default function SearchBar({ onInput }) {
-  function onInputChange(event) {
-    onInput(event.target.value)
-  }
-
+export default function SearchBar({ onSearchChange }) {
   return (
     <Grid>
-      <StyledInput type="text" onInput={onInputChange} />
+      <StyledInput type="text" onInput={onSearchChange} />
       <BackButton onClick={goBack}>
         <MdClose color={'#8A8A8A'} size={'30px'} />
       </BackButton>

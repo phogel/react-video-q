@@ -26,6 +26,7 @@ export default function Header({ cards }) {
       <StyledLink to="/search">
         <FiSearch color={'#8A8A8A'} size={'28px'} />
       </StyledLink>
+      {/* <SearchBar2 /> */}
     </StyledHeader>
   )
 }

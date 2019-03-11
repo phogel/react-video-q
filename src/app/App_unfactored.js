@@ -9,12 +9,18 @@ import { getDataFromStorage, saveDataToStorage } from '../services'
 import PageTitle from '../common/PageTitle'
 import Nav from '../common/Nav'
 import Header from '../common/Header'
-import HeaderSearchBar from '../common/HeaderSearchBar'
+import SearchBar from '../search/SearchBar'
 
 const Grid = styled.section`
   display: grid;
   height: 100vh;
   grid-template-rows: 48px 20px auto 48px;
+`
+const SearchGrid = styled.section`
+  display: grid;
+  height: 100vh;
+  grid-template-rows: 48px 48px 20px auto 48px;
+  transition: 2s;
 `
 
 export default function App() {
@@ -45,6 +51,8 @@ export default function App() {
     { cards: getDataFromStorage() }
   )
 
+  const [searchString, setSearchString] = useState('')
+
   useEffect(() => {
     saveDataToStorage(state.cards)
   }, [state.cards])
@@ -59,9 +67,7 @@ export default function App() {
     }
   }
 
-  const [searchString, setSearchString] = useState('')
-
-  function filteredCards(event) {
+  function filteredCards(e) {
     return state.cards.filter(
       card =>
         card.title.includes(searchString) |
@@ -69,8 +75,8 @@ export default function App() {
     )
   }
 
-  function onSearchChange(event) {
-    setSearchString(event.target.value)
+  function onSearchChange(e) {
+    setSearchString(e.target.value)
     console.log(searchString)
   }
 
@@ -91,12 +97,13 @@ export default function App() {
         <Route
           path="/search"
           render={() => (
-            <Grid>
-              <HeaderSearchBar onSearchChange={onSearchChange} />
+            <SearchGrid>
+              <Header />
+              <SearchBar onSearchChange={onSearchChange} />
               <PageTitle title="All videos" status={''} />
               <CardsContainer cards={filteredCards()} />
               <Nav status={''} />
-            </Grid>
+            </SearchGrid>
           )}
         />
         <Route
@@ -104,7 +111,7 @@ export default function App() {
           path="/"
           render={() => (
             <Grid>
-              <Header />
+              <Header cards={state.cards} />
               <PageTitle title="Not learned yet" status={0} />
               <CardsContainer
                 cards={state.cards.filter(card => card.status === 0)}
@@ -117,7 +124,7 @@ export default function App() {
           path="/learningqueue"
           render={() => (
             <Grid>
-              <Header />
+              <Header cards={state.cards} />
               <PageTitle title="Learning queue" status={1} />
               <CardsContainer
                 cards={state.cards.filter(card => card.status === 1)}
@@ -130,7 +137,7 @@ export default function App() {
           path="/learned"
           render={() => (
             <Grid>
-              <Header />
+              <Header cards={state.cards} />
               <PageTitle title="Learned" status={2} />
               <CardsContainer
                 cards={state.cards.filter(card => card.status === 2)}
@@ -143,7 +150,7 @@ export default function App() {
           path="/refreshqueue"
           render={() => (
             <Grid>
-              <Header />
+              <Header cards={state.cards} />
               <PageTitle title="Refresh Queue" status={3} />
               <CardsContainer
                 cards={state.cards.filter(card => card.status === 3)}
