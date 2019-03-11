@@ -27,14 +27,14 @@ const StyledInput = styled.input`
   ::placeholder {
     color: #c4c4c4;
   }
-  ::-webkit-search-cancel-button {
+  /* ::-webkit-search-cancel-button {
     -webkit-appearance: none;
     content: 'X';
     color: white;
     height: 10px;
     width: 10px;
     background: red;
-  }
+  } */
   :focus {
     outline: none;
   }
