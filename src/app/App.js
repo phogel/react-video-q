@@ -92,7 +92,10 @@ export default function App() {
           path="/search"
           render={() => (
             <Grid>
-              <HeaderSearchBar onSearchChange={onSearchChange} />
+              <HeaderSearchBar
+                searchString={searchString}
+                onSearchChange={onSearchChange}
+              />
               <PageTitle title="All videos" status={''} />
               <CardsContainer cards={filteredCards()} />
               <Nav status={''} />

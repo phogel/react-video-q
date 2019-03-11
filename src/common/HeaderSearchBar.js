@@ -62,7 +62,7 @@ function goBack() {
   window.history.back()
 }
 
-export default function SearchBar({ onSearchChange }) {
+export default function SearchBar({ onSearchChange, searchString }) {
   const txt1 = useRef(null)
 
   useEffect(() => {
@@ -72,6 +72,7 @@ export default function SearchBar({ onSearchChange }) {
   return (
     <Grid>
       <StyledInput
+        value={searchString}
         type="search"
         ref={txt1}
         placeholder="Enter title or tag"
