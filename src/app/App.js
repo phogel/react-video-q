@@ -65,7 +65,7 @@ export default function App() {
     return state.cards
       .filter(
         card =>
-          card.title.toLowerCase().includes(searchString.toLowerCase()) |
+          card.title.toLowerCase().includes(searchString.toLowerCase()) ||
           card.tags
             .join()
             .toLowerCase()
