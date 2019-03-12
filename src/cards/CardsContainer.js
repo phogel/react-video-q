@@ -26,6 +26,7 @@ export default function CardsRender({ cards }) {
           backgroundImageUrl={card.backgroundImageUrl}
           id={card.id}
           uploadDate={card.uploadDate}
+          status={card.status}
         />
       ))}
     </CardContainer>

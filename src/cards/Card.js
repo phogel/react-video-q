@@ -2,6 +2,7 @@ import React from 'react'
 import styled from 'styled-components'
 import PropTypes from 'prop-types'
 import { Link } from 'react-router-dom'
+import Icon from '../common/Icon'
 
 const StyledLink = styled(Link)`
   text-decoration: none;
@@ -9,12 +10,14 @@ const StyledLink = styled(Link)`
 `
 
 const StyledCard = styled.div`
+  display: grid;
+  position: relative;
+  grid-template-rows: auto auto;
+  align-content: end;
+  height: 300px;
   padding: 18px 18px 6px;
   border-radius: 20px;
   color: #fefdfd;
-  display: grid;
-  height: 300px;
-  align-content: end;
   background-image: url(${p => p.backgroundImageUrl});
   background-repeat: no-repeat;
   background-size: cover;
@@ -52,6 +55,13 @@ const Tag = styled.li`
   height: 22px;
 `
 
+const StyledIcon = styled(Icon)`
+  position: absolute;
+  transform: translate(50%);
+  right: 25px;
+  top: 10px;
+`
+
 Card.propTypes = {
   backgroundImageUrl: PropTypes.string,
   title: PropTypes.string,
@@ -74,14 +84,27 @@ Card.defaultProps = {
   ],
 }
 
-export default function Card({ backgroundImageUrl, title, tags, id }) {
+export default function Card({ backgroundImageUrl, title, tags, id, status }) {
   function renderTag(text, index) {
     return <Tag key={index}>{text}</Tag>
+  }
+
+  function selectIcon() {
+    if (status === 0) {
+      return ''
+    } else if (status === 1) {
+      return <StyledIcon fill="#EFA5D4" height="30px" name="learning-queue" />
+    } else if (status === 2) {
+      return <StyledIcon fill="#00CCA9" height="30px" name="learned" />
+    } else if (status === 3) {
+      return <StyledIcon fill="#FF328B" height="30px" name="refresh-queue" />
+    }
   }
 
   return (
     <StyledLink to={`/videos/${id}`}>
       <StyledCard className={'card'} backgroundImageUrl={backgroundImageUrl}>
+        {selectIcon()}
         <StyledTitle>{title}</StyledTitle>
         {tags && <TagList>{tags.map(renderTag)}</TagList>}
       </StyledCard>
