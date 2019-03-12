@@ -5,7 +5,7 @@ import ButtonLearningQueue from './ButtonLearningQueue'
 import ButtonLearned from './ButtonLearned'
 import ButtonRefreshQueue from './ButtonRefreshQueue'
 import YouTubeVideo from '../YouTube/YouTubeVideo'
-import SwitchButton from '../common/SwitchButton'
+import SwitchButton from './SwitchButton'
 import dayjs from 'dayjs'
 
 const Grid = styled.section`
@@ -102,6 +102,16 @@ export default function CardsDetailPage(props) {
     props.onCheckboxClick(card.id)
   }
 
+  const [daysBeforeRefresh, setDaysBeforeRefresh] = useState(0)
+
+  function onSliderChange(event) {
+    const sliderTimeStamp = dayjs()
+    const refreshDate = sliderTimeStamp.add(event.target.value, 'second')
+    console.log(refreshDate)
+    setDaysBeforeRefresh(event.target.value)
+    props.onSliderChange(card.id, refreshDate)
+  }
+
   function bgColor(status) {
     if (status === 1) {
       return { background: 'rgb(250, 239, 246)' }
@@ -110,15 +120,6 @@ export default function CardsDetailPage(props) {
     } else if (status === 3) {
       return { background: 'rgb(249,216,231)' }
     } else return { background: '#fcfcfc' }
-  }
-
-  const [daysBeforeRefresh, setDaysBeforeRefresh] = useState(0)
-
-  function updateDaysBeforeRefresh(event) {
-    setDaysBeforeRefresh(event.target.value)
-    const onChange = dayjs()
-    console.log(onChange)
-    console.log(daysBeforeRefresh)
   }
 
   return (
@@ -135,7 +136,7 @@ export default function CardsDetailPage(props) {
           <SwitchButton
             onCheckboxClick={onCheckboxClick}
             refresh={card.refresh}
-            onSliderChange={updateDaysBeforeRefresh}
+            onSliderChange={onSliderChange}
             daysBeforeRefresh={daysBeforeRefresh}
           />
         ) : (

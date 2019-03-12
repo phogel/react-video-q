@@ -10,6 +10,7 @@ const Grid = styled.div`
   background: #1a1a1a;
   padding: 10px 10px 10px 10px;
   z-index: 0;
+  overflow: hidden;
   /* background-image: url("${logo}");
   background-repeat: no-repeat;
   background-position: 10px 12px; */

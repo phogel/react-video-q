@@ -16,7 +16,7 @@ const StyledSwitchButton = styled.div`
     }
   }
   .switch-input {
-    /* display: none; */
+    display: none;
   }
   .switch-label {
     position: relative;

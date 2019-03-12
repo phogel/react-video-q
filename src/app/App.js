@@ -10,6 +10,7 @@ import PageTitle from '../common/PageTitle'
 import Nav from '../common/Nav'
 import Header from '../common/Header'
 import HeaderSearchBar from '../common/HeaderSearchBar'
+import dayjs from 'dayjs'
 
 const Grid = styled.section`
   display: grid;
@@ -52,9 +53,20 @@ export default function App() {
     ])
   }
 
+  function sliderChangeHandler(id, refreshDate) {
+    console.log(refreshDate)
+    const card = cards.find(card => card.id === id)
+    const index = cards.indexOf(card)
+    setCards([
+      ...cards.slice(0, index),
+      { ...cards[index], refreshDate: refreshDate.toString() },
+      ...cards.slice(index + 1),
+    ])
+  }
+
   const [searchString, setSearchString] = useState('')
 
-  function filteredCards(event) {
+  function searchWithinAllCards() {
     return cards
       .filter(
         card =>
@@ -71,11 +83,28 @@ export default function App() {
     setSearchString(event.target.value)
   }
 
+  function changeCardStatus(cardToChange) {
+    const index = cards.indexOf(cardToChange)
+    setCards([
+      ...cards.slice(0, index),
+      { ...cards[index], refresh: false, status: 3, refreshDate: '' },
+      ...cards.slice(index + 1),
+    ])
+  }
+
+  function checkIfRefresh() {
+    cards.forEach(card => {
+      if (card.refresh && dayjs().isAfter(card.refreshDate)) {
+        changeCardStatus(card)
+      }
+    })
+  }
+
   return (
     <Router>
       <React.Fragment>
         <Helmet>
-          <title>video-q</title>
+          <title>vide-q</title>
           <meta
             name="description"
             content="Learn videos with VIDEO-Q: your app to keep track of learned videos. Check it out now!"
@@ -94,7 +123,10 @@ export default function App() {
                 onSearchChange={onSearchChange}
               />
               <PageTitle title="All videos" status={''} />
-              <CardsContainer cards={filteredCards()} />
+              <CardsContainer
+                checkIfRefresh={checkIfRefresh()}
+                cards={searchWithinAllCards()}
+              />
               <Nav status={''} />
             </Grid>
           )}
@@ -106,7 +138,10 @@ export default function App() {
             <Grid>
               <Header />
               <PageTitle title="Not learned yet" status={0} />
-              <CardsContainer cards={cards.filter(card => card.status === 0)} />
+              <CardsContainer
+                checkIfRefresh={checkIfRefresh()}
+                cards={cards.filter(card => card.status === 0)}
+              />
               <Nav status={0} />
             </Grid>
           )}
@@ -117,7 +152,10 @@ export default function App() {
             <Grid>
               <Header />
               <PageTitle title="Learning queue" status={1} />
-              <CardsContainer cards={cards.filter(card => card.status === 1)} />
+              <CardsContainer
+                checkIfRefresh={checkIfRefresh()}
+                cards={cards.filter(card => card.status === 1)}
+              />
               <Nav status={1} />
             </Grid>
           )}
@@ -128,7 +166,10 @@ export default function App() {
             <Grid>
               <Header />
               <PageTitle title="Learned" status={2} />
-              <CardsContainer cards={cards.filter(card => card.status === 2)} />
+              <CardsContainer
+                checkIfRefresh={checkIfRefresh()}
+                cards={cards.filter(card => card.status === 2)}
+              />
               <Nav status={2} />
             </Grid>
           )}
@@ -139,7 +180,10 @@ export default function App() {
             <Grid>
               <Header />
               <PageTitle title="Refresh Queue" status={3} />
-              <CardsContainer cards={cards.filter(card => card.status === 3)} />
+              <CardsContainer
+                checkIfRefresh={checkIfRefresh()}
+                cards={cards.filter(card => card.status === 3)}
+              />
               <Nav status={3} />
             </Grid>
           )}
@@ -148,7 +192,9 @@ export default function App() {
           path="/videos/:id"
           render={({ match }) => (
             <CardDetailPage
+              checkIfRefresh={checkIfRefresh()}
               onCheckboxClick={checkboxClickHandler}
+              onSliderChange={sliderChangeHandler}
               onClick={clickHandler}
               status={cards.find(card => card.id === match.params.id).status}
               id={match.params.id}
