@@ -1,4 +1,4 @@
-import React, { useReducer, useEffect, useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import GlobalStyle from './GlobalStyle'
 import { Helmet } from 'react-helmet'
 import CardDetailPage from '../cards/CardDetailPage'
@@ -18,51 +18,44 @@ const Grid = styled.section`
 `
 
 export default function App() {
-  const [state, dispatch] = useReducer(
-    (state, action) => {
-      const { type, payload } = action
-      switch (type) {
-        case 'reset-status':
-          return {
-            cards: [
-              ...state.cards.slice(0, payload.index),
-              { ...state.cards[payload.index], status: 0 },
-              ...state.cards.slice(payload.index + 1),
-            ],
-          }
-        case 'update-status':
-          return {
-            cards: [
-              ...state.cards.slice(0, payload.index),
-              { ...state.cards[payload.index], status: payload.status },
-              ...state.cards.slice(payload.index + 1),
-            ],
-          }
-        default:
-          return state
-      }
-    },
-    { cards: getDataFromStorage() }
-  )
+  const [cards, setCards] = useState(getDataFromStorage())
 
   useEffect(() => {
-    saveDataToStorage(state.cards)
-  }, [state.cards])
+    saveDataToStorage(cards)
+  }, [cards])
 
   function clickHandler(id, status) {
-    const card = state.cards.find(card => card.id === id)
-    const index = state.cards.indexOf(card)
-    if (status === state.cards[index].status) {
-      dispatch({ type: 'reset-status', payload: { index } })
+    const card = cards.find(card => card.id === id)
+    const index = cards.indexOf(card)
+    if (status === cards[index].status) {
+      setCards([
+        ...cards.slice(0, index),
+        { ...cards[index], status: 0 },
+        ...cards.slice(index + 1),
+      ])
     } else {
-      dispatch({ type: 'update-status', payload: { index, status } })
+      setCards([
+        ...cards.slice(0, index),
+        { ...cards[index], status: status },
+        ...cards.slice(index + 1),
+      ])
     }
+  }
+
+  function checkboxClickHandler(id) {
+    const card = cards.find(card => card.id === id)
+    const index = cards.indexOf(card)
+    setCards([
+      ...cards.slice(0, index),
+      { ...cards[index], refresh: !card.refresh },
+      ...cards.slice(index + 1),
+    ])
   }
 
   const [searchString, setSearchString] = useState('')
 
   function filteredCards(event) {
-    return state.cards
+    return cards
       .filter(
         card =>
           card.title.toLowerCase().includes(searchString.toLowerCase()) ||
@@ -113,9 +106,7 @@ export default function App() {
             <Grid>
               <Header />
               <PageTitle title="Not learned yet" status={0} />
-              <CardsContainer
-                cards={state.cards.filter(card => card.status === 0)}
-              />
+              <CardsContainer cards={cards.filter(card => card.status === 0)} />
               <Nav status={0} />
             </Grid>
           )}
@@ -126,9 +117,7 @@ export default function App() {
             <Grid>
               <Header />
               <PageTitle title="Learning queue" status={1} />
-              <CardsContainer
-                cards={state.cards.filter(card => card.status === 1)}
-              />
+              <CardsContainer cards={cards.filter(card => card.status === 1)} />
               <Nav status={1} />
             </Grid>
           )}
@@ -139,9 +128,7 @@ export default function App() {
             <Grid>
               <Header />
               <PageTitle title="Learned" status={2} />
-              <CardsContainer
-                cards={state.cards.filter(card => card.status === 2)}
-              />
+              <CardsContainer cards={cards.filter(card => card.status === 2)} />
               <Nav status={2} />
             </Grid>
           )}
@@ -152,9 +139,7 @@ export default function App() {
             <Grid>
               <Header />
               <PageTitle title="Refresh Queue" status={3} />
-              <CardsContainer
-                cards={state.cards.filter(card => card.status === 3)}
-              />
+              <CardsContainer cards={cards.filter(card => card.status === 3)} />
               <Nav status={3} />
             </Grid>
           )}
@@ -163,12 +148,11 @@ export default function App() {
           path="/videos/:id"
           render={({ match }) => (
             <CardDetailPage
+              onCheckboxClick={checkboxClickHandler}
               onClick={clickHandler}
-              status={
-                state.cards.find(card => card.id === match.params.id).status
-              }
+              status={cards.find(card => card.id === match.params.id).status}
               id={match.params.id}
-              card={state.cards.find(card => card.id === match.params.id)}
+              card={cards.find(card => card.id === match.params.id)}
             />
           )}
         />

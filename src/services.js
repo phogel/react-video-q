@@ -9,7 +9,8 @@ const defaultData = [
     uploadDate: '2019-03-05T10:51',
     id: 'GTsEfTfprsk',
     backgroundImageUrl: 'http://via.placeholder.com/500x300/',
-    status: 0,
+    status: 2,
+    refresh: true,
   },
   {
     title: 'Hip roll',
@@ -19,7 +20,8 @@ const defaultData = [
     uploadDate: '2019-03-05T10:51',
     id: 'upTlp-poWoI',
     backgroundImageUrl: 'http://via.placeholder.com/500/',
-    status: 0,
+    status: 2,
+    refresh: false,
   },
   {
     title: 'Title3',
@@ -30,6 +32,7 @@ const defaultData = [
     id: 'Q1FWRhT4rTk',
     backgroundImageUrl: 'http://via.placeholder.com/500/',
     status: 0,
+    refresh: false,
   },
   {
     title: 'Title4',
@@ -40,6 +43,7 @@ const defaultData = [
     id: 'U-JofUEsbD0',
     backgroundImageUrl: 'http://via.placeholder.com/500/',
     status: 0,
+    refresh: false,
   },
   {
     title: 'Title5',
@@ -50,6 +54,7 @@ const defaultData = [
     id: 'ogzxiPx3Isc',
     backgroundImageUrl: 'http://via.placeholder.com/500/',
     status: 0,
+    refresh: false,
   },
   {
     title:
@@ -61,6 +66,7 @@ const defaultData = [
     id: 'KmayR29pKbQ',
     backgroundImageUrl: 'http://via.placeholder.com/500/',
     status: 0,
+    refresh: false,
   },
   {
     title: 'Title7',
@@ -71,6 +77,7 @@ const defaultData = [
     id: uid(),
     backgroundImageUrl: 'http://via.placeholder.com/500/',
     status: 0,
+    refresh: false,
   },
 ]
 

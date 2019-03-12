@@ -1,11 +1,12 @@
-import React from 'react'
+import React, { useState } from 'react'
 import styled from 'styled-components'
 import { MdExpandMore } from 'react-icons/md'
 import ButtonLearningQueue from './ButtonLearningQueue'
 import ButtonLearned from './ButtonLearned'
 import ButtonRefreshQueue from './ButtonRefreshQueue'
 import YouTubeVideo from '../YouTube/YouTubeVideo'
-import Switch from '../common/Switch'
+import SwitchButton from '../common/SwitchButton'
+import dayjs from 'dayjs'
 
 const Grid = styled.section`
   display: grid;
@@ -97,6 +98,10 @@ export default function CardsDetailPage(props) {
     props.onClick(card.id, 3)
   }
 
+  function onCheckboxClick() {
+    props.onCheckboxClick(card.id)
+  }
+
   function bgColor(status) {
     if (status === 1) {
       return { background: 'rgb(250, 239, 246)' }
@@ -105,6 +110,15 @@ export default function CardsDetailPage(props) {
     } else if (status === 3) {
       return { background: 'rgb(249,216,231)' }
     } else return { background: '#fcfcfc' }
+  }
+
+  const [daysBeforeRefresh, setDaysBeforeRefresh] = useState(0)
+
+  function updateDaysBeforeRefresh(event) {
+    setDaysBeforeRefresh(event.target.value)
+    const onChange = dayjs()
+    console.log(onChange)
+    console.log(daysBeforeRefresh)
   }
 
   return (
@@ -117,7 +131,16 @@ export default function CardsDetailPage(props) {
         <StyledTitle>{card.title + ' ' + card.id}</StyledTitle>
         {card.tags && <TagList>{card.tags.map(renderTag)}</TagList>}
         <StyledNotes>{card.notes}</StyledNotes>
-        {card.status === 2 ? <Switch /> : <div />}
+        {card.status === 2 ? (
+          <SwitchButton
+            onCheckboxClick={onCheckboxClick}
+            refresh={card.refresh}
+            onSliderChange={updateDaysBeforeRefresh}
+            daysBeforeRefresh={daysBeforeRefresh}
+          />
+        ) : (
+          <div />
+        )}
         <CategoryButtonContainer>
           <ButtonLearningQueue status={status} onClick={onLearningClick} />
           <ButtonLearned status={status} onClick={onLearnedClick} />

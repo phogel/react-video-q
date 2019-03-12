@@ -1,7 +1,7 @@
-import React, { useState } from 'react'
+import React from 'react'
 import styled from 'styled-components'
 
-const StyledSwitch = styled.div`
+const StyledSwitchButton = styled.div`
   margin-left: 30px;
   font-size: 15px;
   z-index: 10;
@@ -16,11 +16,14 @@ const StyledSwitch = styled.div`
     }
   }
   .switch-input {
-    display: none;
+    /* display: none; */
   }
   .switch-label {
     position: relative;
     user-select: none;
+    &:focus {
+      outline: none;
+    }
     display: inline-block;
     cursor: pointer;
     padding: 0 30px 0 44px;
@@ -119,20 +122,21 @@ const StyledSlider = styled.div`
     }
   }
 `
-export default function Switch({ state }) {
-  const [daysBeforeRefresh, setDaysBeforeRefresh] = useState(0)
-
-  function updateDaysBeforeRefresh(event) {
-    setDaysBeforeRefresh(event.target.value)
-  }
-
+export default function SwitchButton({
+  onSliderChange,
+  daysBeforeRefresh,
+  onCheckboxClick,
+  refresh,
+}) {
   return (
-    <StyledSwitch>
+    <StyledSwitchButton>
       <input
         type="checkbox"
         id="switch"
         name="set-name"
         className="switch-input"
+        defaultChecked={refresh}
+        onClick={onCheckboxClick}
       />
       <label htmlFor="switch" className="switch-label">
         <span className="toggle--on">
@@ -145,7 +149,7 @@ export default function Switch({ state }) {
             <label className="slider">
               <input
                 value={daysBeforeRefresh}
-                onChange={updateDaysBeforeRefresh}
+                onChange={onSliderChange}
                 type="range"
                 min="0"
                 max="100"
@@ -162,6 +166,6 @@ export default function Switch({ state }) {
           </StyledSlider>
         </span>
       </label>
-    </StyledSwitch>
+    </StyledSwitchButton>
   )
 }
