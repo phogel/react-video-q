@@ -1,4 +1,4 @@
-import React, { useReducer, useEffect } from 'react'
+import React, { useReducer, useEffect, useState } from 'react'
 import GlobalStyle from './GlobalStyle'
 import { Helmet } from 'react-helmet'
 import CardDetailPage from '../cards/CardDetailPage'
@@ -9,6 +9,7 @@ import { getDataFromStorage, saveDataToStorage } from '../services'
 import PageTitle from '../common/PageTitle'
 import Nav from '../common/Nav'
 import Header from '../common/Header'
+import HeaderSearchBar from '../common/HeaderSearchBar'
 
 const Grid = styled.section`
   display: grid;
@@ -58,6 +59,24 @@ export default function App() {
     }
   }
 
+  const [searchString, setSearchString] = useState('')
+
+  function filteredCards(event) {
+    return state.cards.filter(
+      card =>
+        card.title.toLowerCase().includes(searchString.toLowerCase()) |
+        card.tags
+          .join()
+          .toLowerCase()
+          .includes(searchString.toLowerCase())
+    )
+  }
+
+  function onSearchChange(event) {
+    setSearchString(event.target.value)
+    console.log(searchString)
+  }
+
   return (
     <Router>
       <React.Fragment>
@@ -72,7 +91,20 @@ export default function App() {
             rel="stylesheet"
           />
         </Helmet>
-
+        <Route
+          path="/search"
+          render={() => (
+            <Grid>
+              <HeaderSearchBar
+                searchString={searchString}
+                onSearchChange={onSearchChange}
+              />
+              <PageTitle title="All videos" status={''} />
+              <CardsContainer cards={filteredCards()} />
+              <Nav status={''} />
+            </Grid>
+          )}
+        />
         <Route
           exact
           path="/"

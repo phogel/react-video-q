@@ -1,26 +1,32 @@
 import React from 'react'
 import styled from 'styled-components'
 import logo from '../images/logo.svg'
-import { BrowserRouter as Route, Router, Link } from 'react-router-dom'
+import { Link } from 'react-router-dom'
+import { FiSearch } from 'react-icons/fi'
 
 const StyledHeader = styled.header`
   display: flex;
   justify-content: space-between;
   align-items: center;
   background: #1a1a1a;
-  padding-left: 10px;
+  padding: 0 10px 0 10px;
+  z-index: 1;
 `
 const StyledLink = styled(Link)`
   user-select: none;
   height: 24px;
 `
 
-export default function Header() {
+export default function Header({ cards }) {
   return (
     <StyledHeader>
-      <StyledLink exact to="/">
+      <StyledLink to="/">
         <img src={logo} alt="video-q" />
       </StyledLink>
+      <StyledLink to="/search">
+        <FiSearch color={'#8A8A8A'} size={'28px'} />
+      </StyledLink>
+      {/* <SearchBar2 /> */}
     </StyledHeader>
   )
 }
