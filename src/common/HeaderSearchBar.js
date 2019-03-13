@@ -10,6 +10,7 @@ const Grid = styled.div`
   background: #1a1a1a;
   padding: 10px 10px 10px 10px;
   z-index: 0;
+  overflow: hidden;
   /* background-image: url("${logo}");
   background-repeat: no-repeat;
   background-position: 10px 12px; */
@@ -24,6 +25,7 @@ const StyledInput = styled.input`
   border-radius: 50px;
   padding: 12px 12px;
   font-size: 16px;
+  background: #fefdfd;
   ::placeholder {
     color: #c4c4c4;
   }
@@ -63,10 +65,10 @@ function goBack() {
 }
 
 export default function SearchBar({ onSearchChange, searchString }) {
-  const txt1 = useRef(null)
+  const input = useRef(null)
 
   useEffect(() => {
-    txt1.current.focus()
+    input.current.focus()
   }, [])
 
   return (
@@ -74,9 +76,9 @@ export default function SearchBar({ onSearchChange, searchString }) {
       <StyledInput
         value={searchString}
         type="search"
-        ref={txt1}
+        ref={input}
         placeholder="Enter title or tag"
-        onInput={onSearchChange}
+        onChange={onSearchChange}
       />
       <BackButton onClick={goBack}>
         <MdKeyboardArrowRight color={'#8A8A8A'} size={'30px'} />

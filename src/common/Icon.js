@@ -57,7 +57,7 @@ const Icon = ({
   viewBox = '',
   width = '100%',
   className = '',
-  height = '100%',
+  height = '',
 }) => (
   <svg
     width={width}

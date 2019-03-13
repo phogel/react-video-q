@@ -1,23 +1,26 @@
 import React from 'react'
 import styled from 'styled-components'
 
-const StyledTitle = styled.div`
+const StyledBackground = styled.div`
   width: 100%;
   font-size: 15px;
   text-decoration: bold;
   font-family: 'Dosis', sans-serif;
   display: flex;
   justify-content: center;
-  /* animation: move-down 0.7s;
+`
 
-  @keyframes move-down {
+const StyledTitle = styled.div`
+  animation: move-left-quick 0.2s ease-out;
+
+  @keyframes move-left-quick {
     0% {
-      transform: translateY(-3rem);
+      transform: translateX(2px);
     }
     100% {
-      transform: translateY(0);
+      transform: translateX(0);
     }
-  } */
+  }
 `
 
 function bgColor(status) {
@@ -33,5 +36,9 @@ function bgColor(status) {
 }
 
 export default function PageTitle({ title, status }) {
-  return <StyledTitle style={bgColor(status)}>{title}</StyledTitle>
+  return (
+    <StyledBackground style={bgColor(status)}>
+      <StyledTitle>{title}</StyledTitle>
+    </StyledBackground>
+  )
 }

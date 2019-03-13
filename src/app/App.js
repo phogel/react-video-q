@@ -1,71 +1,83 @@
-import React, { useReducer, useEffect, useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import GlobalStyle from './GlobalStyle'
 import { Helmet } from 'react-helmet'
 import CardDetailPage from '../cards/CardDetailPage'
 import CardsContainer from '../cards/CardsContainer'
 import { BrowserRouter as Router, Route } from 'react-router-dom'
 import styled from 'styled-components'
-import { getDataFromStorage, saveDataToStorage } from '../services'
+import { getCardsFromStorage, saveCardsToStorage } from '../services'
 import PageTitle from '../common/PageTitle'
 import Nav from '../common/Nav'
 import Header from '../common/Header'
 import HeaderSearchBar from '../common/HeaderSearchBar'
+import dayjs from 'dayjs'
+import UploadPage from '../upload/UploadPage'
 
 const Grid = styled.section`
   display: grid;
-  height: 100vh;
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  margin: 0 auto;
   grid-template-rows: 48px 20px auto 48px;
 `
 
 export default function App() {
-  const [state, dispatch] = useReducer(
-    (state, action) => {
-      const { type, payload } = action
-      switch (type) {
-        case 'reset-status':
-          return {
-            cards: [
-              ...state.cards.slice(0, payload.index),
-              { ...state.cards[payload.index], status: 0 },
-              ...state.cards.slice(payload.index + 1),
-            ],
-          }
-        case 'update-status':
-          return {
-            cards: [
-              ...state.cards.slice(0, payload.index),
-              { ...state.cards[payload.index], status: payload.status },
-              ...state.cards.slice(payload.index + 1),
-            ],
-          }
-        default:
-          return state
-      }
-    },
-    { cards: getDataFromStorage() }
-  )
+  const [cards, setCards] = useState(getCardsFromStorage())
 
   useEffect(() => {
-    saveDataToStorage(state.cards)
-  }, [state.cards])
+    saveCardsToStorage(cards)
+  }, [cards])
+
+  function createCard(data) {
+    setCards([...cards, data])
+  }
 
   function clickHandler(id, status) {
-    const card = state.cards.find(card => card.id === id)
-    const index = state.cards.indexOf(card)
-    if (status === state.cards[index].status) {
-      dispatch({ type: 'reset-status', payload: { index } })
+    const card = cards.find(card => card.id === id)
+    const index = cards.indexOf(card)
+    if (status === cards[index].status) {
+      setCards([
+        ...cards.slice(0, index),
+        { ...cards[index], status: 0 },
+        ...cards.slice(index + 1),
+      ])
     } else {
-      dispatch({ type: 'update-status', payload: { index, status } })
+      setCards([
+        ...cards.slice(0, index),
+        { ...cards[index], status: status },
+        ...cards.slice(index + 1),
+      ])
     }
+  }
+
+  function checkboxClickHandler(id) {
+    const card = cards.find(card => card.id === id)
+    const index = cards.indexOf(card)
+    setCards([
+      ...cards.slice(0, index),
+      { ...cards[index], refresh: !card.refresh, refreshDate: '' },
+      ...cards.slice(index + 1),
+    ])
+  }
+
+  function sliderChangeHandler(id, refreshDate) {
+    const card = cards.find(card => card.id === id)
+    const index = cards.indexOf(card)
+    setCards([
+      ...cards.slice(0, index),
+      { ...cards[index], refreshDate: refreshDate },
+      ...cards.slice(index + 1),
+    ])
   }
 
   const [searchString, setSearchString] = useState('')
 
-  function filteredCards(event) {
-    return state.cards
+  function searchWithinAllCards() {
+    return cards
       .filter(
         card =>
-          card.title.toLowerCase().includes(searchString.toLowerCase()) |
+          card.title.toLowerCase().includes(searchString.toLowerCase()) ||
           card.tags
             .join()
             .toLowerCase()
@@ -76,14 +88,30 @@ export default function App() {
 
   function onSearchChange(event) {
     setSearchString(event.target.value)
-    console.log(searchString)
+  }
+
+  function changeCardStatus(cardToChange) {
+    const index = cards.indexOf(cardToChange)
+    setCards([
+      ...cards.slice(0, index),
+      { ...cards[index], status: 3, refresh: false, refreshDate: '' },
+      ...cards.slice(index + 1),
+    ])
+  }
+
+  function checkIfRefresh() {
+    cards.forEach(card => {
+      if (card.refresh && dayjs().isAfter(card.refreshDate)) {
+        changeCardStatus(card)
+      }
+    })
   }
 
   return (
     <Router>
       <React.Fragment>
         <Helmet>
-          <title>video-q</title>
+          <title>vide-q</title>
           <meta
             name="description"
             content="Learn videos with VIDEO-Q: your app to keep track of learned videos. Check it out now!"
@@ -102,7 +130,10 @@ export default function App() {
                 onSearchChange={onSearchChange}
               />
               <PageTitle title="All videos" status={''} />
-              <CardsContainer cards={filteredCards()} />
+              <CardsContainer
+                checkIfRefresh={checkIfRefresh()}
+                cards={searchWithinAllCards()}
+              />
               <Nav status={''} />
             </Grid>
           )}
@@ -115,7 +146,8 @@ export default function App() {
               <Header />
               <PageTitle title="Not learned yet" status={0} />
               <CardsContainer
-                cards={state.cards.filter(card => card.status === 0)}
+                checkIfRefresh={checkIfRefresh()}
+                cards={cards.filter(card => card.status === 0)}
               />
               <Nav status={0} />
             </Grid>
@@ -128,7 +160,8 @@ export default function App() {
               <Header />
               <PageTitle title="Learning queue" status={1} />
               <CardsContainer
-                cards={state.cards.filter(card => card.status === 1)}
+                checkIfRefresh={checkIfRefresh()}
+                cards={cards.filter(card => card.status === 1)}
               />
               <Nav status={1} />
             </Grid>
@@ -141,7 +174,8 @@ export default function App() {
               <Header />
               <PageTitle title="Learned" status={2} />
               <CardsContainer
-                cards={state.cards.filter(card => card.status === 2)}
+                checkIfRefresh={checkIfRefresh()}
+                cards={cards.filter(card => card.status === 2)}
               />
               <Nav status={2} />
             </Grid>
@@ -154,7 +188,8 @@ export default function App() {
               <Header />
               <PageTitle title="Refresh Queue" status={3} />
               <CardsContainer
-                cards={state.cards.filter(card => card.status === 3)}
+                checkIfRefresh={checkIfRefresh()}
+                cards={cards.filter(card => card.status === 3)}
               />
               <Nav status={3} />
             </Grid>
@@ -164,13 +199,20 @@ export default function App() {
           path="/videos/:id"
           render={({ match }) => (
             <CardDetailPage
+              checkIfRefresh={checkIfRefresh()}
+              onCheckboxClick={checkboxClickHandler}
+              onSliderChange={sliderChangeHandler}
               onClick={clickHandler}
-              status={
-                state.cards.find(card => card.id === match.params.id).status
-              }
+              status={cards.find(card => card.id === match.params.id).status}
               id={match.params.id}
-              card={state.cards.find(card => card.id === match.params.id)}
+              card={cards.find(card => card.id === match.params.id)}
             />
+          )}
+        />
+        <Route
+          path="/upload"
+          render={({ history }) => (
+            <UploadPage cards={cards} history={history} onSubmit={createCard} />
           )}
         />
         <GlobalStyle />

@@ -5,21 +5,21 @@ import ButtonLearningQueue from './ButtonLearningQueue'
 import ButtonLearned from './ButtonLearned'
 import ButtonRefreshQueue from './ButtonRefreshQueue'
 import YouTubeVideo from '../YouTube/YouTubeVideo'
+import SwitchButton from './SwitchButton'
 
 const Grid = styled.section`
   display: grid;
   grid-gap: 20px;
+  grid-template-rows: auto auto auto 1fr auto auto;
   position: relative;
-  grid-template-rows: auto auto auto 1fr auto;
-  height: 100vh;
-  width: 100vw;
+  width: 100%;
+  height: 100%;
   margin: 0 auto;
   max-width: 500px;
   background: #fcfcfc;
   box-shadow: 0 1px 15px rgba(0, 0, 0, 0.06), 0 1px 5px rgba(0, 0, 0, 0.14);
   transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
 `
-
 const BackButton = styled.div`
   margin: 0;
   position: absolute;
@@ -49,7 +49,7 @@ const TagList = styled.ul`
 
 const Tag = styled.li`
   display: inline-block;
-  margin: 0 8px 0 0;
+  margin: 0 8px 8px 0;
   padding: 4px 10px 22px 10px;
   background: rgba(26, 26, 26, 0.57);
   border-radius: 10px;
@@ -96,6 +96,14 @@ export default function CardsDetailPage(props) {
     props.onClick(card.id, 3)
   }
 
+  function onCheckboxClick() {
+    props.onCheckboxClick(card.id)
+  }
+
+  function onSliderChange(refreshDate) {
+    props.onSliderChange(card.id, refreshDate)
+  }
+
   function bgColor(status) {
     if (status === 1) {
       return { background: 'rgb(250, 239, 246)' }
@@ -116,6 +124,16 @@ export default function CardsDetailPage(props) {
         <StyledTitle>{card.title + ' ' + card.id}</StyledTitle>
         {card.tags && <TagList>{card.tags.map(renderTag)}</TagList>}
         <StyledNotes>{card.notes}</StyledNotes>
+        {card.status === 2 ? (
+          <SwitchButton
+            cardRefreshDate={card.refreshDate}
+            onCheckboxClick={onCheckboxClick}
+            refresh={card.refresh}
+            onSliderChange={onSliderChange}
+          />
+        ) : (
+          <div />
+        )}
         <CategoryButtonContainer>
           <ButtonLearningQueue status={status} onClick={onLearningClick} />
           <ButtonLearned status={status} onClick={onLearnedClick} />
