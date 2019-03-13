@@ -130,7 +130,7 @@ export default function SwitchButton({
   cardRefreshDate,
 }) {
   const [firstRender, setFirstRender] = useState(true)
-  const [daysBeforeRefresh, setDaysBeforeRefresh] = useState(50)
+  const [daysBeforeRefresh, setDaysBeforeRefresh] = useState(10)
 
   function checkIfRefreshDate() {
     if (cardRefreshDate !== '') {
