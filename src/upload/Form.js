@@ -61,7 +61,7 @@ export default function Form({ onSubmit, cards, history }) {
     if (isError) {
       return (
         <div style={{ color: '#FF328B', textAlign: 'center' }}>
-          Error: A video with this idea already exists!
+          Error: A video with this ID already exists!
         </div>
       )
     }
@@ -115,8 +115,8 @@ export default function Form({ onSubmit, cards, history }) {
           onChange={onInputChange}
           value={data.id}
         />
-        <ErrorMessage />
         <span className="bar" />
+        <ErrorMessage />
       </div>
       <StyledButton>
         Submit{' '}

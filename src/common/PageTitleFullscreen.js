@@ -8,6 +8,6 @@ const Title = styled.div`
   font-family: 'Dosis', sans-serif;
 `
 
-export default function PageTitleFullscreen() {
-  return <Title>Upload video</Title>
+export default function PageTitleFullscreen({ title }) {
+  return <Title>{title}</Title>
 }

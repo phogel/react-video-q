@@ -39,6 +39,7 @@ export default createGlobalStyle`
     transition: background-color .3s;
     :hover, :focus {
       background-color: #FF328B;
+      outline: 0;
     }
     > * {
       position: relative;

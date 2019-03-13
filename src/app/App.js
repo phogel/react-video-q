@@ -18,6 +18,7 @@ const Grid = styled.section`
   position: absolute;
   width: 100%;
   height: 100%;
+  margin: 0 auto;
   grid-template-rows: 48px 20px auto 48px;
 `
 

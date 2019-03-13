@@ -11,7 +11,7 @@ const Grid = styled.section`
   display: grid;
   grid-gap: 20px;
   grid-template-rows: auto auto auto 1fr auto auto;
-  position: absolute;
+  position: relative;
   width: 100%;
   height: 100%;
   margin: 0 auto;
@@ -20,7 +20,6 @@ const Grid = styled.section`
   box-shadow: 0 1px 15px rgba(0, 0, 0, 0.06), 0 1px 5px rgba(0, 0, 0, 0.14);
   transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
 `
-
 const BackButton = styled.div`
   margin: 0;
   position: absolute;

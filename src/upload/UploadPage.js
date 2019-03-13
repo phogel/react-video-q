@@ -8,7 +8,8 @@ const Grid = styled.section`
   display: grid;
   grid-auto-rows: auto;
   width: 100%;
-  margin: auto 0;
+  max-width: 500px;
+  margin: 0 auto;
   grid-gap: 30px;
   padding: 20px;
 `
@@ -31,7 +32,7 @@ export default function UploadPage({ cards, onSubmit, history }) {
 
   return (
     <Grid>
-      <PageTitleFullscreen>Upload video</PageTitleFullscreen>
+      <PageTitleFullscreen title="Upload video" />
       <Form cards={cards} history={history} onSubmit={onSubmit} />
       <LinkContainer>
         <Link to="" onClick={goBack}>
