@@ -10,6 +10,7 @@ export default createGlobalStyle`
     margin: 0;
     background: rgb(250, 250, 250);
     color: #1A1A1A;
+    touch-action: manipulation;
   }
 
   ul, ol {
@@ -29,7 +30,7 @@ export default createGlobalStyle`
     outline: none;
     border-radius: 2px;
     box-shadow: 0 1px 4px rgba(0, 0, 0, .6);
-    font-size: 14px;
+    font-size: 16px;
     text-transform: uppercase;
     height: 40px;
     width: 100%;
@@ -70,7 +71,7 @@ export default createGlobalStyle`
   }
 
   input 				{
-  font-size:18px;
+  font-size:16px;
   padding:10px 10px 10px 5px;
   display:block;
   width:100%;

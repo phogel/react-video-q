@@ -84,11 +84,11 @@ const defaultData = [
   },
 ]
 
-export function getDataFromStorage() {
+export function getCardsFromStorage() {
   return getFromStorage('cards') || defaultData
 }
 
-export function saveDataToStorage(cards) {
+export function saveCardsToStorage(cards) {
   saveToStorage('cards', cards)
 }
 

@@ -5,7 +5,7 @@ import CardDetailPage from '../cards/CardDetailPage'
 import CardsContainer from '../cards/CardsContainer'
 import { BrowserRouter as Router, Route } from 'react-router-dom'
 import styled from 'styled-components'
-import { getDataFromStorage, saveDataToStorage } from '../services'
+import { getCardsFromStorage, saveCardsToStorage } from '../services'
 import PageTitle from '../common/PageTitle'
 import Nav from '../common/Nav'
 import Header from '../common/Header'
@@ -20,11 +20,15 @@ const Grid = styled.section`
 `
 
 export default function App() {
-  const [cards, setCards] = useState(getDataFromStorage())
+  const [cards, setCards] = useState(getCardsFromStorage())
 
   useEffect(() => {
-    saveDataToStorage(cards)
+    saveCardsToStorage(cards)
   }, [cards])
+
+  function createCard(data) {
+    setCards([...cards, data])
+  }
 
   function clickHandler(id, status) {
     const card = cards.find(card => card.id === id)
@@ -202,7 +206,12 @@ export default function App() {
             />
           )}
         />
-        <Route path="/upload" render={() => <UploadPage />} />
+        <Route
+          path="/upload"
+          render={({ history }) => (
+            <UploadPage history={history} onSubmit={createCard} />
+          )}
+        />
         <GlobalStyle />
       </React.Fragment>
     </Router>
