@@ -1,4 +1,5 @@
 import uid from 'uid'
+import youTubeImage from './images/youtube.png'
 
 const defaultData = [
   {
@@ -8,7 +9,7 @@ const defaultData = [
       'Lorem, ipsum dolor sit amet consectetur dipisicing elit. Voluptates officiis nulla, molestiae tenetur. officiis nulla, molestiae tenetur. ffi?Lorem, ipsum dolor sit amet consectetur dipisicing elit.Lorem, ipsum dolor sit amet consectetur dipisicing elit. Voluptates officiis nulla, molestiae tenetur. officiis nulla, molestiae tenetur. ffi?Lorem, ipsum dolor sit amet consectetur dipisicing elit.Lorem, ipsum dolor sit amet consectetur dipisicing elit. Voluptates officiis nulla, molestiae tenetur. officiis nulla, molestiae tenetur. ffi?Lorem, ipsum dolor sit amet consectetur dipisicing elit.Lorem, ipsum dolor sit amet consectetur dipisicing elit. Voluptates officiis nulla, molestiae tenetur. officiis nulla, molestiae tenetur. ffi?Lorem, ipsum dolor sit amet consectetur dipisicing elit.',
     uploadDate: '2019-03-05T10:51',
     id: 'GTsEfTfprsk',
-    backgroundImageUrl: 'http://via.placeholder.com/500x300/',
+    backgroundImageUrl: youTubeImage,
     status: 2,
     refresh: false,
     refreshDate: '',

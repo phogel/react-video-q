@@ -42,6 +42,7 @@ export default function Form({ onSubmit, cards, history }) {
   }, [])
 
   function onSubmitHandler(event) {
+    const bgUrl = `https://i1.ytimg.com/vi/${data.id}/hqdefault.jpg`
     event.preventDefault()
     const newArray = cards.filter(card => card.id === data.id)
     if (newArray.length !== 0) {
@@ -49,7 +50,7 @@ export default function Form({ onSubmit, cards, history }) {
     } else {
       setIsError(false)
       const tags = split(data.tags)
-      onSubmit({ ...data, tags })
+      onSubmit({ ...data, tags, backgroundImageUrl: bgUrl })
       history.push('/')
       setData(defaultData)
     }

@@ -3,6 +3,7 @@ import styled from 'styled-components'
 import PropTypes from 'prop-types'
 import { Link } from 'react-router-dom'
 import Icon from '../common/Icon'
+import youTubeImage from '../images/youtube.png'
 
 const StyledLink = styled(Link)`
   text-decoration: none;
@@ -71,7 +72,7 @@ Card.propTypes = {
 
 Card.defaultProps = {
   title: 'No title defined',
-  backgroundImageUrl: 'https://i.ytimg.com/vi/-OcuDiZBW6c/maxresdefault.jpg',
+  backgroundImageUrl: youTubeImage,
   tags: [
     'No tags',
     'defined',
