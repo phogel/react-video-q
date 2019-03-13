@@ -25,6 +25,7 @@ const StyledInput = styled.input`
   border-radius: 50px;
   padding: 12px 12px;
   font-size: 16px;
+  background: #fefdfd;
   ::placeholder {
     color: #c4c4c4;
   }

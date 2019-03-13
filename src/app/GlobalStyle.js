@@ -69,51 +69,79 @@ export default createGlobalStyle`
     outline: none;
   }
 
-  .form__group {
-  position: relative;
-  padding: 15px 0 0;
+  input 				{
+  font-size:18px;
+  padding:10px 10px 10px 5px;
+  display:block;
+  width:100%;
+  border:none;
+  border-bottom:1px solid #E0E0E0;
+  background: none;
+  ::placeholder { color: #9E9E9E; font-size: 16px; }
+}
+input:focus 		{ outline:none; }
+
+/* LABEL ======================================= */
+label 				 {
+  color:#999; 
+  font-size:18px;
+  font-weight:normal;
+  position:absolute;
+  pointer-events:none;
+  left:5px;
+  top:10px;
+  transition:0.2s ease all; 
 }
 
-.form__field {
-  margin-bottom: 20px;
-  font-family: inherit;
-  width: 100%;
-  border: 0;
-  border-bottom: 1px solid #d2d2d2;
-  outline: 0;
-  font-size: 16px;
-  color: #212121;
-  padding: 7px 0;
-  background: transparent;
-  transition: border-color 0.2s;
+/* active state */
+input:focus ~ label, input:valid ~ label 		{
+  top:-20px;
+  font-size:14px;
+  color:#9E9E9E;
 }
 
-.form__field::placeholder {
-  color: transparent;
+/* BOTTOM BARS ================================= */
+.bar 	{ position:relative; display:block; width:100%; }
+.bar:before, .bar:after 	{
+  content:'';
+  height:2px; 
+  width:0;
+  bottom: 0px;
+  position:absolute;
+  background:#FF328B; 
+  transition:0.2s ease all; 
+}
+.bar:before {
+  left:50%;
+}
+.bar:after {
+  right:50%; 
 }
 
-.form__field:placeholder-shown ~ .form__label {
-  font-size: 16px;
-  cursor: text;
-  top: 20px;
+/* active state */
+input:focus ~ .bar:before, input:focus ~ .bar:after {
+  width:50%;
 }
 
-label,
-.form__field:focus ~ .form__label {
-  position: absolute;
-  top: 0;
-  display: block;
-  transition: 0.2s;
-  font-size: 12px;
-  color: #9b9b9b;
+/* HIGHLIGHTER ================================== */
+.highlight {
+  position:absolute;
+  height:60%; 
+  width:100px; 
+  top:25%; 
+  left:0;
+  pointer-events:none;
+  opacity:0.5;
 }
 
-.form__field:focus ~ .form__label {
-  color: #FF328B;
+/* active state */
+input:focus ~ .highlight {
+  animation:inputHighlighter 0.3s ease;
 }
 
-.form__field:focus {
-  padding-bottom: 6px;
-  border-bottom: 2px solid #FF328B;
+/* ANIMATIONS ================ */
+@keyframes inputHighlighter {
+	from { background:#5264AE; }
+  to 	{ width:0; background:transparent; }
 }
 `
