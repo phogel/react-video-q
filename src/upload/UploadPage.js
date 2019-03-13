@@ -1,9 +1,8 @@
-import React, { useState } from 'react'
+import React from 'react'
 import { Link } from 'react-router-dom'
 import styled from 'styled-components'
 import PageTitleFullscreen from '../common/PageTitleFullscreen'
 import Form from './Form'
-import split from '../utils.js'
 
 const Grid = styled.section`
   display: grid;
@@ -24,32 +23,7 @@ const LinkContainer = styled.div`
   }
 `
 
-const defaultData = {
-  title: '',
-  tags: '',
-  notes: '',
-  id: '',
-  status: 0,
-}
-
-export default function UploadPage(props) {
-  const [data, setData] = useState(defaultData)
-
-  function onInputChange(event) {
-    setData({
-      ...data,
-      [event.target.name]: event.target.value,
-    })
-  }
-
-  function onSubmit(event) {
-    event.preventDefault()
-    props.history.push('/')
-    const tags = split(data.tags)
-    props.onSubmit({ ...data, tags })
-    setData(defaultData)
-  }
-
+export default function UploadPage({ cards, onSubmit, history }) {
   function goBack() {
     window.history.back()
   }
@@ -57,7 +31,7 @@ export default function UploadPage(props) {
   return (
     <Grid>
       <PageTitleFullscreen>Upload video</PageTitleFullscreen>
-      <Form data={data} onSubmit={onSubmit} onInputChange={onInputChange} />
+      <Form cards={cards} history={history} onSubmit={onSubmit} />
       <LinkContainer>
         <Link to="" onClick={goBack}>
           Cancel

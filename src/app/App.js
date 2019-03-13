@@ -209,7 +209,7 @@ export default function App() {
         <Route
           path="/upload"
           render={({ history }) => (
-            <UploadPage history={history} onSubmit={createCard} />
+            <UploadPage cards={cards} history={history} onSubmit={createCard} />
           )}
         />
         <GlobalStyle />

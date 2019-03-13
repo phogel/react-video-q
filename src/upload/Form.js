@@ -1,6 +1,7 @@
-import React, { useEffect, useRef } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import styled from 'styled-components'
 import { MdCloudUpload } from 'react-icons/md'
+import split from '../utils.js'
 
 const StyledForm = styled.form`
   display: grid;
@@ -16,19 +17,59 @@ const StyledButton = styled.button`
   margin-top: 10px;
 `
 
-const ErrorMessage = styled.div`
-  color: red;
-`
+const defaultData = {
+  title: '',
+  tags: '',
+  notes: '',
+  id: '',
+  status: 0,
+}
 
-export default function Form({ data, onSubmit, onInputChange }) {
+export default function Form({ onSubmit, cards, history }) {
+  const [data, setData] = useState(defaultData)
+
+  function onInputChange(event) {
+    setData({
+      ...data,
+      [event.target.name]: event.target.value,
+    })
+  }
+
   const input = useRef(null)
 
   useEffect(() => {
     input.current.focus()
   }, [])
 
+  function onSubmitHandler(event) {
+    event.preventDefault()
+    const newArray = cards.filter(card => card.id === data.id)
+    if (newArray.length !== 0) {
+      setIsError(true)
+    } else {
+      setIsError(false)
+      const tags = split(data.tags)
+      onSubmit({ ...data, tags })
+      history.push('/')
+      setData(defaultData)
+    }
+  }
+
+  const [isError, setIsError] = useState(false)
+
+  function ErrorMessage() {
+    if (isError) {
+      return (
+        <div style={{ color: '#FF328B', textAlign: 'center' }}>
+          Error: A video with this idea already exists!
+        </div>
+      )
+    }
+    return null
+  }
+
   return (
-    <StyledForm onSubmit={onSubmit}>
+    <StyledForm onSubmit={event => onSubmitHandler(event)}>
       <div className="group">
         <input
           type="text"
@@ -38,10 +79,9 @@ export default function Form({ data, onSubmit, onInputChange }) {
           name="title"
           onChange={onInputChange}
           value={data.title}
-          maxlength="50"
+          maxLength="50"
         />
         <span className="bar" />
-        <ErrorMessage />
       </div>
       <div className="group">
         <input
@@ -51,7 +91,7 @@ export default function Form({ data, onSubmit, onInputChange }) {
           name="tags"
           onChange={onInputChange}
           value={data.tags}
-          maxlength="100"
+          maxLength="100"
         />
         <span className="bar" />
       </div>
@@ -62,7 +102,7 @@ export default function Form({ data, onSubmit, onInputChange }) {
           name="notes"
           onChange={onInputChange}
           value={data.notes}
-          maxlength="300"
+          maxLength="300"
         />
         <span className="bar" />
       </div>
@@ -75,6 +115,7 @@ export default function Form({ data, onSubmit, onInputChange }) {
           onChange={onInputChange}
           value={data.id}
         />
+        <ErrorMessage />
         <span className="bar" />
       </div>
       <StyledButton>
@@ -82,7 +123,7 @@ export default function Form({ data, onSubmit, onInputChange }) {
         <MdCloudUpload
           color={'#FF328B'}
           size={'28px'}
-          style={{ marginLeft: '10px' }}
+          style={{ position: 'absolute', left: '60%' }}
         />
       </StyledButton>
     </StyledForm>
