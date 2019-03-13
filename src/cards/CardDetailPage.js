@@ -10,10 +10,10 @@ import SwitchButton from './SwitchButton'
 const Grid = styled.section`
   display: grid;
   grid-gap: 20px;
-  position: relative;
   grid-template-rows: auto auto auto 1fr auto auto;
-  height: 100vh;
-  width: 100vw;
+  position: absolute;
+  width: 100%;
+  height: 100%;
   margin: 0 auto;
   max-width: 500px;
   background: #fcfcfc;
@@ -50,7 +50,7 @@ const TagList = styled.ul`
 
 const Tag = styled.li`
   display: inline-block;
-  margin: 0 8px 0 0;
+  margin: 0 8px 8px 0;
   padding: 4px 10px 22px 10px;
   background: rgba(26, 26, 26, 0.57);
   border-radius: 10px;

@@ -15,7 +15,9 @@ import UploadPage from '../upload/UploadPage'
 
 const Grid = styled.section`
   display: grid;
-  height: 100vh;
+  position: absolute;
+  width: 100%;
+  height: 100%;
   grid-template-rows: 48px 20px auto 48px;
 `
 

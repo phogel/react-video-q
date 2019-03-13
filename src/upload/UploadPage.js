@@ -21,6 +21,7 @@ const LinkContainer = styled.div`
     text-decoration: none;
     color: #1a1a1a;
   }
+  user-select: none;
 `
 
 export default function UploadPage({ cards, onSubmit, history }) {

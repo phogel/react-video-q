@@ -12,12 +12,16 @@ const StyledHeader = styled.header`
   background: #1a1a1a;
   padding: 0 10px 0 10px;
   z-index: 1;
+  position: relative;
 `
 const StyledLink = styled(Link)`
   display: flex;
   justify-content: space-between;
   align-items: center;
   user-select: none;
+  &:focus {
+    outline: none;
+  }
   height: 24px;
 `
 
@@ -25,7 +29,7 @@ export default function Header() {
   return (
     <StyledHeader>
       <StyledLink to="/" style={{ position: 'absolute', left: '10px' }}>
-        <img src={logo} alt="video-q" />
+        <img src={logo} alt="video-q" style={{ userSelect: 'none' }} />
       </StyledLink>
       <StyledLink to="/upload">
         <MdAdd color={'#8A8A8A'} size={'28px'} />
