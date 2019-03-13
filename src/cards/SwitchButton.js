@@ -1,5 +1,6 @@
-import React from 'react'
+import React, { useState } from 'react'
 import styled from 'styled-components'
+import dayjs from 'dayjs'
 
 const StyledSwitchButton = styled.div`
   margin-left: 30px;
@@ -124,10 +125,26 @@ const StyledSlider = styled.div`
 `
 export default function SwitchButton({
   onSliderChange,
-  daysBeforeRefresh,
   onCheckboxClick,
   refresh,
+  cardRefreshDate,
 }) {
+  const [firstRender, setFirstRender] = useState(true)
+  const [daysBeforeRefresh, setDaysBeforeRefresh] = useState(50)
+
+  function checkIfRefreshDate() {
+    if (cardRefreshDate !== '') {
+      return dayjs(cardRefreshDate).diff(dayjs(), 'day')
+    }
+  }
+
+  function onSliderChangeHandler(event) {
+    const refreshDate = dayjs().add(event.target.value, 'day')
+    setDaysBeforeRefresh(event.target.value)
+    setFirstRender(false)
+    onSliderChange(refreshDate)
+  }
+
   return (
     <StyledSwitchButton>
       <input
@@ -142,16 +159,16 @@ export default function SwitchButton({
         <span className="toggle--on">
           Move video automatically to refresh queue in{' '}
           <span style={{ fontWeight: 'bold', color: '#00cca9' }}>
-            {daysBeforeRefresh | 0}
+            {firstRender ? checkIfRefreshDate() : daysBeforeRefresh}
           </span>{' '}
           days
           <StyledSlider>
             <label className="slider">
               <input
-                value={daysBeforeRefresh}
-                onChange={onSliderChange}
+                value={firstRender ? checkIfRefreshDate() : daysBeforeRefresh}
+                onChange={onSliderChangeHandler}
                 type="range"
-                min="0"
+                min="1"
                 max="100"
               />
             </label>

@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React from 'react'
 import styled from 'styled-components'
 import { MdExpandMore } from 'react-icons/md'
 import ButtonLearningQueue from './ButtonLearningQueue'
@@ -6,7 +6,6 @@ import ButtonLearned from './ButtonLearned'
 import ButtonRefreshQueue from './ButtonRefreshQueue'
 import YouTubeVideo from '../YouTube/YouTubeVideo'
 import SwitchButton from './SwitchButton'
-import dayjs from 'dayjs'
 
 const Grid = styled.section`
   display: grid;
@@ -102,13 +101,7 @@ export default function CardsDetailPage(props) {
     props.onCheckboxClick(card.id)
   }
 
-  const [daysBeforeRefresh, setDaysBeforeRefresh] = useState(0)
-
-  function onSliderChange(event) {
-    const sliderTimeStamp = dayjs()
-    const refreshDate = sliderTimeStamp.add(event.target.value, 'second')
-    console.log(refreshDate)
-    setDaysBeforeRefresh(event.target.value)
+  function onSliderChange(refreshDate) {
     props.onSliderChange(card.id, refreshDate)
   }
 
@@ -134,10 +127,10 @@ export default function CardsDetailPage(props) {
         <StyledNotes>{card.notes}</StyledNotes>
         {card.status === 2 ? (
           <SwitchButton
+            cardRefreshDate={card.refreshDate}
             onCheckboxClick={onCheckboxClick}
             refresh={card.refresh}
             onSliderChange={onSliderChange}
-            daysBeforeRefresh={daysBeforeRefresh}
           />
         ) : (
           <div />

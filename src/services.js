@@ -11,7 +11,7 @@ const defaultData = [
     backgroundImageUrl: 'http://via.placeholder.com/500x300/',
     status: 2,
     refresh: false,
-    refreshDate: '2019-03-27T22:19:37.805Z',
+    refreshDate: '',
   },
   {
     title: 'Hip roll',
@@ -23,7 +23,7 @@ const defaultData = [
     backgroundImageUrl: 'http://via.placeholder.com/500/',
     status: 2,
     refresh: false,
-    refreshDate: '2019-03-27T22:19:37.805Z',
+    refreshDate: '',
   },
   {
     title: 'Title3',
@@ -35,7 +35,7 @@ const defaultData = [
     backgroundImageUrl: 'http://via.placeholder.com/500/',
     status: 1,
     refresh: false,
-    refreshDate: '2019-03-27T22:19:37.805Z',
+    refreshDate: '',
   },
   {
     title: 'Title4',

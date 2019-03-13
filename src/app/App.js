@@ -48,18 +48,17 @@ export default function App() {
     const index = cards.indexOf(card)
     setCards([
       ...cards.slice(0, index),
-      { ...cards[index], refresh: !card.refresh },
+      { ...cards[index], refresh: !card.refresh, refreshDate: '' },
       ...cards.slice(index + 1),
     ])
   }
 
   function sliderChangeHandler(id, refreshDate) {
-    console.log(refreshDate)
     const card = cards.find(card => card.id === id)
     const index = cards.indexOf(card)
     setCards([
       ...cards.slice(0, index),
-      { ...cards[index], refreshDate: refreshDate.toString() },
+      { ...cards[index], refreshDate: refreshDate },
       ...cards.slice(index + 1),
     ])
   }
@@ -87,7 +86,7 @@ export default function App() {
     const index = cards.indexOf(cardToChange)
     setCards([
       ...cards.slice(0, index),
-      { ...cards[index], refresh: false, status: 3, refreshDate: '' },
+      { ...cards[index], status: 3, refresh: false, refreshDate: '' },
       ...cards.slice(index + 1),
     ])
   }

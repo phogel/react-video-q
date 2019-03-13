@@ -64,10 +64,10 @@ function goBack() {
 }
 
 export default function SearchBar({ onSearchChange, searchString }) {
-  const txt1 = useRef(null)
+  const input = useRef(null)
 
   useEffect(() => {
-    txt1.current.focus()
+    input.current.focus()
   }, [])
 
   return (
@@ -75,7 +75,7 @@ export default function SearchBar({ onSearchChange, searchString }) {
       <StyledInput
         value={searchString}
         type="search"
-        ref={txt1}
+        ref={input}
         placeholder="Enter title or tag"
         onChange={onSearchChange}
       />
