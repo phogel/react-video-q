@@ -24,7 +24,7 @@ export default function Header() {
       <StyledLink to="/">
         <img src={logo} alt="video-q" />
       </StyledLink>
-      <StyledLink to="/add">
+      <StyledLink to="/upload">
         <MdAdd color={'#8A8A8A'} size={'28px'} />
       </StyledLink>
       <StyledLink to="/search">

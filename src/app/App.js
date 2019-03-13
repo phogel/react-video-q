@@ -11,6 +11,7 @@ import Nav from '../common/Nav'
 import Header from '../common/Header'
 import HeaderSearchBar from '../common/HeaderSearchBar'
 import dayjs from 'dayjs'
+import UploadPage from '../upload/UploadPage'
 
 const Grid = styled.section`
   display: grid;
@@ -201,6 +202,7 @@ export default function App() {
             />
           )}
         />
+        <Route path="/upload" render={() => <UploadPage />} />
         <GlobalStyle />
       </React.Fragment>
     </Router>
