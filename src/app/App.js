@@ -107,6 +107,11 @@ export default function App() {
     })
   }
 
+  function deleteCardClickHandler(card) {
+    const index = cards.indexOf(card)
+    setCards([...cards.slice(0, index), ...cards.slice(index + 1)])
+  }
+
   return (
     <Router>
       <React.Fragment>
@@ -203,9 +208,12 @@ export default function App() {
               onCheckboxClick={checkboxClickHandler}
               onSliderChange={sliderChangeHandler}
               onClick={clickHandler}
-              status={cards.find(card => card.id === match.params.id).status}
+              status={
+                cards.find(card => card.id === match.params.id).status || null
+              }
               id={match.params.id}
-              card={cards.find(card => card.id === match.params.id)}
+              card={cards.find(card => card.id === match.params.id) || []}
+              onDeleteCardClick={deleteCardClickHandler}
             />
           )}
         />

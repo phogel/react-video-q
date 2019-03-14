@@ -1,6 +1,6 @@
 import React from 'react'
 import styled from 'styled-components'
-import { MdExpandMore } from 'react-icons/md'
+import { MdExpandMore, MdDeleteForever } from 'react-icons/md'
 import ButtonLearningQueue from './ButtonLearningQueue'
 import ButtonLearned from './ButtonLearned'
 import ButtonRefreshQueue from './ButtonRefreshQueue'
@@ -10,10 +10,10 @@ import SwitchButton from './SwitchButton'
 const Grid = styled.section`
   display: grid;
   grid-gap: 20px;
-  grid-template-rows: auto auto auto 1fr auto auto;
+  grid-template-rows: auto auto auto auto 1fr auto auto;
   position: relative;
   width: 100%;
-  height: 100%;
+  height: 100vh;
   margin: 0 auto;
   max-width: 500px;
   background: #fcfcfc;
@@ -75,8 +75,22 @@ const CategoryButtonContainer = styled.section`
   user-select: none;
 `
 
+const DeleteButton = styled.div`
+  position: relative;
+  padding: 0 10px;
+  cursor: pointer;
+  user-select: none;
+`
+
 export default function CardsDetailPage(props) {
-  const { card, status } = props
+  const { card, status, onDeleteCardClick } = props
+
+  function onDeleteCardClickHandler(card) {
+    setTimeout(() => {
+      onDeleteCardClick(card)
+    }, 200)
+    goBack()
+  }
 
   function goBack() {
     window.history.back()
@@ -121,6 +135,14 @@ export default function CardsDetailPage(props) {
           <MdExpandMore color={'#FCFCFC'} size={'30px'} />
         </BackButton>
         <YouTubeVideo videoId={card.id} />
+        <DeleteButton>
+          <MdDeleteForever
+            color={'rgba(26, 26, 26, 0.57)'}
+            size={'30px'}
+            style={{ position: 'absolute', right: '15px' }}
+            onClick={() => onDeleteCardClickHandler(card)}
+          />
+        </DeleteButton>
         <StyledTitle>{card.title + ' ' + card.id}</StyledTitle>
         {card.tags && <TagList>{card.tags.map(renderTag)}</TagList>}
         <StyledNotes>{card.notes}</StyledNotes>

@@ -16,6 +16,7 @@ const CardContainer = styled.section`
 `
 
 export default function CardsRender({ cards }) {
+  console.log(cards)
   return (
     <CardContainer>
       {cards.map(card => (
