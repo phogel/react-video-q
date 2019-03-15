@@ -12,7 +12,6 @@ import Header from '../common/Header'
 import HeaderSearchBar from '../common/HeaderSearchBar'
 import dayjs from 'dayjs'
 import UploadPage from '../upload/UploadPage'
-import split from '../utils.js'
 
 const Grid = styled.section`
   display: grid;

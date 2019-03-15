@@ -26,7 +26,7 @@ const StyledTextArea = styled.textarea`
 const Cancel = styled.div`
   display: flex;
   justify-content: center;
-  margin-top: 10px;
+  margin-top: 20px;
   > a {
     text-decoration: none;
     color: #1a1a1a;
@@ -89,9 +89,7 @@ export default function CardForm({ card, onSubmit, setIsEditable }) {
           style={{ position: 'absolute', left: '60%' }}
         />
       </StyledButton>
-      {/* <Cancel onClick={setIsEditable(false)}>
-          Cancel
-      </Cancel> */}
+      <Cancel onClick={() => setIsEditable(false)}>Cancel</Cancel>
     </form>
   )
 }
