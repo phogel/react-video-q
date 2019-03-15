@@ -4,16 +4,8 @@ import dayjs from 'dayjs'
 
 const StyledSwitchButton = styled.div`
   font-size: 15px;
-  z-index: 10;
-  user-select: none;
-  &:focus {
-    outline: none;
-  }
-  > * {
-    user-select: none;
-    &:focus {
-      outline: none;
-    }
+  height: 0;
+  margin-bottom: 40px;
   }
   .switch-input {
     display: none;
@@ -21,20 +13,17 @@ const StyledSwitchButton = styled.div`
   .switch-label {
     position: relative;
     user-select: none;
-    &:focus {
-      outline: none;
-    }
     display: inline-block;
     cursor: pointer;
-    padding: 0 30px 0 44px;
+    padding: 0 10px 0 44px;
 
     :before,
     :after {
       content: '';
       position: absolute;
       margin: 0;
-      outline: 0;
       top: 10px;
+      outline: 0;
       transform: translate(0, -50%);
       transition: all 0.3s ease;
     }
@@ -79,16 +68,11 @@ const StyledSwitchButton = styled.div`
 `
 
 const StyledSlider = styled.div`
-  > * {
-    user-select: none;
-  }
-
   .slider {
-    display: inline-block;
-    width: 100%;
+    width: 110%;
     > input {
       -webkit-appearance: none;
-      width: 90%;
+      width: 100%;
       background-color: transparent;
       cursor: pointer;
       :focus {
@@ -99,11 +83,11 @@ const StyledSlider = styled.div`
         opacity: 0.38;
         ::-webkit-slider-thumb {
           position: absolute;
-          left: 62px;
+          left: 48px;
         }
       }
       ::-webkit-slider-runnable-track {
-        margin: 16px;
+        margin: 16px 32px 16px 0;
         border-radius: 2px;
         height: 4px;
         background-color: #80e5d4;
@@ -129,16 +113,18 @@ export default function SwitchButton({
   cardRefreshDate,
 }) {
   const [firstRender, setFirstRender] = useState(true)
-  const [daysBeforeRefresh, setDaysBeforeRefresh] = useState(10)
+  const [daysBeforeRefresh, setDaysBeforeRefresh] = useState(51)
 
   function checkIfRefreshDate() {
     if (cardRefreshDate !== '') {
-      return dayjs(cardRefreshDate).diff(dayjs(), 'day')
+      return dayjs(cardRefreshDate).diff(dayjs(), 'second')
     }
+    const refreshDate = dayjs().add(51, 'second')
+    return daysBeforeRefresh && onSliderChange(refreshDate)
   }
 
   function onSliderChangeHandler(event) {
-    const refreshDate = dayjs().add(event.target.value, 'day')
+    const refreshDate = dayjs().add(event.target.value, 'second')
     setDaysBeforeRefresh(event.target.value)
     setFirstRender(false)
     onSliderChange(refreshDate)
@@ -165,7 +151,7 @@ export default function SwitchButton({
             <label className="slider">
               <input
                 value={firstRender ? checkIfRefreshDate() : daysBeforeRefresh}
-                onChange={onSliderChangeHandler}
+                onInput={onSliderChangeHandler}
                 type="range"
                 min="1"
                 max="100"

@@ -7,6 +7,19 @@ const StyledForm = styled.form`
   display: grid;
   grid-auto-rows: auto;
   grid-gap: 20px;
+  > * input {
+    font-size: 16px;
+    padding: 10px 10px 10px 5px;
+    display: block;
+    width: 100%;
+    border: none;
+    border-bottom: 1px solid #e0e0e0;
+    background: none;
+    ::placeholder {
+      color: #9e9e9e;
+      font-size: 16px;
+    }
+  }
 `
 
 const StyledButton = styled.button`
@@ -51,7 +64,7 @@ export default function Form({ cards, history, onSubmit }) {
     } else {
       setIsError(false)
       const tags = split(data.tags)
-      const bgUrl = `https://i1.ytimg.com/vi/${data.id}/hqdefault.jpg`
+      const bgUrl = `http://img.youtube.com/vi/${data.id}/maxresdefault.jpg`
       onSubmit({ ...data, tags, backgroundImageUrl: bgUrl })
       history.push('/')
       setData(defaultData)
@@ -73,7 +86,6 @@ export default function Form({ cards, history, onSubmit }) {
     <StyledForm onSubmit={event => onSubmitHandler(event)}>
       <div className="group">
         <input
-          className="input"
           type="text"
           required
           placeholder="Title"
@@ -87,7 +99,6 @@ export default function Form({ cards, history, onSubmit }) {
       </div>
       <div className="group">
         <input
-          className="input"
           type="text"
           placeholder="Tags: e.g. head roll, Pablo & Raquel, 2018..."
           name="tags"
@@ -99,7 +110,6 @@ export default function Form({ cards, history, onSubmit }) {
       </div>
       <div className="group">
         <input
-          className="input"
           type="text"
           placeholder="Notes"
           name="notes"
@@ -111,7 +121,6 @@ export default function Form({ cards, history, onSubmit }) {
       </div>
       <div className="group">
         <input
-          className="input"
           required
           type="text"
           placeholder="YouTube video ID"

@@ -8,7 +8,7 @@ export default createGlobalStyle`
   body {
     font-family: 'Roboto', sans-serif;
     margin: 0;
-    background: rgb(250, 250, 250);
+    background: $primary;
     color: #1A1A1A;
     touch-action: manipulation;
   }
@@ -68,20 +68,8 @@ export default createGlobalStyle`
   }
 
   textarea:focus, input:focus{
-    outline: none;
+    outline: none;  
   }
-
-  input .input				{
-  font-size:16px;
-  padding:10px 10px 10px 5px;
-  display:block;
-  width:100%;
-  border:none;
-  border-bottom:1px solid #E0E0E0;
-  background: none;
-  ::placeholder { color: #9E9E9E; font-size: 16px; }
-}
-input:focus 		{ outline:none; }
 
 /* LABEL ======================================= */
 label .input				 {
@@ -122,6 +110,10 @@ input:focus ~ label, input:valid ~ label 		{
 
 /* active state */
 input:focus ~ .bar:before, input:focus ~ .bar:after {
+  width:50%;
+}
+
+textarea:focus ~ .bar:before, textarea:focus ~ .bar:after {
   width:50%;
 }
 
