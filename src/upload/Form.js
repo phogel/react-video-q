@@ -25,7 +25,7 @@ const defaultData = {
   status: 0,
 }
 
-export default function Form({ onSubmit, cards, history }) {
+export default function Form({ cards, history, onSubmit }) {
   const [data, setData] = useState(defaultData)
 
   function onInputChange(event) {
@@ -41,8 +41,9 @@ export default function Form({ onSubmit, cards, history }) {
     input.current.focus()
   }, [])
 
+  const [isError, setIsError] = useState(false)
+
   function onSubmitHandler(event) {
-    const bgUrl = `https://i1.ytimg.com/vi/${data.id}/hqdefault.jpg`
     event.preventDefault()
     const newArray = cards.filter(card => card.id === data.id)
     if (newArray.length !== 0) {
@@ -50,13 +51,12 @@ export default function Form({ onSubmit, cards, history }) {
     } else {
       setIsError(false)
       const tags = split(data.tags)
+      const bgUrl = `https://i1.ytimg.com/vi/${data.id}/hqdefault.jpg`
       onSubmit({ ...data, tags, backgroundImageUrl: bgUrl })
       history.push('/')
       setData(defaultData)
     }
   }
-
-  const [isError, setIsError] = useState(false)
 
   function ErrorMessage() {
     if (isError) {
@@ -86,7 +86,6 @@ export default function Form({ onSubmit, cards, history }) {
       </div>
       <div className="group">
         <input
-          required
           type="text"
           placeholder="Tags: e.g. head roll, Pablo & Raquel, 2018..."
           name="tags"
@@ -99,7 +98,7 @@ export default function Form({ onSubmit, cards, history }) {
       <div className="group">
         <input
           type="text"
-          placeholder="Video notes"
+          placeholder="Notes"
           name="notes"
           onChange={onInputChange}
           value={data.notes}

@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import GlobalStyle from './GlobalStyle'
 import { Helmet } from 'react-helmet'
-import CardDetailPage from '../cards/CardDetailPage'
+import CardDetailPage from '../cards/detailpage/CardDetailPage'
 import CardsContainer from '../cards/CardsContainer'
 import { BrowserRouter as Router, Route } from 'react-router-dom'
 import styled from 'styled-components'
@@ -107,6 +107,27 @@ export default function App() {
     })
   }
 
+  function deleteCardClickHandler(card) {
+    const index = cards.indexOf(card)
+    setCards([...cards.slice(0, index), ...cards.slice(index + 1)])
+  }
+
+  function saveCardClickHandler(formData, card) {
+    console.log(formData)
+    console.log(formData.tags)
+    const index = cards.indexOf(card)
+    setCards([
+      ...cards.slice(0, index),
+      {
+        ...cards[index],
+        title: formData.title,
+        tags: formData.tags,
+        notes: formData.notes,
+      },
+      ...cards.slice(index + 1),
+    ])
+  }
+
   return (
     <Router>
       <React.Fragment>
@@ -203,9 +224,13 @@ export default function App() {
               onCheckboxClick={checkboxClickHandler}
               onSliderChange={sliderChangeHandler}
               onClick={clickHandler}
-              status={cards.find(card => card.id === match.params.id).status}
+              status={
+                cards.find(card => card.id === match.params.id).status || null
+              }
               id={match.params.id}
-              card={cards.find(card => card.id === match.params.id)}
+              card={cards.find(card => card.id === match.params.id) || []}
+              onDeleteCardClick={deleteCardClickHandler}
+              onSaveCardClick={saveCardClickHandler}
             />
           )}
         />
