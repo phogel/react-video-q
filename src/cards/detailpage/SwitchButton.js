@@ -3,7 +3,6 @@ import styled from 'styled-components'
 import dayjs from 'dayjs'
 
 const StyledSwitchButton = styled.div`
-  margin-left: 30px;
   font-size: 15px;
   z-index: 10;
   user-select: none;
