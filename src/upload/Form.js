@@ -73,6 +73,7 @@ export default function Form({ cards, history, onSubmit }) {
     <StyledForm onSubmit={event => onSubmitHandler(event)}>
       <div className="group">
         <input
+          className="input"
           type="text"
           required
           placeholder="Title"
@@ -86,6 +87,7 @@ export default function Form({ cards, history, onSubmit }) {
       </div>
       <div className="group">
         <input
+          className="input"
           type="text"
           placeholder="Tags: e.g. head roll, Pablo & Raquel, 2018..."
           name="tags"
@@ -97,6 +99,7 @@ export default function Form({ cards, history, onSubmit }) {
       </div>
       <div className="group">
         <input
+          className="input"
           type="text"
           placeholder="Notes"
           name="notes"
@@ -108,6 +111,7 @@ export default function Form({ cards, history, onSubmit }) {
       </div>
       <div className="group">
         <input
+          className="input"
           required
           type="text"
           placeholder="YouTube video ID"

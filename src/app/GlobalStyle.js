@@ -71,7 +71,7 @@ export default createGlobalStyle`
     outline: none;
   }
 
-  input 				{
+  input .input				{
   font-size:16px;
   padding:10px 10px 10px 5px;
   display:block;
@@ -84,7 +84,7 @@ export default createGlobalStyle`
 input:focus 		{ outline:none; }
 
 /* LABEL ======================================= */
-label 				 {
+label .input				 {
   color:#999; 
   font-size:18px;
   font-weight:normal;
