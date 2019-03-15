@@ -182,7 +182,11 @@ export default function CardsDetailPage(props) {
               </EditButton>
             </EditSaveContainer>
           </ButtonList>
-          <CardEditForm card={card} onSubmit={onSaveCardClick} />
+          <CardEditForm
+            card={card}
+            onSubmit={onSaveCardClick}
+            setIsEditable={setIsEditable}
+          />
           {card.status === 2 ? (
             <SwitchButton
               cardRefreshDate={card.refreshDate}

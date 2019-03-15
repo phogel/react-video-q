@@ -34,7 +34,7 @@ const Cancel = styled.div`
   user-select: none;
 `
 
-export default function CardForm({ card, onSubmit }) {
+export default function CardForm({ card, onSubmit, setIsEditable }) {
   const [formData, setFormData] = useState({
     title: card.title,
     tags: card.tags,
@@ -49,7 +49,7 @@ export default function CardForm({ card, onSubmit }) {
     event.preventDefault()
     const tags = split(formData.tags)
     onSubmit({ ...formData, tags }, card)
-    // setIsEditable(false)
+    setIsEditable(false)
   }
 
   return (
