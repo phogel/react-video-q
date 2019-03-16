@@ -12,22 +12,27 @@ const Grid = styled.section`
 
 export default function LoginPage() {
   return (
-    <Grid>
-      Log In to your YouTube account
-      <button id="authorize-button">Login</button>
-      <form className="form__group" style={{ display: 'none' }}>
-        <input
-          id="playlist"
-          name="playlist"
-          placeholder="Playlist name"
-          type="text"
-          className="form__field"
-        />
-        <label htmlFor="playlist" className="form__label">
-          Enter playlist name
-        </label>
-        <input type="submit" value="Load videos from playlist" />
-      </form>
+    <Grid id="content">
+      Log In With Google
+      <button id="authorize-button">Log In</button>
+      <button id="signout-button">Log Out</button>
+      <div id="content">
+        <form id="channel-form">
+          <div id="input-field">
+            <input
+              id="channel-input"
+              placeholder="Enter Channel Name"
+              type="text"
+            />
+            <input value="Get Channel Data" type="submit" />
+
+            {/* <input name="playlist" placeholder="Playlist name" type="text" />
+            <label htmlFor="playlist">Enter playlist name</label>
+            <input type="submit" value="Load videos from playlist" /> */}
+          </div>
+        </form>
+        <div id="video-container" />
+      </div>
     </Grid>
   )
 }
