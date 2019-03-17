@@ -1,6 +1,6 @@
-import React, { useState } from 'react'
+import React from 'react'
 import styled from 'styled-components'
-import dayjs from 'dayjs'
+import RefreshSlider from './RefreshSlider'
 
 const StyledSwitchButton = styled.div`
   font-size: 15px;
@@ -67,69 +67,12 @@ const StyledSwitchButton = styled.div`
   }
 `
 
-const StyledSlider = styled.div`
-  .slider {
-    width: 110%;
-    > input {
-      -webkit-appearance: none;
-      width: 100%;
-      background-color: transparent;
-      cursor: pointer;
-      :focus {
-        outline: none;
-      }
-      :disabled {
-        cursor: default;
-        opacity: 0.38;
-        ::-webkit-slider-thumb {
-          position: absolute;
-          left: 48px;
-        }
-      }
-      ::-webkit-slider-runnable-track {
-        margin: 16px 32px 16px 0;
-        border-radius: 2px;
-        height: 4px;
-        background-color: #80e5d4;
-      }
-      ::-webkit-slider-thumb {
-        appearance: none;
-        -webkit-appearance: none;
-        border: none;
-        border-radius: 50%;
-        height: 3px;
-        width: 3px;
-        background-color: #00cca9;
-        transform: scale(6, 6);
-        transition: box-shadow 0.2s;
-      }
-    }
-  }
-`
 export default function SwitchButton({
   onSliderChange,
   onCheckboxClick,
   refresh,
   cardRefreshDate,
 }) {
-  const [firstRender, setFirstRender] = useState(true)
-  const [daysBeforeRefresh, setDaysBeforeRefresh] = useState(51)
-
-  function checkIfRefreshDate() {
-    if (cardRefreshDate !== '') {
-      return dayjs(cardRefreshDate).diff(dayjs(), 'second')
-    }
-    const refreshDate = dayjs().add(51, 'second')
-    return daysBeforeRefresh && onSliderChange(refreshDate)
-  }
-
-  function onSliderChangeHandler(event) {
-    const refreshDate = dayjs().add(event.target.value, 'second')
-    setDaysBeforeRefresh(event.target.value)
-    setFirstRender(false)
-    onSliderChange(refreshDate)
-  }
-
   return (
     <StyledSwitchButton>
       <input
@@ -142,30 +85,13 @@ export default function SwitchButton({
       />
       <label htmlFor="switch" className="switch-label">
         <span className="toggle--on">
-          Move video automatically to refresh queue in{' '}
-          <span style={{ fontWeight: 'bold', color: '#00cca9' }}>
-            {firstRender ? checkIfRefreshDate() : daysBeforeRefresh}
-          </span>{' '}
-          days
-          <StyledSlider>
-            <label className="slider">
-              <input
-                value={firstRender ? checkIfRefreshDate() : daysBeforeRefresh}
-                onInput={onSliderChangeHandler}
-                type="range"
-                min="1"
-                max="100"
-              />
-            </label>
-          </StyledSlider>
+          <RefreshSlider
+            onSliderChange={onSliderChange}
+            cardRefreshDate={cardRefreshDate}
+          />
         </span>
         <span className="toggle--off">
           Move video automatically to refresh queue in 0 days
-          <StyledSlider>
-            <label className="slider">
-              <input type="range" disabled min="0" max="100" />
-            </label>
-          </StyledSlider>
         </span>
       </label>
     </StyledSwitchButton>
