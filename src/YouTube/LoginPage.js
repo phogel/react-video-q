@@ -1,6 +1,9 @@
 import React from 'react'
 import styled from 'styled-components'
+<<<<<<< HEAD
 import Youtube from './YouTube'
+=======
+>>>>>>> b260b1bd0c49076724541333195253892acf2272
 
 const Grid = styled.section`
   display: grid;
