@@ -1,3 +1,4 @@
+import gapi from 'gapi-client'
 // Options
 const CLIENT_ID =
   '843342214316-febn2vufffq9heqdut8vhtlfvqjh15sd.apps.googleusercontent.com'
@@ -22,18 +23,20 @@ function handleClientLoad() {
 
 // Init API client library and set up sign in listeners
 function initClient() {
-  gapi.client.init({
-    discoveryDocs: DISCOVERY_DOCS,
-    clientId: CLIENT_ID,
-    scope: SCOPES
-  }).then(() => {
-    // Listen for sign in state changes
-    gapi.auth2.getAuthInstance().isSignedIn.listen(updateSigninStatus)
-    // Handle initial sign in state
-    updateSigninStatus(gapi.auth2.getAuthInstance().isSignedIn.get())
-    authorizeButton.onclick = handleAuthClick
-    signoutButton.onclick = handleSignoutClick
-  })
+  gapi.client
+    .init({
+      discoveryDocs: DISCOVERY_DOCS,
+      clientId: CLIENT_ID,
+      scope: SCOPES,
+    })
+    .then(() => {
+      // Listen for sign in state changes
+      gapi.auth2.getAuthInstance().isSignedIn.listen(updateSigninStatus)
+      // Handle initial sign in state
+      updateSigninStatus(gapi.auth2.getAuthInstance().isSignedIn.get())
+      authorizeButton.onclick = handleAuthClick
+      signoutButton.onclick = handleSignoutClick
+    })
 }
 
 // Update UI sign in state changes
@@ -66,5 +69,3 @@ function handleSignoutClick() {
 function getChannel(channel) {
   console.log(channel)
 }
-
-export default
