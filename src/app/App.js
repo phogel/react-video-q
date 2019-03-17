@@ -39,13 +39,13 @@ export default function App() {
     if (status === cards[index].status) {
       setCards([
         ...cards.slice(0, index),
-        { ...cards[index], status: 0 },
+        { ...cards[index], status: 0, refresh: false },
         ...cards.slice(index + 1),
       ])
     } else {
       setCards([
         ...cards.slice(0, index),
-        { ...cards[index], status: status },
+        { ...cards[index], status: status, refresh: false },
         ...cards.slice(index + 1),
       ])
     }

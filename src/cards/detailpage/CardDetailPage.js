@@ -25,8 +25,14 @@ const Grid = styled.section`
 const MainContentGrid = styled.section`
   display: grid;
   margin: 0 30px 0 30px;
-  grid-template-rows: 30px auto auto auto auto;
+  grid-template-rows: 30px 1fr auto;
 `
+
+const ContentGrid = styled.div`
+  display: grid;
+  grid-template-rows: auto auto auto 1fr;
+`
+
 const Video = styled.section``
 
 const BackButton = styled.div`
@@ -50,8 +56,6 @@ const StyledTitle = styled.h3`
 `
 
 const TagList = styled.ul`
-  display: flex;
-  width: 100%;
   padding: 0;
   flex-wrap: wrap;
 `
@@ -78,7 +82,7 @@ const CategoryButtonContainer = styled.section`
   grid-template-columns: repeat(3, 1fr);
   justify-content: center;
   align-items: flex-start;
-  margin-bottom: 20px;
+  margin-bottom: 10px;
   user-select: none;
 `
 
@@ -212,9 +216,11 @@ export default function CardsDetailPage(props) {
               />
             </EditButton>
           </ButtonList>
-          <StyledTitle>{card.title}</StyledTitle>
-          {card.tags && <TagList>{card.tags.map(renderTag)}</TagList>}
-          <StyledNotes>{card.notes}</StyledNotes>
+          <ContentGrid>
+            <StyledTitle>{card.title}</StyledTitle>
+            {card.tags && <TagList>{card.tags.map(renderTag)}</TagList>}
+            <StyledNotes>{card.notes}</StyledNotes>
+          </ContentGrid>
           {card.status === 2 ? (
             <SwitchButton
               cardRefreshDate={card.refreshDate}

@@ -31,7 +31,7 @@ export default function ButtonLearned({ status, onClick }) {
           filter: shadow,
         }}
         fill={color}
-        height="45px"
+        height="30px"
         name="learned"
       />
       <div>{line1}</div>

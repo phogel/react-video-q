@@ -28,7 +28,7 @@ export default function ButtonRefreshQueue({ status, onClick }) {
       <Icon
         style={{ marginBottom: '10px', filter: shadow }}
         fill={color}
-        height="45px"
+        height="30px"
         name="refresh-queue"
       />
       <div>{line1}</div>
