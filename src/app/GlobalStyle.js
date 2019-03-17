@@ -71,7 +71,6 @@ export default createGlobalStyle`
     outline: none;  
   }
 
-/* LABEL ======================================= */
 label .input				 {
   color:#999; 
   font-size:18px;
@@ -83,14 +82,12 @@ label .input				 {
   transition:0.2s ease all; 
 }
 
-/* active state */
 input:focus ~ label, input:valid ~ label 		{
   top:-20px;
   font-size:14px;
   color:#9E9E9E;
 }
 
-/* BOTTOM BARS ================================= */
 .bar 	{ position:relative; display:block; width:100%; }
 .bar:before, .bar:after 	{
   content:'';
@@ -108,7 +105,6 @@ input:focus ~ label, input:valid ~ label 		{
   right:50%; 
 }
 
-/* active state */
 input:focus ~ .bar:before, input:focus ~ .bar:after {
   width:50%;
 }
@@ -117,7 +113,6 @@ textarea:focus ~ .bar:before, textarea:focus ~ .bar:after {
   width:50%;
 }
 
-/* HIGHLIGHTER ================================== */
 .highlight {
   position:absolute;
   height:60%; 
@@ -128,12 +123,10 @@ textarea:focus ~ .bar:before, textarea:focus ~ .bar:after {
   opacity:0.5;
 }
 
-/* active state */
 input:focus ~ .highlight {
   animation:inputHighlighter 0.3s ease;
 }
 
-/* ANIMATIONS ================ */
 @keyframes inputHighlighter {
 	from { background:#5264AE; }
   to 	{ width:0; background:transparent; }
