@@ -45,16 +45,16 @@ const StyledSlider = styled.div`
 export default function RefreshSlider({ cardRefreshDate, onSliderChange }) {
   const [firstRender, setFirstRender] = useState(true)
   const [daysBeforeRefresh, setDaysBeforeRefresh] = useState(51)
-  function checkIfRefreshDate() {
+  function checkForRefreshDate() {
     if (cardRefreshDate !== '') {
-      return dayjs(cardRefreshDate).diff(dayjs(), 'second')
+      return dayjs(cardRefreshDate).diff(dayjs(), 'day')
     }
-    const refreshDate = dayjs().add(51, 'second')
+    const refreshDate = dayjs().add(51, 'day')
     return daysBeforeRefresh && onSliderChange(refreshDate)
   }
 
   function onSliderChangeHandler(event) {
-    const refreshDate = dayjs().add(event.target.value, 'second')
+    const refreshDate = dayjs().add(event.target.value, 'day')
     setDaysBeforeRefresh(event.target.value)
     setFirstRender(false)
     onSliderChange(refreshDate)
@@ -67,14 +67,14 @@ export default function RefreshSlider({ cardRefreshDate, onSliderChange }) {
     <React.Fragment>
       Move video automatically to refresh queue in{' '}
       <span style={{ fontWeight: 'bold', color: '#00cca9' }}>
-        {firstRender ? checkIfRefreshDate() : daysBeforeRefresh}
+        {firstRender ? checkForRefreshDate() : daysBeforeRefresh}
       </span>{' '}
       days
       <StyledSlider>
         <label className="slider">
           <input
             defaultValue={
-              firstRender ? checkIfRefreshDate() : daysBeforeRefresh
+              firstRender ? checkForRefreshDate() : daysBeforeRefresh
             }
             onChange={onSliderChangeHandler}
             type="range"
