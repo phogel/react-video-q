@@ -1,85 +1,121 @@
-import uid from 'uid'
-import youTubeImage from './images/youtube.png'
-
 const defaultData = [
   {
-    title: 'Head roll',
-    tags: ['Pablo & Raquel', 'Bachaturo', '2018'],
-    notes:
-      'Lorem, ipsum dolor sit amet consectetur dipisicing elit. Voluptates officiis nulla, molestiae tenetur. officiis nulla, molestiae tenetur. ffi?Lorem, ipsum dolor sit amet consectetur dipisicing elit.Lorem, ipsum dolor sit amet consectetur dipisicing elit. Voluptates officiis nulla, molestiae tenetur. officiis nulla, molestiae tenetur. ffi?Lorem, ipsum dolor sit amet consectetur dipisicing elit.Lorem, ipsum dolor sit amet consectetur dipisicing elit. Voluptates officiis nulla, molestiae tenetur. officiis nulla, molestiae tenetur. ffi?Lorem, ipsum dolor sit amet consectetur dipisicing elit.Lorem, ipsum dolor sit amet consectetur dipisicing elit. Voluptates officiis nulla, molestiae tenetur. officiis nulla, molestiae tenetur. ffi?Lorem, ipsum dolor sit amet consectetur dipisicing elit.',
+    title: 'Intermediate moves',
+    tags: ['Marco & Sara', 'Bachatea', '2018'],
+    notes: '',
     uploadDate: '2019-03-05T10:51',
-    id: 'GTsEfTfprsk',
-    backgroundImageUrl: youTubeImage,
-    status: 2,
+    id: '0jP0h3wIZCE',
+    backgroundImageUrl:
+      'http://img.youtube.com/vi/0jP0h3wIZCE/maxresdefault.jpg',
+    status: 0,
     refresh: false,
     refreshDate: '',
   },
   {
-    title: 'Hip roll',
-    tags: ['Abdel & Lety', 'Youtube', '2018'],
+    title: 'Bachata Flow Freestyle',
+    tags: ['Abdel & Lety', 'Paris Bachata Festival ', '2018', 'Bachata Flow'],
     notes:
-      'Lorem, ipsum dolor sit amet consectetur dipisicing elit. Voluptates officiis nulla, molestiae tenetur. officiis nulla, molestiae tenetur. offi?',
+      'Usher - She came to give it to you (feat. Nicki Minaj) [Dj Bernardo Bachata Remix] ',
     uploadDate: '2019-03-05T10:51',
-    id: 'upTlp-poWoI',
-    backgroundImageUrl: 'http://via.placeholder.com/500/',
-    status: 2,
+    id: 'VJ0XU8c0yoU',
+    backgroundImageUrl:
+      'http://img.youtube.com/vi/VJ0XU8c0yoU/maxresdefault.jpg',
+    status: 0,
     refresh: false,
     refreshDate: '',
   },
   {
-    title: 'Title3',
-    tags: ['tag1', 'tag2', 'tag3'],
-    notes:
-      'Lorem, ipsum dolor sit amet consectetur dipisicing elit. Voluptates officiis nulla, molestiae tenetur. officiis nulla, molestiae tenetur. offi?',
+    title: 'Body Isolation',
+    tags: ['Marcelo y Belen', 'Europe Bachata Festival', '2018', 'Animals'],
+    notes: '1:30-2:30 favorite part',
     uploadDate: '2019-03-05T10:51',
-    id: 'Q1FWRhT4rTk',
-    backgroundImageUrl: 'http://via.placeholder.com/500/',
-    status: 1,
+    id: '8GkEhFu7gDs',
+    backgroundImageUrl:
+      'http://img.youtube.com/vi/8GkEhFu7gDs/maxresdefault.jpg',
+    status: 0,
     refresh: false,
     refreshDate: '',
   },
   {
-    title: 'Title4',
-    tags: ['tag1', 'tag2', 'tag3'],
-    notes:
-      'Lorem, ipsum dolor sit amet consectetur dipisicing elit. Voluptates officiis nulla, molestiae tenetur. officiis nulla, molestiae tenetur. offi?',
+    title: 'Bachata Sensual',
+    tags: ['Cornel & Rithika', '2018', 'Head roll'],
+    notes: '',
     uploadDate: '2019-03-05T10:51',
     id: 'U-JofUEsbD0',
-    backgroundImageUrl: 'http://via.placeholder.com/500/',
-    status: 1,
+    backgroundImageUrl:
+      'http://img.youtube.com/vi/U-JofUEsbD0/maxresdefault.jpg',
+    status: 0,
     refresh: false,
   },
   {
-    title: 'Title5',
-    tags: ['tag1', 'tag2', 'tag3'],
+    title: 'Hip isolation moves',
+    tags: ['Korke y Judith', '2016', 'LA BKS'],
     notes:
       'Lorem, ipsum dolor sit amet consectetur dipisicing elit. Voluptates officiis nulla, molestiae tenetur. officiis nulla, molestiae tenetur. offi?',
     uploadDate: '2019-03-05T10:51',
-    id: 'ogzxiPx3Isc',
-    backgroundImageUrl: 'http://via.placeholder.com/500/',
-    status: 3,
+    id: 'sGzhU3JJ5Tk',
+    backgroundImageUrl:
+      'http://img.youtube.com/vi/sGzhU3JJ5Tk/maxresdefault.jpg',
+    status: 0,
     refresh: false,
   },
   {
-    title:
-      'Title6 this is the cooles video of them all with a very long title which is annoying',
-    tags: ['tag1', 'tag2', 'tag3'],
+    title: 'Freestyle moves',
+    tags: ['Lutz & Olivia', '2018', 'Rovinj'],
     notes:
       'Lorem, ipsum dolor sit amet consectetur dipisicing elit. Voluptates officiis nulla, molestiae tenetur. officiis nulla, molestiae tenetur. offi?',
     uploadDate: '2019-03-05T10:51',
-    id: 'KmayR29pKbQ',
-    backgroundImageUrl: 'http://via.placeholder.com/500/',
-    status: 3,
+    id: 'b0rovctJe1U',
+    backgroundImageUrl:
+      'http://img.youtube.com/vi/b0rovctJe1U/maxresdefault.jpg',
+    status: 0,
     refresh: false,
   },
   {
-    title: 'Title7',
-    tags: ['tag1', 'tag2', 'tag3'],
+    title: 'Bailemos Despacio',
+    tags: ['Carlos Espinosa y Eleonora', 'Bachata Day', '2019'],
     notes:
-      'Lorem, ipsum dolor sit amet consectetur dipisicing elit. Voluptates officiis nulla, molestiae tenetur. officiis nulla, molestiae tenetur. offi?',
+      'Una Bachata en Boca Chica, Republica Dominicana. Song: Besos a Escondidas Artist: Grupo Extra Ataca y Alemana bailando Bachata de Grupo Extra.',
     uploadDate: '2019-03-05T10:51',
-    id: uid(),
-    backgroundImageUrl: 'http://via.placeholder.com/500/',
+    id: 'yeYHmjLijaA',
+    backgroundImageUrl:
+      'http://img.youtube.com/vi/yeYHmjLijaA/maxresdefault.jpg',
+    status: 0,
+    refresh: false,
+  },
+  {
+    title: '10 Intermediate Sensual Figures of Bachata',
+    tags: ['Bachata Day', '2019'],
+    notes:
+      'Una Bachata en Boca Chica, Republica Dominicana. Song: Besos a Escondidas Artist: Grupo Extra Ataca y Alemana bailando Bachata de Grupo Extra.',
+    uploadDate: '2019-03-05T10:51',
+    id: 'tl-gQB6PB-g',
+    backgroundImageUrl:
+      'http://img.youtube.com/vi/tl-gQB6PB-g/maxresdefault.jpg',
+    status: 0,
+    refresh: false,
+  },
+  {
+    title: 'Bachata Sensual Advanced Moves Tutorial',
+    tags: '',
+    notes:
+      'Una Bachata en Boca Chica, Republica Dominicana. Song: Besos a Escondidas Artist: Grupo Extra Ataca y Alemana bailando Bachata de Grupo Extra.',
+    uploadDate: '2019-03-05T10:51',
+    id: 'PPyXdK0PkBU',
+    backgroundImageUrl:
+      'http://img.youtube.com/vi/PPyXdK0PkBU/maxresdefault.jpg',
+    status: 0,
+    refresh: false,
+  },
+  {
+    title: 'Nice wave combination and freestyles',
+    tags: ['Pablo & Raquel', 'Stuttgart', '2018'],
+    notes:
+      'Una Bachata en Boca Chica, Republica Dominicana. Song: Besos a Escondidas Artist: Grupo Extra Ataca y Alemana bailando Bachata de Grupo Extra.',
+    uploadDate: '2019-03-05T10:51',
+    id: 'upTlp-poWoI',
+    backgroundImageUrl:
+      'http://img.youtube.com/vi/upTlp-poWoI/maxresdefault.jpg',
     status: 0,
     refresh: false,
   },

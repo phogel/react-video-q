@@ -8,8 +8,8 @@ export default createGlobalStyle`
   body {
     font-family: 'Roboto', sans-serif;
     margin: 0;
-    background: $primary;
-    color: #1A1A1A;
+    background: rgb(250, 250, 250);
+    color: #1a1a1a;
     touch-action: manipulation;
   }
 
