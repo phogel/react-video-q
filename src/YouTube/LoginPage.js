@@ -29,10 +29,23 @@ export default function LoginPage() {
 
   const defaultChannel = 'techguyweb'
 
+  // const xhr = new XMLHttpRequest(),
+  //   method = 'GET',
+  //   url = 'https://apis.google.com/js/api.js'
+
+  // xhr.open(method, url, true)
+  // xhr.onreadystatechange = function() {
+  //   if (xhr.readyState === 'complete') {
+  //     window.onload = handleClientLoad
+  //     console.log('hello')
+  //   }
+  // }
+
   window.onload = handleClientLoad
 
   // Load auth2 library
   function handleClientLoad() {
+    console.log('handleClientLoad')
     gapi.load('client:auth2', initClient)
   }
 
