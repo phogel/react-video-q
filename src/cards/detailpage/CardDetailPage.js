@@ -155,13 +155,12 @@ export default function CardsDetailPage(props) {
   }
 
   function bgColor(status) {
-    if (status === 1) {
-      return { background: 'rgb(250, 239, 246)' }
-    } else if (status === 2) {
-      return { background: 'rgb(212, 244,238)' }
-    } else if (status === 3) {
-      return { background: 'rgb(249,216,231)' }
-    } else return { background: '#fcfcfc' }
+    let backgrounds = [
+      'rgb(250, 239, 246)',
+      'rgb(212, 244,238)',
+      'rgb(249,216,231)',
+    ]
+    return { background: backgrounds[status - 1] || '#fcfcfc' }
   }
 
   function MainContent() {
