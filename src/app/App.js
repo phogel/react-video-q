@@ -133,7 +133,7 @@ export default function App() {
     <Router>
       <React.Fragment>
         <Helmet>
-          <title>vide-q</title>
+          <title>VIDEQ</title>
           <meta
             name="description"
             content="Learn videos with VIDEO-Q: your app to keep track of learned videos. Check it out now!"
