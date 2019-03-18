@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import styled from 'styled-components'
 import Input from '../common/Input'
+import PageTitleFullscreen from '../common/PageTitleFullscreen'
 
 const Grid = styled.section`
   display: grid;
@@ -24,7 +25,6 @@ const DISCOVERY_DOCS = [
   'https://www.googleapis.com/discovery/v1/apis/youtube/v3/rest',
 ]
 const SCOPES = 'https://www.googleapis.com/auth/youtube.readonly'
-const defaultChannel = 'techguyweb'
 const gapi = window.gapi
 
 export default class LoginPage extends Component {
@@ -90,11 +90,12 @@ export default class LoginPage extends Component {
     if (isSignedIn) {
       return (
         <Grid id="content">
+          <PageTitleFullscreen title="Enter a play list name" />
           <StyledForm id="playlist-form">
             <Input
               id="input-field"
               name="playlist"
-              placeholder="Enter a playlist name"
+              placeholder="Playlist name"
             />
             <input type="submit" value="Load videos from playlist" />
           </StyledForm>
@@ -106,7 +107,7 @@ export default class LoginPage extends Component {
     }
     return (
       <Grid id="content">
-        Log In To YouTube
+        <PageTitleFullscreen title="Log in to YouTube" />
         <button id="authorize-button" onClick={() => this.login()}>
           Log In
         </button>
