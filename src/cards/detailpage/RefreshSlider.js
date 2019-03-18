@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState } from 'react'
 import styled from 'styled-components'
 import dayjs from 'dayjs'
 
@@ -60,9 +60,6 @@ export default function RefreshSlider({ cardRefreshDate, onSliderChange }) {
     onSliderChange(refreshDate)
   }
 
-  useEffect(() => {
-    console.log('test')
-  })
   return (
     <React.Fragment>
       Move video automatically to refresh queue in{' '}
