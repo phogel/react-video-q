@@ -97,7 +97,7 @@ const defaultData = [
   },
   {
     title: 'Bachata Sensual Advanced Moves Tutorial',
-    tags: '',
+    tags: [],
     notes:
       'Una Bachata en Boca Chica, Republica Dominicana. Song: Besos a Escondidas Artist: Grupo Extra Ataca y Alemana bailando Bachata de Grupo Extra.',
     uploadDate: '2019-03-05T10:51',
