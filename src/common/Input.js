@@ -52,10 +52,15 @@ const Bar = styled.span`
   }
 `
 
-export default function Input({ placeholder, icon }) {
+export default function Input({ placeholder, name }) {
   return (
     <Group className="group">
-      <StyledInput className="input" />
+      <StyledInput
+        className="input"
+        type="text"
+        name={name}
+        placeholder={placeholder}
+      />
       <Bar className="bar" />
     </Group>
   )
