@@ -1,7 +1,6 @@
 import React from 'react'
 import styled from 'styled-components'
 import gapi from 'gapi-client'
-import Youtube from './YouTube'
 
 const Grid = styled.section`
   display: grid;
@@ -29,6 +28,8 @@ export default function LoginPage() {
   const videoContainer = document.getElementById('video-container')
 
   const defaultChannel = 'techguyweb'
+
+  window.onload = handleClientLoad
 
   // Load auth2 library
   function handleClientLoad() {
@@ -84,13 +85,7 @@ export default function LoginPage() {
     console.log(channel)
   }
 
-  // useEffect(() => {
-  //   async defer src="https://apis.google.com/js/api.js"
-  //   onreadystatechange="if (this.readyState === 'complete') this.onload()"
-  // })
-
   return (
-    // <Youtube />
     <Grid id="content">
       Log In With Google
       <button id="authorize-button">Log In</button>
