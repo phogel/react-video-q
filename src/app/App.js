@@ -12,6 +12,7 @@ import Header from '../common/Header'
 import HeaderSearchBar from '../common/HeaderSearchBar'
 import dayjs from 'dayjs'
 import UploadPage from '../upload/UploadPage'
+import LoginPage from '../youtube/LoginPage'
 
 const Grid = styled.section`
   display: grid;
@@ -132,7 +133,7 @@ export default function App() {
     <Router>
       <React.Fragment>
         <Helmet>
-          <title>vide-q</title>
+          <title>VIDEQ</title>
           <meta
             name="description"
             content="Learn videos with VIDEO-Q: your app to keep track of learned videos. Check it out now!"
@@ -142,6 +143,7 @@ export default function App() {
             rel="stylesheet"
           />
         </Helmet>
+        <Route path="/login" render={() => <LoginPage />} />
         <Route
           path="/search"
           render={() => (

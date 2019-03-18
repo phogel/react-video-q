@@ -4,7 +4,7 @@ import { MdExpandMore, MdDeleteForever, MdEdit } from 'react-icons/md'
 import ButtonLearningQueue from './ButtonLearningQueue'
 import ButtonLearned from './ButtonLearned'
 import ButtonRefreshQueue from './ButtonRefreshQueue'
-import YouTubeVideo from '../../YouTube/YouTubeVideo'
+import YouTubeVideo from '../../youtube/YouTubeVideo'
 import SwitchButton from './SwitchButton'
 import CardEditForm from './CardEditForm'
 
