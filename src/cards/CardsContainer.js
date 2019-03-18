@@ -19,7 +19,7 @@ export default function CardsRender({ cards }) {
   return (
     <CardContainer>
       {cards.map(card => (
-        <Card details={card} />
+        <Card details={card} key={card.id} />
       ))}
     </CardContainer>
   )
