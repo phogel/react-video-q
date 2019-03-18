@@ -23,7 +23,7 @@ const StyledCard = styled.div`
       to bottom,
       rgba(0, 0, 0, 0) 0%,
       rgba(0, 0, 0, 0) 59%,
-      rgba(0, 0, 0, 0.65) 100%
+      rgba(${p => p.cardFade}) 100%
     ),
     url(${p => p.backgroundImageUrl}) no-repeat;
   background-size: cover;
@@ -93,10 +93,18 @@ Card.defaultProps = {
 
 const iconFill = ['#EFA5D4', '#00CCA9', '#FF328B']
 const iconName = ['learning-queue', 'learned', 'refresh-queue']
+const cardFade = ['239,165,212,0.65', '0,204,169,0.65', '255,50,139,0.65']
 
 export default function Card({ details }) {
   function renderTag(text, index) {
     return <Tag key={index}>{text}</Tag>
+  }
+
+  function selectFade() {
+    if (details.status === 0) {
+      return '0, 0, 0, 0.65'
+    }
+    return cardFade[details.status - 1]
   }
 
   function selectIcon() {
@@ -118,6 +126,7 @@ export default function Card({ details }) {
       <StyledCard
         className={'card'}
         backgroundImageUrl={details.backgroundImageUrl}
+        cardFade={selectFade}
       >
         {selectIcon()}
         <StyledTitle>{details.title}</StyledTitle>
