@@ -113,7 +113,7 @@ const ButtonList = styled.div`
 `
 
 export default function CardsDetailPage(props) {
-  const { card, status, onDeleteCardClick, onSaveCardClick } = props
+  const { card, status, onDeleteCardClick, onSaveCardClick, lastSeen } = props
 
   const [isEditable, setIsEditable] = useState(false)
 
@@ -152,6 +152,10 @@ export default function CardsDetailPage(props) {
 
   function onSliderChange(refreshDate) {
     props.onSliderChange(card.id, refreshDate)
+  }
+
+  function onVideoStart(event) {
+    props.onVideoStart(event, card.id)
   }
 
   function bgColor(status) {
@@ -239,7 +243,7 @@ export default function CardsDetailPage(props) {
     <React.Fragment>
       <Grid style={bgColor(status)}>
         <Video>
-          <YouTubeVideo videoId={card.id} />
+          <YouTubeVideo onStateChange={onVideoStart} videoId={card.id} />
           <BackButton onClick={goBack}>
             <MdExpandMore color={'#FCFCFC'} size={'30px'} />
           </BackButton>
