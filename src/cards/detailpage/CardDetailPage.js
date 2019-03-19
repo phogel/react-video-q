@@ -86,7 +86,6 @@ const CategoryButtonContainer = styled.section`
   margin-bottom: 10px;
   user-select: none;
   > * {
-    cursor: pointer;
     user-select: none;
   }
 `
@@ -97,7 +96,6 @@ const ButtonList = styled.div`
   justify-content: space-between;
   align-items: center;
   > * {
-    cursor: pointer;
     user-select: none;
   }
 `
