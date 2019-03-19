@@ -1,7 +1,9 @@
 import React, { Component } from 'react'
 import styled from 'styled-components'
+import { Link } from 'react-router-dom'
 import Input from '../common/Input'
 import PageTitleFullscreen from '../common/PageTitleFullscreen'
+import Spinner from '../common/Spinner'
 
 const Grid = styled.section`
   display: grid;
@@ -16,6 +18,17 @@ const StyledForm = styled.form`
   display: grid;
   grid-auto-rows: auto;
   grid-gap: 20px;
+`
+
+const LinkContainer = styled.div`
+  display: flex;
+  justify-content: center;
+  margin-top: 10px;
+  > a {
+    text-decoration: none;
+    color: #1a1a1a;
+  }
+  user-select: none;
 `
 
 // Options
@@ -39,24 +52,23 @@ export default class LoginPage extends Component {
           scope: SCOPES,
         })
         .then(() => {
+          this.setState({ initialized: true })
           // Listen for sign in state changes
           gapi.auth2
             .getAuthInstance()
-            .isSignedIn.listen(this.updateSigninStatus)
+            .isSignedIn.listen(isSignedIn => this.setState({ isSignedIn }))
+
           // Handle initial sign in state
-          this.updateSigninStatus(gapi.auth2.getAuthInstance().isSignedIn.get())
+          this.setState({
+            isSignedIn: gapi.auth2.getAuthInstance().isSignedIn.get(),
+          })
         })
     })
 
     this.state = {
       isSignedIn: false,
+      initialized: false,
     }
-  }
-
-  // Update UI sign in state changes
-  updateSigninStatus(isSignedIn) {
-    console.log('state: ' + isSignedIn)
-    this.setState({ isSignedIn })
   }
 
   // Handle login
@@ -84,9 +96,17 @@ export default class LoginPage extends Component {
     gapi.auth2.getAuthInstance().signOut()
   }
 
-  render() {
-    const { isSignedIn } = this.state
+  skipLogin() {
+    console.log('skip login')
+    // this.setState()
+  }
 
+  render() {
+    const { isSignedIn, initialized } = this.state
+
+    if (!initialized) {
+      return <Spinner />
+    }
     if (isSignedIn) {
       return (
         <Grid id="content">
@@ -111,6 +131,11 @@ export default class LoginPage extends Component {
         <button id="authorize-button" onClick={() => this.login()}>
           Log In
         </button>
+        <LinkContainer>
+          <Link to="/" onClick={this.skipLogin}>
+            Skip
+          </Link>
+        </LinkContainer>
       </Grid>
     )
   }
