@@ -81,11 +81,31 @@ export default class LoginPage extends Component {
     gapi.auth2.getAuthInstance().signOut()
   }
 
-  // Get channel from API
-  getChannel(channel) {
-    console.log(channel)
-  }
+  //   // Get playlist from API
+  //   getPlaylist(playlist) {
+  //     console.log(playlist)
+  //     gapi.client.youtube.
 
+  //   }
+
+  //   function get_channel(cid) {
+  //     var request = gapi.client.youtube.channels.list({
+  //         part: 'snippet,contentDetails,statistics',
+  //         id: cid
+  //     });
+  //     request.execute(function(response) {
+  //         var channels = response.items;
+  //         console.log(channels[0].snippet.title);
+  //     });
+  // }
+
+  //   defineRequest() {
+  //     buildApiRequest('GET',
+  //                     '/youtube/v3/playlists',
+  //                     {'channelId': 'UC_x5XG1OV2P6uZZ5FSM9Ttw',
+  //                      'maxResults': '25',
+  //                      'part': 'snippet,contentDetails'});
+  //       }
   login() {
     console.log('login')
     gapi.auth2.getAuthInstance().signIn()
@@ -122,6 +142,11 @@ export default class LoginPage extends Component {
           <button id="signout-button" onClick={() => this.logout()}>
             Log Out
           </button>
+          <LinkContainer>
+            <Link to="/" onClick={this.skipLogin}>
+              Skip
+            </Link>
+          </LinkContainer>
         </Grid>
       )
     }

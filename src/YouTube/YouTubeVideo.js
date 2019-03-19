@@ -1,8 +1,6 @@
 import React, { Component } from 'react'
 import YouTube from 'react-youtube'
 
-//https://www.youtube.com/watch?v=GTsEfTfprsk
-//https://youtu.be/GTsEfTfprsk
 export default class YouTubeVideo extends Component {
   videoOnReady(event) {
     // access to player in all event handlers via event.target
@@ -15,7 +13,7 @@ export default class YouTubeVideo extends Component {
       width: '100%',
       playerVars: {
         // https://developers.google.com/youtube/player_parameters
-        autoplay: 1,
+        //autoplay: 1,
       },
     }
     const { videoId, onStateChange } = this.props
