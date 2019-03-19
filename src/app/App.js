@@ -100,16 +100,16 @@ export default function App() {
     ])
   }
 
-  function videoStartHandler(event, id) {
+  function videoStateChangeHandler(event, id) {
     if (event.data === 1) {
+      const date = dayjs()
       const card = cards.find(card => card.id === id)
       const index = cards.indexOf(card)
       setCards([
         ...cards.slice(0, index),
-        { ...card, lastSeenTime: dayjs() },
+        { ...card, lastSeenTime: date },
         ...cards.slice(index + 1),
       ])
-      console.log(card.lastSeenTime)
     }
   }
 
@@ -127,8 +127,6 @@ export default function App() {
   }
 
   function saveCardClickHandler(formData, card) {
-    console.log(formData)
-    console.log(formData.tags)
     const index = cards.indexOf(card)
     setCards([
       ...cards.slice(0, index),
@@ -239,7 +237,7 @@ export default function App() {
               onCheckboxClick={checkboxClickHandler}
               onSliderChange={sliderChangeHandler}
               onClick={clickHandler}
-              onVideoStart={videoStartHandler}
+              onVideoStateChange={videoStateChangeHandler}
               status={
                 cards.find(card => card.id === match.params.id).status || null
               }
