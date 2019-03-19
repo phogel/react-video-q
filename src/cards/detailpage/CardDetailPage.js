@@ -7,6 +7,7 @@ import ButtonRefreshQueue from './ButtonRefreshQueue'
 import YouTubeVideo from '../../youtube/YouTubeVideo'
 import SwitchButton from './SwitchButton'
 import CardEditForm from './CardEditForm'
+import LastSeen from './LastSeen'
 
 const Grid = styled.section`
   display: grid;
@@ -84,36 +85,25 @@ const CategoryButtonContainer = styled.section`
   align-items: flex-start;
   margin-bottom: 10px;
   user-select: none;
-`
-
-const DeleteButton = styled.div`
   > * {
     cursor: pointer;
     user-select: none;
   }
-`
-
-const EditButton = styled.div`
-  margin-left: 20px;
-  > * {
-    cursor: pointer;
-    user-select: none;
-  }
-`
-
-const EditSaveContainer = styled.div`
-  display: flex;
-  justify-content: space-between;
 `
 
 const ButtonList = styled.div`
   display: grid;
   grid-template-columns: 1fr auto;
   justify-content: space-between;
+  align-items: center;
+  > * {
+    cursor: pointer;
+    user-select: none;
+  }
 `
 
 export default function CardsDetailPage(props) {
-  const { card, status, onDeleteCardClick, onSaveCardClick, lastSeen } = props
+  const { card, status, onDeleteCardClick, onSaveCardClick } = props
 
   const [isEditable, setIsEditable] = useState(false)
 
@@ -154,8 +144,8 @@ export default function CardsDetailPage(props) {
     props.onSliderChange(card.id, refreshDate)
   }
 
-  function onVideoStart(event) {
-    props.onVideoStart(event, card.id)
+  function onVideoStateChange(event) {
+    props.onVideoStateChange(event, card.id)
   }
 
   function bgColor(status) {
@@ -172,22 +162,16 @@ export default function CardsDetailPage(props) {
       return (
         <MainContentGrid>
           <ButtonList>
-            <DeleteButton>
-              <MdDeleteForever
-                color={'rgba(26, 26, 26, 0.57)'}
-                size={'25px'}
-                onClick={() => onDeleteCardClickHandler(card)}
-              />
-            </DeleteButton>
-            <EditSaveContainer>
-              <EditButton>
-                <MdEdit
-                  color={'#FF328B'}
-                  size={'25px'}
-                  onClick={onEditCardClickHandler}
-                />
-              </EditButton>
-            </EditSaveContainer>
+            <MdDeleteForever
+              color={'rgba(26, 26, 26, 0.57)'}
+              size={'20px'}
+              onClick={() => onDeleteCardClickHandler(card)}
+            />
+            <MdEdit
+              color={'#FF328B'}
+              size={'20px'}
+              onClick={onEditCardClickHandler}
+            />
           </ButtonList>
           <CardEditForm
             card={card}
@@ -210,14 +194,12 @@ export default function CardsDetailPage(props) {
       return (
         <MainContentGrid>
           <ButtonList>
-            <div />
-            <EditButton>
-              <MdEdit
-                color={'rgba(26, 26, 26, 0.57)'}
-                size={'25px'}
-                onClick={onEditCardClickHandler}
-              />
-            </EditButton>
+            <div>{card.lastSeenTime && <LastSeen card={card} />}</div>
+            <MdEdit
+              color={'rgba(26, 26, 26, 0.57)'}
+              size={'20px'}
+              onClick={onEditCardClickHandler}
+            />
           </ButtonList>
           <ContentGrid>
             <StyledTitle>{card.title}</StyledTitle>
@@ -243,7 +225,7 @@ export default function CardsDetailPage(props) {
     <React.Fragment>
       <Grid style={bgColor(status)}>
         <Video>
-          <YouTubeVideo onStateChange={onVideoStart} videoId={card.id} />
+          <YouTubeVideo onStateChange={onVideoStateChange} videoId={card.id} />
           <BackButton onClick={goBack}>
             <MdExpandMore color={'#FCFCFC'} size={'30px'} />
           </BackButton>

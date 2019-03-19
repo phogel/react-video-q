@@ -1,6 +1,5 @@
 import React, { Component } from 'react'
 import YouTube from 'react-youtube'
-import dayjs from 'dayjs'
 
 //https://www.youtube.com/watch?v=GTsEfTfprsk
 //https://youtu.be/GTsEfTfprsk
@@ -13,7 +12,7 @@ export default class YouTubeVideo extends Component {
   render() {
     const opts = {
       height: '210',
-      width: '375',
+      width: '100%',
       playerVars: {
         // https://developers.google.com/youtube/player_parameters
         autoplay: 1,
