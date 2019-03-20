@@ -13,6 +13,12 @@ export default createGlobalStyle`
     touch-action: manipulation;
   }
 
+  html, body {
+    height: 100%;
+    width: 100%;
+    overflow-x: hidden;
+  }
+
   ul, ol {
     margin: 0;
   }
@@ -34,7 +40,7 @@ export default createGlobalStyle`
     text-transform: uppercase;
     height: 40px;
     width: 100%;
-    background: #1a1a1a;
+    background: #FF328B;
     color: rgb(250, 250, 250);
     transition: background-color .3s;
     :hover, :focus {

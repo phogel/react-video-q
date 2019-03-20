@@ -14,12 +14,6 @@ const Grid = styled.section`
   padding: 20px;
 `
 
-const StyledForm = styled.form`
-  display: grid;
-  grid-auto-rows: auto;
-  grid-gap: 20px;
-`
-
 const StyledAbortLink = styled.div`
   display: flex;
   justify-content: center;

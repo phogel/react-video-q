@@ -32,12 +32,12 @@ export default function Header() {
         <img src={logo} alt="video-q" style={{ userSelect: 'none' }} />
       </StyledLink>
       <StyledLink to="/upload">
-        <MdAdd color={'#8A8A8A'} size={'28px'} />
+        <MdAdd color="#8A8A8A" size="30px" />
       </StyledLink>
       <StyledLink to="/search">
         <FiSearch
-          color={'#8A8A8A'}
-          size={'28px'}
+          color="#8A8A8A"
+          size="24px"
           style={{ position: 'absolute', right: '10px' }}
         />
       </StyledLink>

@@ -41,7 +41,7 @@ const Bar = styled.span`
   }
 `
 
-export default function Input({ placeholder, name }) {
+export default function Input({ placeholder, name, value, onChange }) {
   return (
     <Group className="group">
       <StyledInput
@@ -49,6 +49,8 @@ export default function Input({ placeholder, name }) {
         type="text"
         name={name}
         placeholder={placeholder}
+        value={value}
+        onChange={onChange}
       />
       <Bar className="bar" />
     </Group>

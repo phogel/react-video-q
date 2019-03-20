@@ -14,7 +14,7 @@ const StyledForm = styled.form`
   > * input,
   textarea {
     font-size: 16px;
-    padding: 10px 10px 10px 0;
+    padding: 10px 10px 7px 0;
     display: block;
     width: 100%;
     border: none;
@@ -35,14 +35,6 @@ const TitleInput = styled.input`
   font-family: 'Dosis', sans-serif;
 `
 
-const StyledButton = styled.button`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  padding: 0;
-  margin-top: 10px;
-`
-
 const StyledTextArea = styled.textarea`
   width: 100%;
   font-size: 16px;
@@ -52,15 +44,19 @@ const StyledTextArea = styled.textarea`
   font-family: 'Roboto', sans-serif;
 `
 
-const Cancel = styled.div`
+const StyledButton = styled.button`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 0;
+  margin-top: 10px;
+`
+
+const StyledAbortLink = styled.div`
   display: flex;
   justify-content: center;
   margin-top: 20px;
-  > a {
-    text-decoration: none;
-    color: #1a1a1a;
-  }
-  user-select: none;
+  color: #dcdcdc;
 `
 
 export default function CardForm({ card, onSubmit, setIsEditable }) {
@@ -131,12 +127,14 @@ export default function CardForm({ card, onSubmit, setIsEditable }) {
       <StyledButton>
         Save
         <MdSave
-          color={'#FF328B'}
-          size={'28px'}
+          color={'rgb(250, 250, 250)'}
+          size={'20px'}
           style={{ position: 'absolute', left: '60%' }}
         />
       </StyledButton>
-      <Cancel onClick={() => setIsEditable(false)}>Cancel</Cancel>
+      <StyledAbortLink onClick={() => setIsEditable(false)}>
+        Cancel
+      </StyledAbortLink>
     </StyledForm>
   )
 }

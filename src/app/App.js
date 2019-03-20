@@ -12,7 +12,7 @@ import Header from '../common/Header'
 import HeaderSearchBar from '../search/HeaderSearchBar'
 import dayjs from 'dayjs'
 import UploadPage from '../upload/UploadPage'
-import LoginPage from '../youtube/LoginPage'
+import LoginPage from '../upload/LoginPage'
 
 const Grid = styled.section`
   display: grid;
@@ -154,7 +154,7 @@ export default function App() {
             rel="stylesheet"
           />
         </Helmet>
-        <Route path="/login" render={() => <LoginPage />} />
+        <Route path="/login" component={LoginPage} />
         <Route
           path="/search"
           render={() => (

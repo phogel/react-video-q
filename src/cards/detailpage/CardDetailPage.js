@@ -93,8 +93,8 @@ const CategoryButtonContainer = styled.section`
 
 const ButtonList = styled.div`
   display: grid;
-  grid-template-columns: 1fr auto;
-  justify-content: space-between;
+  grid-template-columns: 1fr auto auto;
+  justify-content: flex-end;
   align-items: center;
   > * {
     user-select: none;
@@ -161,9 +161,11 @@ export default function CardsDetailPage(props) {
       return (
         <MainContentGrid>
           <ButtonList>
+            <div>{card.lastSeenTime && <LastSeen card={card} />}</div>
             <MdDeleteForever
               color={'rgba(26, 26, 26, 0.57)'}
               size={'20px'}
+              style={{ marginRight: '20px' }}
               onClick={() => onDeleteCardClickHandler(card)}
             />
             <MdEdit
@@ -184,6 +186,7 @@ export default function CardsDetailPage(props) {
         <MainContentGrid>
           <ButtonList>
             <div>{card.lastSeenTime && <LastSeen card={card} />}</div>
+            <div />
             <MdEdit
               color={'rgba(26, 26, 26, 0.57)'}
               size={'20px'}
@@ -211,21 +214,19 @@ export default function CardsDetailPage(props) {
   }
 
   return (
-    <React.Fragment>
-      <Grid style={bgColor(status)}>
-        <Video>
-          <YouTubeVideo onStateChange={onVideoStateChange} videoId={card.id} />
-          <BackButton onClick={goBack}>
-            <MdExpandMore color={'#FCFCFC'} size={'30px'} />
-          </BackButton>
-        </Video>
-        <MainContent />
-        <CategoryButtonContainer>
-          <ButtonLearningQueue status={status} onClick={onLearningClick} />
-          <ButtonLearned status={status} onClick={onLearnedClick} />
-          <ButtonRefreshQueue status={status} onClick={onRefreshClick} />
-        </CategoryButtonContainer>
-      </Grid>
-    </React.Fragment>
+    <Grid style={bgColor(status)}>
+      <Video>
+        <YouTubeVideo onStateChange={onVideoStateChange} videoId={card.id} />
+        <BackButton onClick={goBack}>
+          <MdExpandMore color={'#FCFCFC'} size={'30px'} />
+        </BackButton>
+      </Video>
+      <MainContent />
+      <CategoryButtonContainer>
+        <ButtonLearningQueue status={status} onClick={onLearningClick} />
+        <ButtonLearned status={status} onClick={onLearnedClick} />
+        <ButtonRefreshQueue status={status} onClick={onRefreshClick} />
+      </CategoryButtonContainer>
+    </Grid>
   )
 }

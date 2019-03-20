@@ -12,7 +12,7 @@ const gapi = window.gapi
 
 export default function ChannelComponent() {
   const [playlists, setPlaylists] = useState('')
-  const [selectedPlaylist, setSelectedPlaylist] = useState('')
+  const [selectedPlaylist, setSelectedPlaylist] = useState()
   const [initialized, setInitialized] = useState(false)
 
   function responseHandler(response) {
@@ -36,7 +36,7 @@ export default function ChannelComponent() {
   }
 
   function onChangeHandler(event) {
-    setSelectedPlaylist({ selectedPlaylist: event.target.value })
+    setSelectedPlaylist(event.target.value)
   }
 
   function onSubmitHandler(event) {
