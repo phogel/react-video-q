@@ -53,6 +53,7 @@ const StyledTitle = styled.h3`
   display: block;
   font-size: 22px;
   font-weight: bold;
+  padding: 10px 10px 10px 0;
   display: ${p => (p.isEditable ? 'none' : null)};
 `
 
@@ -176,16 +177,6 @@ export default function CardsDetailPage(props) {
             onSubmit={onSaveCardClick}
             setIsEditable={setIsEditable}
           />
-          {card.status === 2 ? (
-            <SwitchButton
-              cardRefreshDate={card.refreshDate}
-              onCheckboxClick={onCheckboxClick}
-              refresh={card.refresh}
-              onSliderChange={onSliderChange}
-            />
-          ) : (
-            <div />
-          )}
         </MainContentGrid>
       )
     } else {

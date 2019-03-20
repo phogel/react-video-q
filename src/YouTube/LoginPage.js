@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import styled from 'styled-components'
-import { Link } from 'react-router-dom'
+import { Redirect, Link } from 'react-router-dom'
 import Input from '../common/Input'
 import PageTitleFullscreen from '../common/PageTitleFullscreen'
 import Spinner from '../common/Spinner'
@@ -68,66 +68,49 @@ export default class LoginPage extends Component {
     this.state = {
       isSignedIn: false,
       initialized: false,
+      skipLogin: false,
     }
   }
 
-  // Handle login
-  handleAuthClick() {
-    gapi.auth2.getAuthInstance().signIn()
-  }
-
-  // Handle logout
-  handleSignoutClick() {
-    gapi.auth2.getAuthInstance().signOut()
-  }
-
-  //   // Get playlist from API
-  //   getPlaylist(playlist) {
-  //     console.log(playlist)
-  //     gapi.client.youtube.
-
-  //   }
-
-  //   function get_channel(cid) {
-  //     var request = gapi.client.youtube.channels.list({
-  //         part: 'snippet,contentDetails,statistics',
-  //         id: cid
-  //     });
-  //     request.execute(function(response) {
-  //         var channels = response.items;
-  //         console.log(channels[0].snippet.title);
-  //     });
-  // }
-
-  //   defineRequest() {
-  //     buildApiRequest('GET',
-  //                     '/youtube/v3/playlists',
-  //                     {'channelId': 'UC_x5XG1OV2P6uZZ5FSM9Ttw',
-  //                      'maxResults': '25',
-  //                      'part': 'snippet,contentDetails'});
-  //       }
   login() {
-    console.log('login')
     gapi.auth2.getAuthInstance().signIn()
   }
 
   logout() {
-    console.log('logout')
     gapi.auth2.getAuthInstance().signOut()
   }
 
-  skipLogin() {
-    console.log('skip login')
-    // this.setState()
+  onSkipClickHandler() {
+    this.setState({ skipLogin: true })
   }
 
-  render() {
-    const { isSignedIn, initialized } = this.state
+  // getChannel() {
+  //   gapi.client.youtube.channels
+  //     .list({
+  //       part: 'snippet,contentDetails,statistics',
+  //       forUsername: 'GoogleDevelopers',
+  //     })
+  //     .then(function(response) {
+  //       const channel = response.result.items[0]
+  //       return this.createChannelInfo
+  //     })
+  // }
 
+  // createChannelInfo() {
+  //   return
+  // }
+
+  render() {
+    const { isSignedIn, initialized, skipLogin } = this.state
+
+    if (skipLogin) {
+      return <Redirect to={{ pathname: '/' }}> </Redirect>
+    }
     if (!initialized) {
       return <Spinner />
     }
     if (isSignedIn) {
+      // this.getChannel()
       return (
         <Grid id="content">
           <PageTitleFullscreen title="Enter a play list name" />
@@ -142,11 +125,10 @@ export default class LoginPage extends Component {
           <button id="signout-button" onClick={() => this.logout()}>
             Log Out
           </button>
-          <LinkContainer>
-            <Link to="/" onClick={this.skipLogin}>
-              Skip
-            </Link>
+          <LinkContainer onClick={() => this.onSkipClickHandler()}>
+            Skip
           </LinkContainer>
+          <div id="content" />
         </Grid>
       )
     }
@@ -156,10 +138,8 @@ export default class LoginPage extends Component {
         <button id="authorize-button" onClick={() => this.login()}>
           Log In
         </button>
-        <LinkContainer>
-          <Link to="/" onClick={this.skipLogin}>
-            Skip
-          </Link>
+        <LinkContainer onClick={() => this.onSkipClickHandler()}>
+          Skip
         </LinkContainer>
       </Grid>
     )

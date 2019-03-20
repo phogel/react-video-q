@@ -14,7 +14,7 @@ const StyledForm = styled.form`
   > * input,
   textarea {
     font-size: 16px;
-    padding: 10px 10px 10px 5px;
+    padding: 10px 10px 10px 0;
     display: block;
     width: 100%;
     border: none;
@@ -29,7 +29,7 @@ const StyledForm = styled.form`
 
 const TitleInput = styled.input`
   display: block;
-  font-size: 22px;
+  font-size: 22px !important;
   font-weight: bold;
   margin-top: 0;
   font-family: 'Dosis', sans-serif;
@@ -49,6 +49,7 @@ const StyledTextArea = styled.textarea`
   height: 84px;
   background: transparent;
   border: none;
+  font-family: 'Roboto', sans-serif;
 `
 
 const Cancel = styled.div`
@@ -110,6 +111,7 @@ export default function CardForm({ card, onSubmit, setIsEditable }) {
               value={formData.tags}
               onChange={onInputChange}
               maxLength="100"
+              style={{ height: '60px' }}
             />
           )}
           <span className="bar" />
