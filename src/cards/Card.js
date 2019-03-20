@@ -19,8 +19,13 @@ const StyledCard = styled.div`
   padding: 18px 18px 6px;
   border-radius: 20px;
   color: #fefdfd;
-  background-image: url(${p => p.backgroundImageUrl});
-  background-repeat: no-repeat;
+  background: linear-gradient(
+      to bottom,
+      rgba(0, 0, 0, 0) 0%,
+      rgba(0, 0, 0, 0) 59%,
+      rgba(${p => p.cardFade}) 100%
+    ),
+    url(${p => p.backgroundImageUrl}) no-repeat;
   background-size: cover;
   background-position: center;
   scroll-snap-align: start;
@@ -86,45 +91,46 @@ Card.defaultProps = {
   ],
 }
 
-export default function Card({ backgroundImageUrl, title, tags, id, status }) {
+const iconFill = ['#EFA5D4', '#00CCA9', '#FF328B']
+const iconName = ['learning-queue', 'learned', 'refresh-queue']
+const cardFade = ['239,165,212,0.65', '0,204,169,0.65', '255,50,139,0.65']
+
+export default function Card({ details }) {
   function renderTag(text, index) {
     return <Tag key={index}>{text}</Tag>
   }
 
-  function selectIcon() {
-    if (status === 0) {
-      return ''
-    } else if (status === 1) {
-      return (
-        <StyledIcon
-          fill="#EFA5D4"
-          height="30px"
-          width="50px"
-          name="learning-queue"
-        />
-      )
-    } else if (status === 2) {
-      return (
-        <StyledIcon fill="#00CCA9" height="30px" width="50px" name="learned" />
-      )
-    } else if (status === 3) {
-      return (
-        <StyledIcon
-          fill="#FF328B"
-          height="30px"
-          width="50px"
-          name="refresh-queue"
-        />
-      )
+  function selectFade() {
+    if (details.status === 0) {
+      return '0, 0, 0, 0.65'
     }
+    return cardFade[details.status - 1]
+  }
+
+  function selectIcon() {
+    if (details.status === 0) {
+      return ''
+    }
+    return (
+      <StyledIcon
+        fill={iconFill[details.status - 1]}
+        height="30px"
+        width="50px"
+        name={iconName[details.status - 1]}
+      />
+    )
   }
 
   return (
-    <StyledLink to={`/videos/${id}`}>
-      <StyledCard className={'card'} backgroundImageUrl={backgroundImageUrl}>
+    <StyledLink to={`/videos/${details.id}`}>
+      <StyledCard
+        className={'card'}
+        backgroundImageUrl={details.backgroundImageUrl}
+        cardFade={selectFade}
+      >
         {selectIcon()}
-        <StyledTitle>{title}</StyledTitle>
-        {tags && <TagList>{tags.map(renderTag)}</TagList>}
+        <StyledTitle>{details.title}</StyledTitle>
+        {details.tags && <TagList>{details.tags.map(renderTag)}</TagList>}
       </StyledCard>
     </StyledLink>
   )

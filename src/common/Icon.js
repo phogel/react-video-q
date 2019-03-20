@@ -53,7 +53,7 @@ const getPath = (name, props) => {
 const Icon = ({
   name = '',
   style = {},
-  fill = 'red',
+  fill = '#FF328B',
   viewBox = '',
   width = '100%',
   className = '',

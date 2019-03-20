@@ -1,6 +1,9 @@
-import React from 'react'
+import React, { Component } from 'react'
 import styled from 'styled-components'
-import gapi from 'gapi-client'
+import { Link } from 'react-router-dom'
+import Input from '../common/Input'
+import PageTitleFullscreen from '../common/PageTitleFullscreen'
+import Spinner from '../common/Spinner'
 
 const Grid = styled.section`
   display: grid;
@@ -11,115 +14,154 @@ const Grid = styled.section`
   padding: 20px;
 `
 
-export default function LoginPage() {
-  // Options
-  const CLIENT_ID =
-    '843342214316-febn2vufffq9heqdut8vhtlfvqjh15sd.apps.googleusercontent.com'
-  const DISCOVERY_DOCS = [
-    'https://www.googleapis.com/discovery/v1/apis/youtube/v3/rest',
-  ]
-  const SCOPES = 'https://www.googleapis.com/auth/youtube.readonly'
+const StyledForm = styled.form`
+  display: grid;
+  grid-auto-rows: auto;
+  grid-gap: 20px;
+`
 
-  const authorizeButton = document.getElementById('authorize-button')
-  const signoutButton = document.getElementById('signout-button')
-  const content = document.getElementById('content')
-  const channelForm = document.getElementById('channel-form')
-  const channelInput = document.getElementById('channel-input')
-  const videoContainer = document.getElementById('video-container')
-
-  const defaultChannel = 'techguyweb'
-
-  // const xhr = new XMLHttpRequest(),
-  //   method = 'GET',
-  //   url = 'https://apis.google.com/js/api.js'
-
-  // xhr.open(method, url, true)
-  // xhr.onreadystatechange = function() {
-  //   if (xhr.readyState === 'complete') {
-  //     window.onload = handleClientLoad
-  //     console.log('hello')
-  //   }
-  // }
-
-  window.onload = handleClientLoad
-
-  // Load auth2 library
-  function handleClientLoad() {
-    console.log('handleClientLoad')
-    gapi.load('client:auth2', initClient)
+const LinkContainer = styled.div`
+  display: flex;
+  justify-content: center;
+  margin-top: 10px;
+  > a {
+    text-decoration: none;
+    color: #1a1a1a;
   }
+  user-select: none;
+`
 
-  // Init API client library and set up sign in listeners
-  function initClient() {
-    gapi.client
-      .init({
-        discoveryDocs: DISCOVERY_DOCS,
-        clientId: CLIENT_ID,
-        scope: SCOPES,
-      })
-      .then(() => {
-        // Listen for sign in state changes
-        gapi.auth2.getAuthInstance().isSignedIn.listen(updateSigninStatus)
-        // Handle initial sign in state
-        updateSigninStatus(gapi.auth2.getAuthInstance().isSignedIn.get())
-        authorizeButton.onclick = handleAuthClick
-        signoutButton.onclick = handleSignoutClick
-      })
-  }
+// Options
+const CLIENT_ID =
+  '843342214316-febn2vufffq9heqdut8vhtlfvqjh15sd.apps.googleusercontent.com'
+const DISCOVERY_DOCS = [
+  'https://www.googleapis.com/discovery/v1/apis/youtube/v3/rest',
+]
+const SCOPES = 'https://www.googleapis.com/auth/youtube.readonly'
+const gapi = window.gapi
 
-  // Update UI sign in state changes
-  function updateSigninStatus(isSignedIn) {
-    if (isSignedIn) {
-      authorizeButton.style.display = 'none'
-      signoutButton.style.display = 'block'
-      content.style.display = 'block'
-      videoContainer.style.display = 'block'
-      getChannel(defaultChannel)
-    } else {
-      authorizeButton.style.display = 'block'
-      signoutButton.style.display = 'none'
-      content.style.display = 'none'
-      videoContainer.style.display = 'none'
+export default class LoginPage extends Component {
+  constructor(props) {
+    super(props)
+
+    gapi.load('client:auth2', () => {
+      gapi.client
+        .init({
+          discoveryDocs: DISCOVERY_DOCS,
+          clientId: CLIENT_ID,
+          scope: SCOPES,
+        })
+        .then(() => {
+          this.setState({ initialized: true })
+          // Listen for sign in state changes
+          gapi.auth2
+            .getAuthInstance()
+            .isSignedIn.listen(isSignedIn => this.setState({ isSignedIn }))
+
+          // Handle initial sign in state
+          this.setState({
+            isSignedIn: gapi.auth2.getAuthInstance().isSignedIn.get(),
+          })
+        })
+    })
+
+    this.state = {
+      isSignedIn: false,
+      initialized: false,
     }
   }
 
   // Handle login
-  function handleAuthClick() {
+  handleAuthClick() {
     gapi.auth2.getAuthInstance().signIn()
   }
 
   // Handle logout
-  function handleSignoutClick() {
+  handleSignoutClick() {
     gapi.auth2.getAuthInstance().signOut()
   }
 
-  // Get channel from API
-  function getChannel(channel) {
-    console.log(channel)
+  //   // Get playlist from API
+  //   getPlaylist(playlist) {
+  //     console.log(playlist)
+  //     gapi.client.youtube.
+
+  //   }
+
+  //   function get_channel(cid) {
+  //     var request = gapi.client.youtube.channels.list({
+  //         part: 'snippet,contentDetails,statistics',
+  //         id: cid
+  //     });
+  //     request.execute(function(response) {
+  //         var channels = response.items;
+  //         console.log(channels[0].snippet.title);
+  //     });
+  // }
+
+  //   defineRequest() {
+  //     buildApiRequest('GET',
+  //                     '/youtube/v3/playlists',
+  //                     {'channelId': 'UC_x5XG1OV2P6uZZ5FSM9Ttw',
+  //                      'maxResults': '25',
+  //                      'part': 'snippet,contentDetails'});
+  //       }
+  login() {
+    console.log('login')
+    gapi.auth2.getAuthInstance().signIn()
   }
 
-  return (
-    <Grid id="content">
-      Log In With Google
-      <button id="authorize-button">Log In</button>
-      <button id="signout-button">Log Out</button>
-      <div id="content">
-        <form id="channel-form">
-          <div id="input-field">
-            <input
-              id="channel-input"
-              placeholder="Enter Channel Name"
-              type="text"
-            />
-            <input value="Get Channel Data" type="submit" />
+  logout() {
+    console.log('logout')
+    gapi.auth2.getAuthInstance().signOut()
+  }
 
-            {/* <input name="playlist" placeholder="Playlist name" type="text" />
-            <label htmlFor="playlist">Enter playlist name</label>
-            <input type="submit" value="Load videos from playlist" /> */}
-          </div>
-        </form>
-        <div id="video-container" />
-      </div>
-    </Grid>
-  )
+  skipLogin() {
+    console.log('skip login')
+    // this.setState()
+  }
+
+  render() {
+    const { isSignedIn, initialized } = this.state
+
+    if (!initialized) {
+      return <Spinner />
+    }
+    if (isSignedIn) {
+      return (
+        <Grid id="content">
+          <PageTitleFullscreen title="Enter a play list name" />
+          <StyledForm id="playlist-form">
+            <Input
+              id="input-field"
+              name="playlist"
+              placeholder="Playlist name"
+            />
+            <input type="submit" value="Load videos from playlist" />
+          </StyledForm>
+          <button id="signout-button" onClick={() => this.logout()}>
+            Log Out
+          </button>
+          <LinkContainer>
+            <Link to="/" onClick={this.skipLogin}>
+              Skip
+            </Link>
+          </LinkContainer>
+        </Grid>
+      )
+    }
+    return (
+      <Grid id="content">
+        <PageTitleFullscreen title="Log in to YouTube" />
+        <button id="authorize-button" onClick={() => this.login()}>
+          Log In
+        </button>
+        <LinkContainer>
+          <Link to="/" onClick={this.skipLogin}>
+            Skip
+          </Link>
+        </LinkContainer>
+      </Grid>
+    )
+  }
 }

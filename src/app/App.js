@@ -9,7 +9,7 @@ import { getCardsFromStorage, saveCardsToStorage } from '../services'
 import PageTitle from '../common/PageTitle'
 import Nav from '../common/Nav'
 import Header from '../common/Header'
-import HeaderSearchBar from '../common/HeaderSearchBar'
+import HeaderSearchBar from '../search/HeaderSearchBar'
 import dayjs from 'dayjs'
 import UploadPage from '../upload/UploadPage'
 import LoginPage from '../youtube/LoginPage'
@@ -37,16 +37,16 @@ export default function App() {
   function clickHandler(id, status) {
     const card = cards.find(card => card.id === id)
     const index = cards.indexOf(card)
-    if (status === cards[index].status) {
+    if (status === card.status) {
       setCards([
         ...cards.slice(0, index),
-        { ...cards[index], status: 0, refresh: false },
+        { ...card, status: 0, refresh: false },
         ...cards.slice(index + 1),
       ])
     } else {
       setCards([
         ...cards.slice(0, index),
-        { ...cards[index], status: status, refresh: false },
+        { ...card, status: status, refresh: false },
         ...cards.slice(index + 1),
       ])
     }
@@ -57,7 +57,7 @@ export default function App() {
     const index = cards.indexOf(card)
     setCards([
       ...cards.slice(0, index),
-      { ...cards[index], refresh: !card.refresh, refreshDate: '' },
+      { ...card, refresh: !card.refresh, refreshDate: '' },
       ...cards.slice(index + 1),
     ])
   }
@@ -67,7 +67,7 @@ export default function App() {
     const index = cards.indexOf(card)
     setCards([
       ...cards.slice(0, index),
-      { ...cards[index], refreshDate: refreshDate },
+      { ...card, refreshDate: refreshDate },
       ...cards.slice(index + 1),
     ])
   }
@@ -91,13 +91,26 @@ export default function App() {
     setSearchString(event.target.value)
   }
 
-  function changeCardStatus(cardToChange) {
-    const index = cards.indexOf(cardToChange)
+  function changeCardStatus(card) {
+    const index = cards.indexOf(card)
     setCards([
       ...cards.slice(0, index),
-      { ...cards[index], status: 3, refresh: false, refreshDate: '' },
+      { ...card, status: 3, refresh: false, refreshDate: '' },
       ...cards.slice(index + 1),
     ])
+  }
+
+  function videoStateChangeHandler(event, id) {
+    if (event.data === 1) {
+      const date = dayjs()
+      const card = cards.find(card => card.id === id)
+      const index = cards.indexOf(card)
+      setCards([
+        ...cards.slice(0, index),
+        { ...card, lastSeenTime: date },
+        ...cards.slice(index + 1),
+      ])
+    }
   }
 
   function checkIfRefresh() {
@@ -114,8 +127,6 @@ export default function App() {
   }
 
   function saveCardClickHandler(formData, card) {
-    console.log(formData)
-    console.log(formData.tags)
     const index = cards.indexOf(card)
     setCards([
       ...cards.slice(0, index),
@@ -226,6 +237,7 @@ export default function App() {
               onCheckboxClick={checkboxClickHandler}
               onSliderChange={sliderChangeHandler}
               onClick={clickHandler}
+              onVideoStateChange={videoStateChangeHandler}
               status={
                 cards.find(card => card.id === match.params.id).status || null
               }

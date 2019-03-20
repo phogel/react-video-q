@@ -21,11 +21,12 @@ const StyledInput = styled.input`
   width: 100%;
   right: 0;
   height: 32px;
-  border: 1px solid rgba(196, 196, 196, 0.66);
-  border-radius: 50px;
+  border: none;
+  box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.24), 0px 0px 2px rgba(0, 0, 0, 0.12);
+  border-radius: 15px;
   padding: 12px 12px;
-  font-size: 16px;
-  background: #fefdfd;
+  font-size: 14px;
+  background: rgb(250, 250, 250);
   ::placeholder {
     color: #c4c4c4;
   }
