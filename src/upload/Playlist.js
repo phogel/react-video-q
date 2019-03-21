@@ -10,8 +10,8 @@ const StyledForm = styled.form`
 
 const gapi = window.gapi
 
-export default function ChannelComponent() {
-  const [playlists, setPlaylists] = useState('')
+export default function PlaylistComponent({ onSubmit, onChange }) {
+  const [playlists, setPlaylists] = useState([])
   const [selectedPlaylist, setSelectedPlaylist] = useState()
   const [initialized, setInitialized] = useState(false)
 
@@ -20,11 +20,11 @@ export default function ChannelComponent() {
   }
 
   if (!initialized) {
-    console.log(initialized)
     gapi.client.youtube.playlists
       .list({
         mine: 'true',
         part: 'snippet',
+        maxResults: '50',
       })
       .then(response => {
         responseHandler(response)
@@ -32,16 +32,20 @@ export default function ChannelComponent() {
       .catch(err => alert('No playlist by that name'))
     setTimeout(() => {
       setInitialized(true)
-    }, 300)
+    }, 1000)
   }
 
   function onChangeHandler(event) {
     setSelectedPlaylist(event.target.value)
+    console.log('Playlist.js onChangeHandler')
+    console.log(event.target.value)
+    onChange(event.target.value)
   }
 
   function onSubmitHandler(event) {
-    alert('your playlist chosen is: ' + selectedPlaylist)
+    console.log(event)
     event.preventDefault()
+    onSubmit(event.target.value)
   }
 
   return (
@@ -49,10 +53,11 @@ export default function ChannelComponent() {
       <PageTitleFullscreen title="Select a playlist" />
       <StyledForm onSubmit={onSubmitHandler}>
         <select value={selectedPlaylist} onChange={e => onChangeHandler(e)}>
-          {console.log(playlists)}
           {initialized &&
+            playlists &&
+            playlists.length &&
             playlists.map(item => (
-              <option key={item.id} value={item.snippet.localized.title}>
+              <option key={item.id} value={item.id}>
                 {item.snippet.localized.title}
               </option>
             ))}

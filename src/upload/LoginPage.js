@@ -4,6 +4,7 @@ import PageTitleFullscreen from '../common/PageTitleFullscreen'
 import Spinner from '../common/Spinner'
 import ChannelComponent from './Channel'
 import PlaylistComponent from './Playlist'
+import ContentComponent from './Content'
 
 const Grid = styled.section`
   display: grid;
@@ -42,11 +43,11 @@ export default class LoginPage extends Component {
         })
         .then(() => {
           this.setState({ initialized: true })
+
           // Listen for sign in state changes
           gapi.auth2.getAuthInstance().isSignedIn.listen(isSignedIn => {
             this.onSigninStateChange(isSignedIn)
           })
-
           // Handle initial sign in state
           this.setState({
             isSignedIn: gapi.auth2.getAuthInstance().isSignedIn.get(),
@@ -59,6 +60,8 @@ export default class LoginPage extends Component {
     this.state = {
       isSignedIn: false,
       initialized: false,
+      playlistId: '',
+      loadPlaylist: false,
     }
   }
 
@@ -74,22 +77,16 @@ export default class LoginPage extends Component {
     gapi.auth2.getAuthInstance().signOut()
   }
 
-  componentDidMount() {
-    console.log('i mounted')
-  }
-  componentDidUpdate() {
-    console.log('i updated')
-  }
-  componentWillUpdate() {
-    console.log('i will update')
+  onSubmitPlaylist() {
+    this.setState({ loadPlaylist: true })
   }
 
-  componentWillUnmount() {
-    console.log('i will unmount')
+  onChangePlaylist(playlistId) {
+    this.setState({ playlistId })
   }
+
   render() {
-    const { isSignedIn, initialized } = this.state
-
+    const { isSignedIn, initialized, playlistId } = this.state
     if (!initialized) {
       return <Spinner />
     }
@@ -98,12 +95,17 @@ export default class LoginPage extends Component {
       return (
         <Grid id="content">
           <ChannelComponent />
-          <PlaylistComponent />
+          <PlaylistComponent
+            onChange={this.onChangePlaylist.bind(this)}
+            onSubmit={this.onSubmitPlaylist.bind(this)}
+          />
           <button onClick={() => this.logout()}>Log Out</button>
           <StyledAbortLink onClick={() => this.props.history.push('/')}>
             Cancel
           </StyledAbortLink>
-          <div id="content" />
+          {this.state.loadPlaylist && (
+            <ContentComponent playlistId={playlistId} />
+          )}
         </Grid>
       )
     }

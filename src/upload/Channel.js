@@ -19,7 +19,6 @@ export default function ChannelComponent() {
   }
 
   if (!initialized) {
-    console.log(initialized)
     gapi.client.youtube.channels
       .list({
         part: 'snippet,contentDetails,statistics',

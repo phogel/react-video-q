@@ -66,11 +66,12 @@ const Tag = styled.li`
   display: inline-block;
   margin: 0 8px 8px 0;
   padding: 4px 10px 22px 10px;
-  background: rgba(26, 26, 26, 0.57);
+  ${p => p.tagColor};
   border-radius: 10px;
   height: 22px;
-  color: #fcfcfc;
+  color: #fdfdfd;
   font-size: 14px;
+  transition: width 2s, height 2s, background-color 2s, transform 2s;
 `
 
 const StyledNotes = styled.div`
@@ -122,7 +123,11 @@ export default function CardsDetailPage(props) {
   }
 
   function renderTag(text, index) {
-    return <Tag key={index}>{text}</Tag>
+    return (
+      <Tag tagColor={tagColor(status)} key={index}>
+        {text}
+      </Tag>
+    )
   }
 
   function onLearningClick() {
@@ -147,13 +152,9 @@ export default function CardsDetailPage(props) {
     props.onVideoStateChange(event, card.id)
   }
 
-  function bgColor(status) {
-    let backgrounds = [
-      'rgb(250, 239, 246)',
-      'rgb(212, 244,238)',
-      'rgb(249,216,231)',
-    ]
-    return { background: backgrounds[status - 1] || '#fcfcfc' }
+  function tagColor(status) {
+    let backgrounds = ['#EFA5D4', '#00CCA9', '#FF328B']
+    return { background: backgrounds[status - 1] || 'rgba(26, 26, 26, 0.57)' }
   }
 
   function MainContent() {
@@ -214,7 +215,7 @@ export default function CardsDetailPage(props) {
   }
 
   return (
-    <Grid style={bgColor(status)}>
+    <Grid>
       <Video>
         <YouTubeVideo onStateChange={onVideoStateChange} videoId={card.id} />
         <BackButton onClick={goBack}>
