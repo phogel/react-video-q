@@ -12,7 +12,7 @@ import Header from '../common/Header'
 import HeaderSearchBar from '../search/HeaderSearchBar'
 import dayjs from 'dayjs'
 import UploadPage from '../upload/UploadPage'
-import LoginPage from '../upload/LoginPage'
+import LoginPage from '../upload/addplaylist/LoginPage'
 
 const Grid = styled.section`
   display: grid;

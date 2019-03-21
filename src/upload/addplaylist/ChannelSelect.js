@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import styled from 'styled-components'
-import PageTitleFullscreen from '../common/PageTitleFullscreen'
-import Input from '../common/Input'
+import PageTitleFullscreen from '../../common/PageTitleFullscreen'
+import Input from '../../common/Input'
 
 const StyledForm = styled.form`
   display: grid;
@@ -13,9 +13,12 @@ const gapi = window.gapi
 
 export default function ChannelComponent() {
   const [channel, setChannel] = useState('')
+  const [channelLength, setChannelLength] = useState(1)
   const [initialized, setInitialized] = useState(false)
+
   function responseHandler(response) {
     setChannel(response.result.items[0].id)
+    setChannelLength(response.result.items.length)
   }
 
   if (!initialized) {
@@ -27,7 +30,7 @@ export default function ChannelComponent() {
       .then(response => {
         responseHandler(response)
       })
-      .catch(err => alert('No channel by that name'))
+      .catch(err => console.log(err))
     setInitialized(true)
   }
 
@@ -36,23 +39,27 @@ export default function ChannelComponent() {
   }
 
   function onSubmitHandler(event) {
-    alert('your selected channel is: ' + channel)
+    console.log('your selected channel is: ' + channel)
     event.preventDefault()
   }
 
-  return (
-    <React.Fragment>
-      <PageTitleFullscreen title="Enter your YouTube channel ID" />
-      <StyledForm onSubmit={onSubmitHandler}>
-        <Input
-          id="input-field"
-          name="channel"
-          placeholder="Channel name"
-          value={channel}
-          onChange={e => onChangeHandler(e)}
-        />
-        <input type="submit" value="Set channel" />
-      </StyledForm>
-    </React.Fragment>
-  )
+  if (channelLength === 1) {
+    return null
+  } else {
+    return (
+      <React.Fragment>
+        <PageTitleFullscreen title="Enter your YouTube channel ID" />
+        <StyledForm onSubmit={onSubmitHandler}>
+          <Input
+            id="input-field"
+            name="channel"
+            placeholder="Channel name"
+            value={channel}
+            onChange={e => onChangeHandler(e)}
+          />
+          <input type="submit" value="Set channel" />
+        </StyledForm>
+      </React.Fragment>
+    )
+  }
 }

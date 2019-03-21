@@ -1,10 +1,10 @@
 import React, { Component } from 'react'
 import styled from 'styled-components'
-import PageTitleFullscreen from '../common/PageTitleFullscreen'
-import Spinner from '../common/Spinner'
-import ChannelComponent from './Channel'
-import PlaylistComponent from './Playlist'
-import ContentComponent from './Content'
+import PageTitleFullscreen from '../../common/PageTitleFullscreen'
+import Spinner from '../../common/Spinner'
+import ChannelSelect from './ChannelSelect'
+import PlaylistSelect from './PlaylistSelect'
+import PlaylistCards from './PlaylistCards'
 
 const Grid = styled.section`
   display: grid;
@@ -22,8 +22,10 @@ const StyledAbortLink = styled.div`
   color: #dcdcdc;
 `
 
+// const CLIENT_ID =
+//   '843342214316-febn2vufffq9heqdut8vhtlfvqjh15sd.apps.googleusercontent.com'
 const CLIENT_ID =
-  '843342214316-febn2vufffq9heqdut8vhtlfvqjh15sd.apps.googleusercontent.com'
+  '362023861090-is752sg2d40q908ejsd5k9g7f387uinl.apps.googleusercontent.com'
 const DISCOVERY_DOCS = [
   'https://www.googleapis.com/discovery/v1/apis/youtube/v3/rest',
 ]
@@ -62,6 +64,7 @@ export default class LoginPage extends Component {
       initialized: false,
       playlistId: '',
       loadPlaylist: false,
+      playlistInitialized: false,
     }
   }
 
@@ -78,11 +81,17 @@ export default class LoginPage extends Component {
   }
 
   onSubmitPlaylist() {
-    this.setState({ loadPlaylist: true })
+    // this.setState({ loadPlaylist: true })
   }
 
   onChangePlaylist(playlistId) {
-    this.setState({ playlistId })
+    this.setState({ playlistId: playlistId })
+    this.setState({ playlistInitialized: true })
+    this.setState({ loadPlaylist: true })
+  }
+
+  togglePlaylistInitialized() {
+    this.setState({ playlistInitialized: true })
   }
 
   render() {
@@ -93,9 +102,9 @@ export default class LoginPage extends Component {
 
     if (isSignedIn) {
       return (
-        <Grid id="content">
-          <ChannelComponent />
-          <PlaylistComponent
+        <Grid>
+          <ChannelSelect />
+          <PlaylistSelect
             onChange={this.onChangePlaylist.bind(this)}
             onSubmit={this.onSubmitPlaylist.bind(this)}
           />
@@ -103,9 +112,13 @@ export default class LoginPage extends Component {
           <StyledAbortLink onClick={() => this.props.history.push('/')}>
             Cancel
           </StyledAbortLink>
-          {this.state.loadPlaylist && (
-            <ContentComponent playlistId={playlistId} />
-          )}
+          <PlaylistCards
+            playlistInitialized={this.state.playlistInitialized}
+            togglePlaylistInitialized={this.togglePlaylistInitialized.bind(
+              this
+            )}
+            playlistId={playlistId}
+          />
         </Grid>
       )
     }

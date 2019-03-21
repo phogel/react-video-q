@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import styled from 'styled-components'
-import PageTitleFullscreen from '../common/PageTitleFullscreen'
+import PageTitleFullscreen from '../../common/PageTitleFullscreen'
 
 const StyledForm = styled.form`
   display: grid;
@@ -29,7 +29,7 @@ export default function PlaylistComponent({ onSubmit, onChange }) {
       .then(response => {
         responseHandler(response)
       })
-      .catch(err => alert('No playlist by that name'))
+      .catch(err => console.log(err))
     setTimeout(() => {
       setInitialized(true)
     }, 1000)
@@ -37,13 +37,10 @@ export default function PlaylistComponent({ onSubmit, onChange }) {
 
   function onChangeHandler(event) {
     setSelectedPlaylist(event.target.value)
-    console.log('Playlist.js onChangeHandler')
-    console.log(event.target.value)
     onChange(event.target.value)
   }
 
   function onSubmitHandler(event) {
-    console.log(event)
     event.preventDefault()
     onSubmit(event.target.value)
   }
@@ -52,7 +49,14 @@ export default function PlaylistComponent({ onSubmit, onChange }) {
     <React.Fragment>
       <PageTitleFullscreen title="Select a playlist" />
       <StyledForm onSubmit={onSubmitHandler}>
-        <select value={selectedPlaylist} onChange={e => onChangeHandler(e)}>
+        <select
+          value={selectedPlaylist}
+          defaultValue={'default'}
+          onChange={e => onChangeHandler(e)}
+        >
+          <option disabled value={'default'}>
+            -- select a playlist --
+          </option>
           {initialized &&
             playlists &&
             playlists.length &&
