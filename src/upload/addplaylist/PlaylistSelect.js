@@ -44,17 +44,35 @@ export default function PlaylistComponent({ onSubmit, setPlaylistItems }) {
         playlistId: event.target.value,
       })
       .then(response => {
-        console.log(response.result.items)
         setPlaylistItems(
-          response.result.items.map(item => {
-            return {
-              id: item.contentDetails.videoId,
-              title: item.snippet.title,
-              notes: item.snippet.description,
-              backgroundImageUrl: item.snippet.thumbnails.high.url,
-              status: 0,
-            }
-          })
+          response.result.items
+            .map(item => {
+              function url() {
+                if (item.snippet.thumbnails.hasOwnProperty('maxres')) {
+                  return item.snippet.thumbnails.maxres.url
+                } else if (item.snippet.thumbnails.hasOwnProperty('default')) {
+                  return item.snippet.thumbnails.default.url
+                } else if (item.snippet.thumbnails.hasOwnProperty('high')) {
+                  return item.snippet.thumbnails.high.url
+                } else if (item.snippet.thumbnails.hasOwnProperty('medium')) {
+                  return item.snippet.thumbnails.medium.url
+                } else if (item.snippet.thumbnails.hasOwnProperty('default')) {
+                  return item.snippet.thumbnails.default.url
+                }
+              }
+              if (item.status.privacyStatus === 'private') {
+                return null
+              } else {
+                return {
+                  id: item.contentDetails.videoId,
+                  title: item.snippet.title,
+                  notes: item.snippet.description,
+                  backgroundImageUrl: url(),
+                  status: 0,
+                }
+              }
+            })
+            .filter(item => item !== null)
         )
       })
       .catch(err => console.log(err))

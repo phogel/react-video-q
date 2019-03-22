@@ -1,9 +1,9 @@
 import React from 'react'
-import CardsContainer from '../../cards/CardsContainer'
+import CardsContainerSmall from './CardsContainerSmall'
 
 export default function Content({ playlistItems }) {
   if (playlistItems && playlistItems.length > 0) {
-    return <CardsContainer cards={playlistItems} />
+    return <CardsContainerSmall cards={playlistItems} />
   } else {
     return null
   }
