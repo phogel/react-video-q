@@ -9,9 +9,10 @@ import PlaylistCards from './PlaylistCards'
 const Grid = styled.section`
   display: grid;
   grid-auto-rows: auto;
-  margin: auto 0;
-  grid-gap: 20px;
-  width: 100vw;
+  width: 100%;
+  max-width: 500px;
+  margin: 0 auto;
+  grid-gap: 10px;
 `
 
 const Container = styled.div`
@@ -19,9 +20,11 @@ const Container = styled.div`
   grid-auto-rows: auto;
   grid-gap: 20px;
   padding: 20px;
-  position: fixed;
+  position: sticky;
+  top: 0;
+  left: 0;
   margin: auto 0;
-  width: 100%;
+  width: 100vw;
   z-index: 5;
   background: rgb(250, 250, 250);
   box-shadow: 0 1px 4px rgba(0, 0, 0, 0.6);
@@ -30,7 +33,6 @@ const Container = styled.div`
 const StyledAbortLink = styled.div`
   display: flex;
   justify-content: center;
-  margin-top: 10px;
   color: #dcdcdc;
 `
 
@@ -96,8 +98,8 @@ export default function AddPlaylistPage({ history, cards, setCards }) {
           <PlaylistSelect
             setPlaylistItems={setPlaylistItems}
             onSubmit={onSubmitPlaylist}
+            logout={logout}
           />
-          <button onClick={() => logout()}>Log Out</button>
           <StyledAbortLink onClick={() => history.push('/')}>
             Cancel
           </StyledAbortLink>

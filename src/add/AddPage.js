@@ -28,6 +28,7 @@ const StyledItem = styled.div`
   display: flex;
   justify-content: center;
   text-align: center;
+  align-items: center;
   background: #1a1a1a;
   padding: 10px;
   border-radius: 10px;
@@ -35,7 +36,7 @@ const StyledItem = styled.div`
   transition: background-color 0.3s;
   :hover,
   :focus {
-    background-color: rgb(255, 50, 139, 0.8);
+    background-color: rgb(255, 50, 139, 0.9);
     outline: 0;
   }
 `

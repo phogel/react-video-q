@@ -2,6 +2,11 @@ import React, { useState } from 'react'
 import styled from 'styled-components'
 import PageTitleFullscreen from '../../common/PageTitleFullscreen'
 
+const Grid = styled.div`
+  display: grid;
+  grid-template-columns: 1fr auto;
+`
+
 const StyledForm = styled.form`
   position: relative;
   display: grid;
@@ -42,7 +47,11 @@ const StyledSelect = styled.select`
 
 const gapi = window.gapi
 
-export default function PlaylistComponent({ onSubmit, setPlaylistItems }) {
+export default function PlaylistComponent({
+  onSubmit,
+  setPlaylistItems,
+  logout,
+}) {
   const [playlists, setPlaylists] = useState([])
   const [selectedPlaylist, setSelectedPlaylist] = useState()
   const [initialized, setInitialized] = useState(false)
@@ -101,6 +110,7 @@ export default function PlaylistComponent({ onSubmit, setPlaylistItems }) {
                   notes: item.snippet.description,
                   backgroundImageUrl: url(),
                   status: 0,
+                  tags: [],
                 }
               }
             })
@@ -118,7 +128,15 @@ export default function PlaylistComponent({ onSubmit, setPlaylistItems }) {
 
   return (
     <React.Fragment>
-      <PageTitleFullscreen title="Select a playlist" />
+      <Grid>
+        <PageTitleFullscreen title="Select a playlist" />
+        <button
+          style={{ height: '30px', fontSize: '14px' }}
+          onClick={() => logout()}
+        >
+          Log Out
+        </button>
+      </Grid>
       <StyledForm onSubmit={onSubmitHandler}>
         <StyledSelect
           value={selectedPlaylist}
@@ -137,7 +155,7 @@ export default function PlaylistComponent({ onSubmit, setPlaylistItems }) {
               </option>
             ))}
         </StyledSelect>
-        <input type="submit" value="Add to VIDE-Q" />
+        <input type="submit" value="Add to VIDEQ" />
       </StyledForm>
     </React.Fragment>
   )
