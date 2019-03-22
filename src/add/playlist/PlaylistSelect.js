@@ -3,9 +3,41 @@ import styled from 'styled-components'
 import PageTitleFullscreen from '../../common/PageTitleFullscreen'
 
 const StyledForm = styled.form`
+  position: relative;
   display: grid;
   grid-auto-rows: auto;
   grid-gap: 20px;
+  > select {
+    appearance: none;
+  }
+  :before {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    /* Styling the down arrow */
+    width: 0;
+    height: 0;
+    padding: 0;
+    content: '';
+    border-left: 0.25em solid transparent;
+    border-right: 0.25em solid transparent;
+    border-top: 0.375em solid #e0e0e0;
+    pointer-events: none;
+  }
+`
+
+const StyledSelect = styled.select`
+  font-family: inherit;
+  background-color: transparent;
+  width: 100%;
+  padding: 4px 0;
+  font-size: 16px;
+  color: #7c7c7c;
+  border: none;
+  border-bottom: 1px solid #e0e0e0;
+  :focus {
+    outline: none;
+  }
 `
 
 const gapi = window.gapi
@@ -88,7 +120,7 @@ export default function PlaylistComponent({ onSubmit, setPlaylistItems }) {
     <React.Fragment>
       <PageTitleFullscreen title="Select a playlist" />
       <StyledForm onSubmit={onSubmitHandler}>
-        <select
+        <StyledSelect
           value={selectedPlaylist}
           defaultValue={'default'}
           onChange={onChangeHandler}
@@ -104,8 +136,8 @@ export default function PlaylistComponent({ onSubmit, setPlaylistItems }) {
                 {item.snippet.localized.title}
               </option>
             ))}
-        </select>
-        <input type="submit" value="Load videos from playlist" />
+        </StyledSelect>
+        <input type="submit" value="Add to VIDE-Q" />
       </StyledForm>
     </React.Fragment>
   )

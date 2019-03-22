@@ -9,10 +9,22 @@ import PlaylistCards from './PlaylistCards'
 const Grid = styled.section`
   display: grid;
   grid-auto-rows: auto;
-  width: 100%;
   margin: auto 0;
   grid-gap: 20px;
+  width: 100vw;
+`
+
+const Container = styled.div`
+  display: grid;
+  grid-auto-rows: auto;
+  grid-gap: 20px;
   padding: 20px;
+  position: fixed;
+  margin: auto 0;
+  width: 100%;
+  z-index: 5;
+  background: rgb(250, 250, 250);
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.6);
 `
 
 const StyledAbortLink = styled.div`
@@ -32,7 +44,7 @@ const DISCOVERY_DOCS = [
 const SCOPES = 'https://www.googleapis.com/auth/youtube.readonly'
 const gapi = window.gapi
 
-export default function LoginPage({ history }) {
+export default function AddPlaylistPage({ history, cards, setCards }) {
   const [isSignedIn, setIsSignedIn] = useState(false)
   const [initialized, setInitialized] = useState(false)
   const [playlistItems, setPlaylistItems] = useState([])
@@ -69,7 +81,7 @@ export default function LoginPage({ history }) {
   }
 
   function onSubmitPlaylist() {
-    // this.setState({ loadPlaylist: true })
+    setCards([...cards, ...playlistItems])
   }
 
   if (!initialized) {
@@ -77,29 +89,32 @@ export default function LoginPage({ history }) {
   }
 
   if (isSignedIn) {
-    console.log(playlistItems)
     return (
       <Grid>
-        <ChannelSelect />
-        <PlaylistSelect
-          setPlaylistItems={setPlaylistItems}
-          onSubmit={onSubmitPlaylist}
-        />
-        <button onClick={() => logout()}>Log Out</button>
-        <StyledAbortLink onClick={() => history.push('/')}>
-          Cancel
-        </StyledAbortLink>
+        <Container>
+          <ChannelSelect />
+          <PlaylistSelect
+            setPlaylistItems={setPlaylistItems}
+            onSubmit={onSubmitPlaylist}
+          />
+          <button onClick={() => logout()}>Log Out</button>
+          <StyledAbortLink onClick={() => history.push('/')}>
+            Cancel
+          </StyledAbortLink>
+        </Container>
         <PlaylistCards playlistItems={playlistItems} />
       </Grid>
     )
   }
   return (
     <Grid>
-      <PageTitleFullscreen title="Log in to YouTube" />
-      <button onClick={() => login()}>Log In</button>
-      <StyledAbortLink onClick={() => history.push('/')}>
-        Cancel
-      </StyledAbortLink>
+      <Container>
+        <PageTitleFullscreen title="Log in to YouTube" />
+        <button onClick={() => login()}>Log In</button>
+        <StyledAbortLink onClick={() => history.push('/')}>
+          Cancel
+        </StyledAbortLink>
+      </Container>
     </Grid>
   )
 }

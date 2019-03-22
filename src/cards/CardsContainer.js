@@ -18,8 +18,8 @@ const CardContainer = styled.section`
 export default function CardsRender({ cards }) {
   return (
     <CardContainer>
-      {cards.map(card => (
-        <Card card={card} key={card.id} />
+      {cards.map((card, index) => (
+        <Card card={card} key={index} />
       ))}
     </CardContainer>
   )

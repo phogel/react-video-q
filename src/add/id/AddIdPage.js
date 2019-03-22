@@ -1,6 +1,6 @@
 import React from 'react'
 import styled from 'styled-components'
-import PageTitleFullscreen from '../common/PageTitleFullscreen'
+import PageTitleFullscreen from '../../common/PageTitleFullscreen'
 import Form from './Form'
 
 const Grid = styled.section`
@@ -20,7 +20,7 @@ const StyledAbortLink = styled.div`
   color: #dcdcdc;
 `
 
-export default function UploadPage({ cards, onSubmit, history }) {
+export default function AddIdPage({ cards, onSubmit, history }) {
   function goBack() {
     window.history.back()
   }

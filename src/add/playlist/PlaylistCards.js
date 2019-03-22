@@ -1,5 +1,5 @@
 import React from 'react'
-import CardsContainerSmall from './CardsContainerSmall'
+import CardsContainerSmall from '../../cards/CardsContainerSmall'
 
 export default function Content({ playlistItems }) {
   if (playlistItems && playlistItems.length > 0) {

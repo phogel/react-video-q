@@ -3,19 +3,21 @@ import styled from 'styled-components'
 
 const StyledBackground = styled.div`
   width: 100%;
+  height: 28px;
   font-size: 15px;
   text-decoration: bold;
   font-family: 'Dosis', sans-serif;
   display: flex;
   justify-content: center;
+  align-items: center;
 `
 
 const StyledTitle = styled.div`
-  animation: move-left-quick 0.2s ease-out;
+  animation: move-left-quick 0.4s ease-out;
 
   @keyframes move-left-quick {
     0% {
-      transform: translateX(2px);
+      transform: translateX(6px);
     }
     100% {
       transform: translateX(0);

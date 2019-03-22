@@ -9,6 +9,7 @@ import SwitchButton from './SwitchButton'
 import CardEditForm from './CardEditForm'
 import LastSeen from './LastSeen'
 import { Slider } from 'antd'
+import BackButton from '../../common/BackButton'
 
 const Grid = styled.section`
   display: grid;
@@ -36,19 +37,6 @@ const ContentGrid = styled.div`
 `
 
 const Video = styled.section``
-
-const BackButton = styled.div`
-  margin: 0;
-  position: absolute;
-  top: 5px;
-  left: 5px;
-  height: 30px;
-  width: 30px;
-  opacity: 0.75;
-  background: black;
-  z-index: 10;
-  border-radius: 5px;
-`
 
 const StyledTitle = styled.h3`
   display: block;
@@ -113,10 +101,12 @@ export default function CardsDetailPage(props) {
   }
 
   function onDeleteCardClickHandler(card) {
-    setTimeout(() => {
-      onDeleteCardClick(card)
-    }, 200)
-    goBack()
+    if (window.confirm('Do you really want to delete this card?')) {
+      setTimeout(() => {
+        onDeleteCardClick(card)
+      }, 200)
+      goBack()
+    }
   }
 
   function goBack() {
@@ -218,9 +208,7 @@ export default function CardsDetailPage(props) {
     <Grid>
       <Video>
         <YouTubeVideo onStateChange={onVideoStateChange} videoId={card.id} />
-        <BackButton onClick={goBack}>
-          <MdExpandMore color={'#FCFCFC'} size={'30px'} />
-        </BackButton>
+        <BackButton />
       </Video>
       <MainContent />
       <CategoryButtonContainer>

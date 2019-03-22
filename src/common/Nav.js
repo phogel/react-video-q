@@ -14,6 +14,7 @@ const StyledLink = styled(Link)`
   justify-content: center;
   align-items: center;
   text-decoration: none;
+  transition: all 0.5s ease-in;
 `
 
 export default function Nav({ status }) {

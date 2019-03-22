@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react'
 import styled from 'styled-components'
 import { MdCloudUpload } from 'react-icons/md'
-import split from '../utils.js'
+import split from '../../utils.js'
 
 const StyledForm = styled.form`
   display: grid;
@@ -132,11 +132,11 @@ export default function Form({ cards, history, onSubmit }) {
         <ErrorMessage />
       </div>
       <StyledButton>
-        Submit{' '}
+        Add to VIDE-Q{' '}
         <MdCloudUpload
           color={'rgb(250, 250, 250)'}
           size={'20px'}
-          style={{ position: 'absolute', left: '60%' }}
+          style={{ marginLeft: '10px' }}
         />
       </StyledButton>
     </StyledForm>
