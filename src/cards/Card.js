@@ -19,6 +19,7 @@ const StyledCard = styled.div`
   padding: 18px 18px 6px;
   border-radius: 20px;
   color: #fefdfd;
+  background: #b9b8b8;
   background: linear-gradient(
       to bottom,
       rgba(0, 0, 0, 0) 0%,
@@ -95,42 +96,42 @@ const iconFill = ['#EFA5D4', '#00CCA9', '#FF328B']
 const iconName = ['learning-queue', 'learned', 'refresh-queue']
 const cardFade = ['239,165,212,0.65', '0,204,169,0.65', '255,50,139,0.65']
 
-export default function Card({ details }) {
+export default function Card({ card }) {
   function renderTag(text, index) {
     return <Tag key={index}>{text}</Tag>
   }
 
   function selectFade() {
-    if (details.status === 0) {
+    if (card.status === 0) {
       return '0, 0, 0, 0.65'
     }
-    return cardFade[details.status - 1]
+    return cardFade[card.status - 1]
   }
 
   function selectIcon() {
-    if (details.status === 0) {
+    if (card.status === 0) {
       return ''
     }
     return (
       <StyledIcon
-        fill={iconFill[details.status - 1]}
+        fill={iconFill[card.status - 1]}
         height="30px"
         width="50px"
-        name={iconName[details.status - 1]}
+        name={iconName[card.status - 1]}
       />
     )
   }
 
   return (
-    <StyledLink to={`/videos/${details.id}`}>
+    <StyledLink to={`/videos/${card.id}`}>
       <StyledCard
         className={'card'}
-        backgroundImageUrl={details.backgroundImageUrl}
+        backgroundImageUrl={card.backgroundImageUrl}
         cardFade={selectFade}
       >
         {selectIcon()}
-        <StyledTitle>{details.title}</StyledTitle>
-        {details.tags && <TagList>{details.tags.map(renderTag)}</TagList>}
+        <StyledTitle>{card.title}</StyledTitle>
+        {card.tags && <TagList>{card.tags.map(renderTag)}</TagList>}
       </StyledCard>
     </StyledLink>
   )

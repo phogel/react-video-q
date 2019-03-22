@@ -8,6 +8,7 @@ import YouTubeVideo from '../../youtube/YouTubeVideo'
 import SwitchButton from './SwitchButton'
 import CardEditForm from './CardEditForm'
 import LastSeen from './LastSeen'
+import { Slider } from 'antd'
 
 const Grid = styled.section`
   display: grid;
@@ -199,6 +200,7 @@ export default function CardsDetailPage(props) {
             {card.tags && <TagList>{card.tags.map(renderTag)}</TagList>}
             <StyledNotes>{card.notes}</StyledNotes>
           </ContentGrid>
+          <Slider range defaultValue={[20, 50]} />
           {card.status === 2 ? (
             <SwitchButton
               cardRefreshDate={card.refreshDate}
@@ -206,9 +208,7 @@ export default function CardsDetailPage(props) {
               refresh={card.refresh}
               onSliderChange={onSliderChange}
             />
-          ) : (
-            <div />
-          )}
+          ) : null}
         </MainContentGrid>
       )
     }

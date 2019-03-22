@@ -10,14 +10,10 @@ const StyledForm = styled.form`
 
 const gapi = window.gapi
 
-export default function PlaylistComponent({ onSubmit, onChange }) {
+export default function PlaylistComponent({ onSubmit, setPlaylistItems }) {
   const [playlists, setPlaylists] = useState([])
   const [selectedPlaylist, setSelectedPlaylist] = useState()
   const [initialized, setInitialized] = useState(false)
-
-  function responseHandler(response) {
-    setPlaylists(response.result.items)
-  }
 
   if (!initialized) {
     gapi.client.youtube.playlists
@@ -35,9 +31,34 @@ export default function PlaylistComponent({ onSubmit, onChange }) {
     }, 1000)
   }
 
+  function responseHandler(response) {
+    setPlaylists(response.result.items)
+  }
+
   function onChangeHandler(event) {
     setSelectedPlaylist(event.target.value)
-    onChange(event.target.value)
+    gapi.client.youtube.playlistItems
+      .list({
+        maxResults: '50',
+        part: 'snippet,contentDetails,status,id',
+        playlistId: event.target.value,
+      })
+      .then(response => {
+        console.log(response.result.items)
+        setPlaylistItems(
+          response.result.items.map(item => {
+            return {
+              id: item.contentDetails.videoId,
+              title: item.snippet.title,
+              notes: item.snippet.description,
+              backgroundImageUrl: item.snippet.thumbnails.high.url,
+              status: 0,
+            }
+          })
+        )
+      })
+      .catch(err => console.log(err))
+    // onChange(playlistItems)
   }
 
   function onSubmitHandler(event) {
@@ -52,7 +73,7 @@ export default function PlaylistComponent({ onSubmit, onChange }) {
         <select
           value={selectedPlaylist}
           defaultValue={'default'}
-          onChange={e => onChangeHandler(e)}
+          onChange={onChangeHandler}
         >
           <option disabled value={'default'}>
             -- select a playlist --

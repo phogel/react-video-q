@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React, { useState } from 'react'
 import styled from 'styled-components'
 import PageTitleFullscreen from '../../common/PageTitleFullscreen'
 import Spinner from '../../common/Spinner'
@@ -22,114 +22,84 @@ const StyledAbortLink = styled.div`
   color: #dcdcdc;
 `
 
-// const CLIENT_ID =
-//   '843342214316-febn2vufffq9heqdut8vhtlfvqjh15sd.apps.googleusercontent.com'
 const CLIENT_ID =
-  '362023861090-is752sg2d40q908ejsd5k9g7f387uinl.apps.googleusercontent.com'
+  '843342214316-febn2vufffq9heqdut8vhtlfvqjh15sd.apps.googleusercontent.com'
+// const CLIENT_ID =
+//   '362023861090-is752sg2d40q908ejsd5k9g7f387uinl.apps.googleusercontent.com'
 const DISCOVERY_DOCS = [
   'https://www.googleapis.com/discovery/v1/apis/youtube/v3/rest',
 ]
 const SCOPES = 'https://www.googleapis.com/auth/youtube.readonly'
 const gapi = window.gapi
 
-export default class LoginPage extends Component {
-  constructor(props) {
-    super(props)
+export default function LoginPage({ history }) {
+  const [isSignedIn, setIsSignedIn] = useState(false)
+  const [initialized, setInitialized] = useState(false)
+  const [playlistItems, setPlaylistItems] = useState([])
 
-    gapi.load('client:auth2', () => {
-      gapi.client
-        .init({
-          discoveryDocs: DISCOVERY_DOCS,
-          clientId: CLIENT_ID,
-          scope: SCOPES,
+  gapi.load('client:auth2', () => {
+    gapi.client
+      .init({
+        discoveryDocs: DISCOVERY_DOCS,
+        clientId: CLIENT_ID,
+        scope: SCOPES,
+      })
+      .then(() => {
+        setInitialized(true)
+
+        // Listen for sign in state changes
+        gapi.auth2.getAuthInstance().isSignedIn.listen(isSignedIn => {
+          onSigninStateChange(isSignedIn)
         })
-        .then(() => {
-          this.setState({ initialized: true })
+        // Handle initial sign in state
+        setIsSignedIn(gapi.auth2.getAuthInstance().isSignedIn.get())
+      })
+  })
 
-          // Listen for sign in state changes
-          gapi.auth2.getAuthInstance().isSignedIn.listen(isSignedIn => {
-            this.onSigninStateChange(isSignedIn)
-          })
-          // Handle initial sign in state
-          this.setState({
-            isSignedIn: gapi.auth2.getAuthInstance().isSignedIn.get(),
-          })
-        })
-    })
-
-    this.onSigninStateChange = this.onSigninStateChange.bind(this)
-
-    this.state = {
-      isSignedIn: false,
-      initialized: false,
-      playlistId: '',
-      loadPlaylist: false,
-      playlistInitialized: false,
-    }
+  function onSigninStateChange(isSignedIn) {
+    setIsSignedIn({ isSignedIn })
   }
 
-  onSigninStateChange(isSignedIn) {
-    this.setState({ isSignedIn })
-  }
-
-  login() {
+  function login() {
     gapi.auth2.getAuthInstance().signIn()
   }
 
-  logout() {
+  function logout() {
     gapi.auth2.getAuthInstance().signOut()
   }
 
-  onSubmitPlaylist() {
+  function onSubmitPlaylist() {
     // this.setState({ loadPlaylist: true })
   }
 
-  onChangePlaylist(playlistId) {
-    this.setState({ playlistId: playlistId })
-    this.setState({ playlistInitialized: true })
-    this.setState({ loadPlaylist: true })
+  if (!initialized) {
+    return <Spinner />
   }
 
-  togglePlaylistInitialized() {
-    this.setState({ playlistInitialized: true })
-  }
-
-  render() {
-    const { isSignedIn, initialized, playlistId } = this.state
-    if (!initialized) {
-      return <Spinner />
-    }
-
-    if (isSignedIn) {
-      return (
-        <Grid>
-          <ChannelSelect />
-          <PlaylistSelect
-            onChange={this.onChangePlaylist.bind(this)}
-            onSubmit={this.onSubmitPlaylist.bind(this)}
-          />
-          <button onClick={() => this.logout()}>Log Out</button>
-          <StyledAbortLink onClick={() => this.props.history.push('/')}>
-            Cancel
-          </StyledAbortLink>
-          <PlaylistCards
-            playlistInitialized={this.state.playlistInitialized}
-            togglePlaylistInitialized={this.togglePlaylistInitialized.bind(
-              this
-            )}
-            playlistId={playlistId}
-          />
-        </Grid>
-      )
-    }
+  if (isSignedIn) {
+    console.log(playlistItems)
     return (
       <Grid>
-        <PageTitleFullscreen title="Log in to YouTube" />
-        <button onClick={() => this.login()}>Log In</button>
-        <StyledAbortLink onClick={() => this.props.history.push('/')}>
+        <ChannelSelect />
+        <PlaylistSelect
+          setPlaylistItems={setPlaylistItems}
+          onSubmit={onSubmitPlaylist}
+        />
+        <button onClick={() => logout()}>Log Out</button>
+        <StyledAbortLink onClick={() => history.push('/')}>
           Cancel
         </StyledAbortLink>
+        <PlaylistCards playlistItems={playlistItems} />
       </Grid>
     )
   }
+  return (
+    <Grid>
+      <PageTitleFullscreen title="Log in to YouTube" />
+      <button onClick={() => login()}>Log In</button>
+      <StyledAbortLink onClick={() => history.push('/')}>
+        Cancel
+      </StyledAbortLink>
+    </Grid>
+  )
 }
