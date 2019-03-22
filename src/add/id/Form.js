@@ -132,7 +132,7 @@ export default function Form({ cards, history, onSubmit }) {
         <ErrorMessage />
       </div>
       <StyledButton>
-        Add to VIDE-Q{' '}
+        Add to VIDE<strong>Q</strong>{' '}
         <MdCloudUpload
           color={'rgb(250, 250, 250)'}
           size={'20px'}

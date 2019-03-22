@@ -3,7 +3,6 @@ import styled from 'styled-components'
 
 const StyledBackground = styled.div`
   width: 100%;
-  height: 28px;
   font-size: 15px;
   text-decoration: bold;
   font-family: 'Dosis', sans-serif;

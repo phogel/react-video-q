@@ -31,7 +31,6 @@ export default createGlobalStyle`
   button, input[type=submit] {
     font-family: 'Dosis', sans-serif;
     position: relative;
-    padding: 12px 24px;
     overflow: hidden;
     border-width: 0;
     outline: none;

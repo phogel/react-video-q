@@ -44,6 +44,7 @@ const StyledAddButton = styled.div`
 
 export default function Header({ history }) {
   const [addClick, setAddClick] = useState(false)
+  const [addButtonColor, setAddButtonColor] = useState('#8A8A8A')
 
   function onClickHandler() {
     setAddClick(!addClick)
@@ -51,8 +52,10 @@ export default function Header({ history }) {
 
   function AddPageComponent() {
     if (addClick) {
+      setAddButtonColor('#fefdfd')
       return <AddPage history={history} />
     }
+    setAddButtonColor('#8A8A8A')
     return null
   }
 
@@ -65,7 +68,7 @@ export default function Header({ history }) {
           <img src={logo} alt="video-q" style={{ userSelect: 'none' }} />
         </StyledLink>
         <StyledAddButton onClick={onClickHandler}>
-          <MdAdd color="#8A8A8A" size="30px" />
+          <MdAdd color={addButtonColor} size="30px" />
         </StyledAddButton>
         <StyledLink to="/search">
           <FiSearch

@@ -10,11 +10,11 @@ const Container = styled.div`
   color: #fefdfd;
   margin: 6px 6px 0 6px;
   z-index: 1;
-  animation: move-down 0.2s ease-out;
+  animation: move-down 0.8s cubic-bezier(0.4, 0, 0.2, 1);
 
   @keyframes move-down {
     0% {
-      transform: translateY(-15rem);
+      transform: translateY(-70px);
     }
     100% {
       transform: translateY(0);
@@ -24,7 +24,6 @@ const Container = styled.div`
 
 const StyledItem = styled.div`
   font-size: 16px;
-  text-decoration: bold;
   font-family: 'Dosis', sans-serif;
   display: flex;
   justify-content: center;
@@ -33,6 +32,12 @@ const StyledItem = styled.div`
   padding: 10px;
   border-radius: 10px;
   z-index: 10;
+  transition: background-color 0.3s;
+  :hover,
+  :focus {
+    background-color: rgb(255, 50, 139, 0.8);
+    outline: 0;
+  }
 `
 
 export default function AddPage({ history }) {
