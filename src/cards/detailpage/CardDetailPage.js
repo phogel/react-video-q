@@ -8,13 +8,13 @@ import YouTubeVideo from '../../youtube/YouTubeVideo'
 import SwitchButton from './SwitchButton'
 import CardEditForm from './CardEditForm'
 import LastSeen from './LastSeen'
-import { Slider } from 'antd'
 import BackButton from '../../common/BackButton'
+import Example from './TimeSlider'
 
 const Grid = styled.section`
   display: grid;
   grid-gap: 20px;
-  grid-template-rows: auto 1fr auto;
+  grid-template-rows: auto 1fr auto auto;
   position: relative;
   width: 100vw;
   height: 100vh;
@@ -94,7 +94,7 @@ const ButtonList = styled.div`
 `
 
 export default function CardsDetailPage(props) {
-  const { card, status, onDeleteCardClick, onSaveCardClick } = props
+  const { card, status, onDeleteCardClick, onSaveCardClick, setCards } = props
 
   const [isEditable, setIsEditable] = useState(false)
 
@@ -192,7 +192,6 @@ export default function CardsDetailPage(props) {
             {card.tags && <TagList>{card.tags.map(renderTag)}</TagList>}
             <StyledNotes>{card.notes}</StyledNotes>
           </ContentGrid>
-          <Slider range defaultValue={[20, 50]} />
           {card.status === 2 ? (
             <SwitchButton
               cardRefreshDate={card.refreshDate}
@@ -209,10 +208,16 @@ export default function CardsDetailPage(props) {
   return (
     <Grid>
       <Video>
-        <YouTubeVideo onStateChange={onVideoStateChange} videoId={card.id} />
+        <YouTubeVideo
+          onStateChange={onVideoStateChange}
+          videoId={card.id}
+          startSeconds={card.startSeconds}
+          endSeconds={card.endSeconds}
+        />
         <BackButton />
       </Video>
       <MainContent />
+      {/* <Example setCards={setCards} /> */}
       <CategoryButtonContainer>
         <ButtonLearningQueue status={status} onClick={onLearningClick} />
         <ButtonLearned status={status} onClick={onLearnedClick} />

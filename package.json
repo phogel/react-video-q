@@ -16,6 +16,7 @@
     "internal-ip-cli": "1.0.0",
     "prop-types": "15.7.2",
     "react": "^16.8.2",
+    "react-compound-slider": "^1.2.1",
     "react-dom": "^16.8.2",
     "react-helmet": "^6.0.0-beta",
     "react-icons": "^3.4.0",
