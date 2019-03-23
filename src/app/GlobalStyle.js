@@ -6,11 +6,11 @@ export default createGlobalStyle`
   }
 
   body {
-    font-family: 'Roboto', sans-serif;
+    font-family: 'Roboto', sans-serif, -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', 'Helvetica Neue', Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol';
     margin: 0;
     background: rgb(250, 250, 250);
-    color: #1a1a1a;
     touch-action: manipulation;
+
   }
 
   html, body {

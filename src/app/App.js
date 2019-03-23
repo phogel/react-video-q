@@ -11,7 +11,6 @@ import Nav from '../common/Nav'
 import Header from '../common/Header'
 import HeaderSearchBar from '../search/HeaderSearchBar'
 import dayjs from 'dayjs'
-import AddPage from '../add/AddPage'
 import AddIdPage from '../add/id/AddIdPage'
 import AddPlaylistPage from '../add/playlist/AddPlaylistPage'
 

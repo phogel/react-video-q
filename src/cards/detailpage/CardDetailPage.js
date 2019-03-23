@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import styled from 'styled-components'
-import { MdExpandMore, MdDeleteForever, MdEdit } from 'react-icons/md'
+import { MdDeleteForever, MdEdit } from 'react-icons/md'
 import ButtonLearningQueue from './ButtonLearningQueue'
 import ButtonLearned from './ButtonLearned'
 import ButtonRefreshQueue from './ButtonRefreshQueue'
@@ -78,6 +78,7 @@ const CategoryButtonContainer = styled.section`
   user-select: none;
   > * {
     user-select: none;
+    color: rgba(0, 0, 0, 0.65);
   }
 `
 
@@ -88,6 +89,7 @@ const ButtonList = styled.div`
   align-items: center;
   > * {
     user-select: none;
+    color: rgba(0, 0, 0, 0.65);
   }
 `
 
