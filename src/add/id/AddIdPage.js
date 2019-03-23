@@ -1,7 +1,6 @@
 import React from 'react'
-import { Link } from 'react-router-dom'
 import styled from 'styled-components'
-import PageTitleFullscreen from '../common/PageTitleFullscreen'
+import PageTitleFullscreen from '../../common/PageTitleFullscreen'
 import Form from './Form'
 
 const Grid = styled.section`
@@ -14,31 +13,23 @@ const Grid = styled.section`
   padding: 20px;
 `
 
-const LinkContainer = styled.div`
+const StyledAbortLink = styled.div`
   display: flex;
   justify-content: center;
   margin-top: 10px;
-  > a {
-    text-decoration: none;
-    color: #1a1a1a;
-  }
-  user-select: none;
+  color: #dcdcdc;
 `
 
-export default function UploadPage({ cards, onSubmit, history }) {
+export default function AddIdPage({ cards, onSubmit, history }) {
   function goBack() {
     window.history.back()
   }
 
   return (
     <Grid>
-      <PageTitleFullscreen title="Upload video" />
+      <PageTitleFullscreen title="Add video with YouTube ID" />
       <Form cards={cards} history={history} onSubmit={onSubmit} />
-      <LinkContainer>
-        <Link to="" onClick={goBack}>
-          Cancel
-        </Link>
-      </LinkContainer>
+      <StyledAbortLink onClick={goBack}>Cancel</StyledAbortLink>
     </Grid>
   )
 }

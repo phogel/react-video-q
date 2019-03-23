@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 
-const API = 'AIzaSyBN9O4wtM62ZfoSLUoED_U3WjZJ2wOzYMo'
+const API = ''
 const channelID = 'UC8bzko_64Hg7fKyMNYDdcVw'
 const result = 20
 
