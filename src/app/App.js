@@ -11,8 +11,9 @@ import Nav from '../common/Nav'
 import Header from '../common/Header'
 import HeaderSearchBar from '../search/HeaderSearchBar'
 import dayjs from 'dayjs'
-import UploadPage from '../upload/UploadPage'
-import LoginPage from '../youtube/LoginPage'
+import AddPage from '../add/AddPage'
+import AddIdPage from '../add/id/AddIdPage'
+import AddPlaylistPage from '../add/playlist/AddPlaylistPage'
 
 const Grid = styled.section`
   display: grid;
@@ -20,7 +21,7 @@ const Grid = styled.section`
   width: 100%;
   height: 100%;
   margin: 0 auto;
-  grid-template-rows: 48px 20px auto 48px;
+  grid-template-rows: 48px 28px auto 48px;
 `
 
 export default function App() {
@@ -154,7 +155,6 @@ export default function App() {
             rel="stylesheet"
           />
         </Helmet>
-        <Route path="/login" render={() => <LoginPage />} />
         <Route
           path="/search"
           render={() => (
@@ -175,9 +175,9 @@ export default function App() {
         <Route
           exact
           path="/"
-          render={() => (
+          render={({ history }) => (
             <Grid>
-              <Header />
+              <Header history={history} />
               <PageTitle title="Not learned yet" status={0} />
               <CardsContainer
                 checkIfRefresh={checkIfRefresh()}
@@ -189,9 +189,9 @@ export default function App() {
         />
         <Route
           path="/learningqueue"
-          render={() => (
+          render={({ history }) => (
             <Grid>
-              <Header />
+              <Header history={history} />
               <PageTitle title="Learning queue" status={1} />
               <CardsContainer
                 checkIfRefresh={checkIfRefresh()}
@@ -203,9 +203,9 @@ export default function App() {
         />
         <Route
           path="/learned"
-          render={() => (
+          render={({ history }) => (
             <Grid>
-              <Header />
+              <Header history={history} />
               <PageTitle title="Learned" status={2} />
               <CardsContainer
                 checkIfRefresh={checkIfRefresh()}
@@ -217,9 +217,9 @@ export default function App() {
         />
         <Route
           path="/refreshqueue"
-          render={() => (
+          render={({ history }) => (
             <Grid>
-              <Header />
+              <Header history={history} />
               <PageTitle title="Refresh Queue" status={3} />
               <CardsContainer
                 checkIfRefresh={checkIfRefresh()}
@@ -248,10 +248,25 @@ export default function App() {
             />
           )}
         />
+        {/* <Route
+          exact
+          path="/add"
+          render={({ history }) => <AddPage history={history} />}
+        /> */}
         <Route
-          path="/upload"
+          path="/add/id"
           render={({ history }) => (
-            <UploadPage cards={cards} history={history} onSubmit={createCard} />
+            <AddIdPage cards={cards} history={history} onSubmit={createCard} />
+          )}
+        />
+        <Route
+          path="/add/playlist"
+          render={({ history }) => (
+            <AddPlaylistPage
+              cards={cards}
+              setCards={setCards}
+              history={history}
+            />
           )}
         />
         <GlobalStyle />

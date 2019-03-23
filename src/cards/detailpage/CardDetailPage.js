@@ -8,6 +8,8 @@ import YouTubeVideo from '../../youtube/YouTubeVideo'
 import SwitchButton from './SwitchButton'
 import CardEditForm from './CardEditForm'
 import LastSeen from './LastSeen'
+import { Slider } from 'antd'
+import BackButton from '../../common/BackButton'
 
 const Grid = styled.section`
   display: grid;
@@ -36,23 +38,11 @@ const ContentGrid = styled.div`
 
 const Video = styled.section``
 
-const BackButton = styled.div`
-  margin: 0;
-  position: absolute;
-  top: 5px;
-  left: 5px;
-  height: 30px;
-  width: 30px;
-  opacity: 0.75;
-  background: black;
-  z-index: 10;
-  border-radius: 5px;
-`
-
 const StyledTitle = styled.h3`
   display: block;
   font-size: 22px;
   font-weight: bold;
+  padding: 10px 10px 10px 0;
   display: ${p => (p.isEditable ? 'none' : null)};
 `
 
@@ -64,12 +54,13 @@ const TagList = styled.ul`
 const Tag = styled.li`
   display: inline-block;
   margin: 0 8px 8px 0;
-  padding: 4px 10px 22px 10px;
-  background: rgba(26, 26, 26, 0.57);
+  padding: 4px 10px 21px 10px;
+  ${p => p.tagColor};
   border-radius: 10px;
   height: 22px;
-  color: #fcfcfc;
+  color: #fdfdfd;
   font-size: 14px;
+  transition: width 2s, height 2s, background-color 2s, transform 2s;
 `
 
 const StyledNotes = styled.div`
@@ -92,8 +83,8 @@ const CategoryButtonContainer = styled.section`
 
 const ButtonList = styled.div`
   display: grid;
-  grid-template-columns: 1fr auto;
-  justify-content: space-between;
+  grid-template-columns: 1fr auto auto;
+  justify-content: flex-end;
   align-items: center;
   > * {
     user-select: none;
@@ -110,10 +101,12 @@ export default function CardsDetailPage(props) {
   }
 
   function onDeleteCardClickHandler(card) {
-    setTimeout(() => {
-      onDeleteCardClick(card)
-    }, 200)
-    goBack()
+    if (window.confirm('Do you really want to delete this card?')) {
+      setTimeout(() => {
+        onDeleteCardClick(card)
+      }, 200)
+      goBack()
+    }
   }
 
   function goBack() {
@@ -121,7 +114,11 @@ export default function CardsDetailPage(props) {
   }
 
   function renderTag(text, index) {
-    return <Tag key={index}>{text}</Tag>
+    return (
+      <Tag tagColor={tagColor(status)} key={index}>
+        {text}
+      </Tag>
+    )
   }
 
   function onLearningClick() {
@@ -146,13 +143,9 @@ export default function CardsDetailPage(props) {
     props.onVideoStateChange(event, card.id)
   }
 
-  function bgColor(status) {
-    let backgrounds = [
-      'rgb(250, 239, 246)',
-      'rgb(212, 244,238)',
-      'rgb(249,216,231)',
-    ]
-    return { background: backgrounds[status - 1] || '#fcfcfc' }
+  function tagColor(status) {
+    let backgrounds = ['#EFA5D4', '#00CCA9', '#FF328B']
+    return { background: backgrounds[status - 1] || 'rgba(26, 26, 26, 0.57)' }
   }
 
   function MainContent() {
@@ -160,9 +153,11 @@ export default function CardsDetailPage(props) {
       return (
         <MainContentGrid>
           <ButtonList>
+            <div>{card.lastSeenTime && <LastSeen card={card} />}</div>
             <MdDeleteForever
               color={'rgba(26, 26, 26, 0.57)'}
               size={'20px'}
+              style={{ marginRight: '20px' }}
               onClick={() => onDeleteCardClickHandler(card)}
             />
             <MdEdit
@@ -176,16 +171,6 @@ export default function CardsDetailPage(props) {
             onSubmit={onSaveCardClick}
             setIsEditable={setIsEditable}
           />
-          {card.status === 2 ? (
-            <SwitchButton
-              cardRefreshDate={card.refreshDate}
-              onCheckboxClick={onCheckboxClick}
-              refresh={card.refresh}
-              onSliderChange={onSliderChange}
-            />
-          ) : (
-            <div />
-          )}
         </MainContentGrid>
       )
     } else {
@@ -193,6 +178,7 @@ export default function CardsDetailPage(props) {
         <MainContentGrid>
           <ButtonList>
             <div>{card.lastSeenTime && <LastSeen card={card} />}</div>
+            <div />
             <MdEdit
               color={'rgba(26, 26, 26, 0.57)'}
               size={'20px'}
@@ -204,6 +190,7 @@ export default function CardsDetailPage(props) {
             {card.tags && <TagList>{card.tags.map(renderTag)}</TagList>}
             <StyledNotes>{card.notes}</StyledNotes>
           </ContentGrid>
+          <Slider range defaultValue={[20, 50]} />
           {card.status === 2 ? (
             <SwitchButton
               cardRefreshDate={card.refreshDate}
@@ -211,30 +198,24 @@ export default function CardsDetailPage(props) {
               refresh={card.refresh}
               onSliderChange={onSliderChange}
             />
-          ) : (
-            <div />
-          )}
+          ) : null}
         </MainContentGrid>
       )
     }
   }
 
   return (
-    <React.Fragment>
-      <Grid style={bgColor(status)}>
-        <Video>
-          <YouTubeVideo onStateChange={onVideoStateChange} videoId={card.id} />
-          <BackButton onClick={goBack}>
-            <MdExpandMore color={'#FCFCFC'} size={'30px'} />
-          </BackButton>
-        </Video>
-        <MainContent />
-        <CategoryButtonContainer>
-          <ButtonLearningQueue status={status} onClick={onLearningClick} />
-          <ButtonLearned status={status} onClick={onLearnedClick} />
-          <ButtonRefreshQueue status={status} onClick={onRefreshClick} />
-        </CategoryButtonContainer>
-      </Grid>
-    </React.Fragment>
+    <Grid>
+      <Video>
+        <YouTubeVideo onStateChange={onVideoStateChange} videoId={card.id} />
+        <BackButton />
+      </Video>
+      <MainContent />
+      <CategoryButtonContainer>
+        <ButtonLearningQueue status={status} onClick={onLearningClick} />
+        <ButtonLearned status={status} onClick={onLearnedClick} />
+        <ButtonRefreshQueue status={status} onClick={onRefreshClick} />
+      </CategoryButtonContainer>
+    </Grid>
   )
 }

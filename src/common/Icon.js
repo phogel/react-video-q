@@ -58,6 +58,7 @@ const Icon = ({
   width = '100%',
   className = '',
   height = '',
+  transition = 'all 0.5s ease-in',
 }) => (
   <svg
     width={width}
@@ -67,6 +68,7 @@ const Icon = ({
     xmlns="http://www.w3.org/2000/svg"
     viewBox={viewBox || getViewBox(name)}
     xmlnsXlink="http://www.w3.org/1999/xlink"
+    transition={transition}
   >
     {getPath(name, { fill })}
   </svg>
