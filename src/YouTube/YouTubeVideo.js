@@ -1,29 +1,35 @@
-import React, { Component } from 'react'
-import YouTube from 'react-youtube'
+import React from 'react'
+import styled from 'styled-components'
 
-export default class YouTubeVideo extends Component {
-  videoOnReady(event) {
-    // access to player in all event handlers via event.target
-    event.target.stopVideo()
-  }
-
-  render() {
-    const opts = {
-      height: '210',
-      width: '100%',
-      playerVars: {
-        // https://developers.google.com/youtube/player_parameters
-        //  autoplay: 1,
-      },
-    }
-    const { videoId, onStateChange } = this.props
-    return (
-      <YouTube
-        videoId={videoId}
-        opts={opts}
-        onStateChange={onStateChange}
-        onReady={this.videoOnReady}
+const VideoWrapper = styled.div`
+  position: relative;
+  padding-bottom: 56.25%; /* 16:9 */
+  height: 0;
+  border: none;
+`
+const StyledIframe = styled.iframe`
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  border: none;
+`
+export default function YouTubeVideo({ videoId, onStateChange }) {
+  const startSeconds = 20
+  const endSeconds = 30
+  return (
+    <VideoWrapper>
+      <StyledIframe
+        title={videoId}
+        width="100%"
+        height="auto"
+        src={`https://www.youtube.com/embed/${videoId}?wmode=opaque&modestbranding=1&showinfo=0&rel=0&cc_load_policy=1&iv_load_policy=3&color=white&autohide=0&start=${startSeconds}&end=${endSeconds}`}
+        frameBorder="0"
+        allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
+        allowFullScreen
+        events={{ onStateChange: onStateChange }}
       />
-    )
-  }
+    </VideoWrapper>
+  )
 }

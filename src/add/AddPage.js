@@ -14,7 +14,7 @@ const Container = styled.div`
 
   @keyframes move-down {
     0% {
-      transform: translateY(-70px);
+      transform: translateY(-80px);
     }
     100% {
       transform: translateY(0);
