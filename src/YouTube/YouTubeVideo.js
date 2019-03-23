@@ -15,13 +15,9 @@ const StyledIframe = styled.iframe`
   height: 100%;
   border: none;
 `
-
-export default function YouTubeVideo({
-  videoId,
-  onStateChange,
-  startSeconds,
-  endSeconds,
-}) {
+export default function YouTubeVideo({ videoId, onStateChange }) {
+  const startSeconds = 20
+  const endSeconds = 30
   return (
     <VideoWrapper>
       <StyledIframe
@@ -32,7 +28,7 @@ export default function YouTubeVideo({
         frameBorder="0"
         allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
         allowFullScreen
-        onStateChange={onStateChange}
+        events={{ onStateChange: onStateChange }}
       />
     </VideoWrapper>
   )
