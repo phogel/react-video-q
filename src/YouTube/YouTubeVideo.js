@@ -1,13 +1,14 @@
 import React from 'react'
+import YouTubeIframeLoader from 'youtube-iframe'
 import styled from 'styled-components'
 
 const VideoWrapper = styled.div`
   position: relative;
-  padding-bottom: 56.25%; /* 16:9 */
+  padding-bottom: 56.25%;
   height: 0;
   border: none;
 `
-const StyledIframe = styled.iframe`
+const StyledDiv = styled.div`
   position: absolute;
   top: 0;
   left: 0;
@@ -15,21 +16,52 @@ const StyledIframe = styled.iframe`
   height: 100%;
   border: none;
 `
-export default function YouTubeVideo({ videoId, onStateChange }) {
-  const startSeconds = 20
-  const endSeconds = 30
+
+export default function YouTubeVideo({
+  videoId,
+  onStateChange,
+  startSeconds,
+  endSeconds,
+  onGoClick,
+  setGo,
+}) {
+  YouTubeIframeLoader.load(function(YT) {
+    const player = new YT.Player('player', {
+      height: 'auto',
+      width: '100%',
+      videoId: videoId,
+      enablejsapi: 1,
+      showinfo: 0,
+      cc_load_policy: 0,
+      controls: 0,
+      disablekb: 0,
+      modestbranding: 1,
+      rel: 0,
+      playerVars: {
+        start: startSeconds,
+        end: endSeconds,
+      },
+      events: {
+        onReady: onPlayerReady,
+        onStateChange: onStateChange,
+      },
+    })
+  })
+
+  function onPlayerReady(event) {
+    console.log(event.target.seekTo(20))
+  }
+
+  const player = document.getElementById('player')
+
+  if (onGoClick) {
+    //player.seekTo(startSeconds)
+    setGo(false)
+  }
+
   return (
     <VideoWrapper>
-      <StyledIframe
-        title={videoId}
-        width="100%"
-        height="auto"
-        src={`https://www.youtube.com/embed/${videoId}?wmode=opaque&modestbranding=1&showinfo=0&rel=0&cc_load_policy=1&iv_load_policy=3&color=white&autohide=0&start=${startSeconds}&end=${endSeconds}`}
-        frameBorder="0"
-        allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
-        allowFullScreen
-        events={{ onStateChange: onStateChange }}
-      />
+      <StyledDiv id="player" />
     </VideoWrapper>
   )
 }

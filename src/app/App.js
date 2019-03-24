@@ -1,16 +1,16 @@
 import React, { useEffect, useState } from 'react'
-import GlobalStyle from './GlobalStyle'
-import { Helmet } from 'react-helmet'
-import CardDetailPage from '../cards/detailpage/CardDetailPage'
-import CardsContainer from '../cards/CardsContainer'
-import { BrowserRouter as Router, Route } from 'react-router-dom'
 import styled from 'styled-components'
+import { BrowserRouter as Router, Route } from 'react-router-dom'
 import { getCardsFromStorage, saveCardsToStorage } from '../services'
-import PageTitle from '../common/PageTitle'
-import Nav from '../common/Nav'
+import { Helmet } from 'react-helmet'
+import dayjs from 'dayjs'
+import GlobalStyle from './GlobalStyle'
 import Header from '../common/Header'
 import HeaderSearchBar from '../search/HeaderSearchBar'
-import dayjs from 'dayjs'
+import PageTitle from '../common/PageTitle'
+import CardsContainer from '../cards/CardsContainer'
+import Nav from '../common/Nav'
+import CardDetailPage from '../cards/detailpage/CardDetailPage'
 import AddIdPage from '../add/id/AddIdPage'
 import AddPlaylistPage from '../add/playlist/AddPlaylistPage'
 
@@ -244,6 +244,8 @@ export default function App() {
               card={cards.find(card => card.id === match.params.id) || []}
               onDeleteCardClick={deleteCardClickHandler}
               onSaveCardClick={saveCardClickHandler}
+              cards={cards}
+              setCards={setCards}
             />
           )}
         />

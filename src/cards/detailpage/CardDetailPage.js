@@ -9,12 +9,12 @@ import SwitchButton from './SwitchButton'
 import CardEditForm from './CardEditForm'
 import LastSeen from './LastSeen'
 import BackButton from '../../common/BackButton'
-import Example from './TimeSlider'
+import Timer from './Timer'
 
 const Grid = styled.section`
   display: grid;
   grid-gap: 20px;
-  grid-template-rows: auto 1fr auto auto;
+  grid-template-rows: auto 1fr auto;
   position: relative;
   width: 100vw;
   height: 100vh;
@@ -25,10 +25,10 @@ const Grid = styled.section`
   box-shadow: 0 1px 15px rgba(0, 0, 0, 0.06), 0 1px 5px rgba(0, 0, 0, 0.14);
   transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
 `
-const MainContentGrid = styled.section`
+const MainGrid = styled.section`
   display: grid;
   margin: 0 30px 0 30px;
-  grid-template-rows: 30px 1fr auto;
+  grid-template-rows: 30px auto 1fr;
 `
 
 const ContentGrid = styled.div`
@@ -36,7 +36,11 @@ const ContentGrid = styled.div`
   grid-template-rows: auto auto auto 1fr;
 `
 
-const Video = styled.section``
+const Video = styled.section`
+  position: sticky;
+  top: 0;
+  left: 0;
+`
 
 const StyledTitle = styled.h3`
   display: block;
@@ -64,22 +68,34 @@ const Tag = styled.li`
 `
 
 const StyledNotes = styled.div`
+  position: relative;
   font-size: 16px;
-  width: auto;
   overflow: scroll;
+  overflow-wrap: break-word;
+  &:after {
+    content: '';
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background-image: linear-gradient(
+      rgba(255, 255, 255, 0) 50%,
+      rgba(255, 255, 255, 1) 100%
+    );
+  }
 `
 
 const CategoryButtonContainer = styled.section`
   display: grid;
+  position: sticky;
+  bottom: 0;
+  background: rgb(250, 250, 250);
   grid-template-columns: repeat(3, 1fr);
   justify-content: center;
   align-items: flex-start;
   margin-bottom: 10px;
   user-select: none;
-  > * {
-    user-select: none;
-    color: rgba(0, 0, 0, 0.65);
-  }
 `
 
 const ButtonList = styled.div`
@@ -87,14 +103,18 @@ const ButtonList = styled.div`
   grid-template-columns: 1fr auto auto;
   justify-content: flex-end;
   align-items: center;
-  > * {
-    user-select: none;
-    color: rgba(0, 0, 0, 0.65);
-  }
 `
 
 export default function CardsDetailPage(props) {
-  const { card, status, onDeleteCardClick, onSaveCardClick, setCards } = props
+  const {
+    card,
+    status,
+    onDeleteCardClick,
+    onSaveCardClick,
+    onGoClick,
+    cards,
+    setCards,
+  } = props
 
   const [isEditable, setIsEditable] = useState(false)
 
@@ -150,12 +170,18 @@ export default function CardsDetailPage(props) {
     return { background: backgrounds[status - 1] || 'rgba(26, 26, 26, 0.57)' }
   }
 
+  const [go, setGo] = useState(false)
+  function onGoClickHandler(event) {
+    event.preventDefault()
+    setGo(true)
+  }
+
   function MainContent() {
     if (isEditable) {
       return (
-        <MainContentGrid>
+        <MainGrid>
           <ButtonList>
-            <div>{card.lastSeenTime && <LastSeen card={card} />}</div>
+            {card.lastSeenTime ? <LastSeen card={card} /> : <div />}
             <MdDeleteForever
               color={'rgba(26, 26, 26, 0.57)'}
               size={'20px'}
@@ -173,13 +199,13 @@ export default function CardsDetailPage(props) {
             onSubmit={onSaveCardClick}
             setIsEditable={setIsEditable}
           />
-        </MainContentGrid>
+        </MainGrid>
       )
     } else {
       return (
-        <MainContentGrid>
+        <MainGrid>
           <ButtonList>
-            <div>{card.lastSeenTime && <LastSeen card={card} />}</div>
+            {card.lastSeenTime ? <LastSeen card={card} /> : <div />}
             <div />
             <MdEdit
               color={'rgba(26, 26, 26, 0.57)'}
@@ -187,6 +213,12 @@ export default function CardsDetailPage(props) {
               onClick={onEditCardClickHandler}
             />
           </ButtonList>
+          <Timer
+            card={card}
+            cards={cards}
+            setCards={setCards}
+            onGoClick={onGoClickHandler}
+          />
           <ContentGrid>
             <StyledTitle>{card.title}</StyledTitle>
             {card.tags && <TagList>{card.tags.map(renderTag)}</TagList>}
@@ -200,7 +232,7 @@ export default function CardsDetailPage(props) {
               onSliderChange={onSliderChange}
             />
           ) : null}
-        </MainContentGrid>
+        </MainGrid>
       )
     }
   }
@@ -209,15 +241,16 @@ export default function CardsDetailPage(props) {
     <Grid>
       <Video>
         <YouTubeVideo
-          onStateChange={onVideoStateChange}
-          videoId={card.id}
           startSeconds={card.startSeconds}
           endSeconds={card.endSeconds}
+          onStateChange={onVideoStateChange}
+          onGoClick={go}
+          setGo={setGo}
+          videoId={card.id}
         />
         <BackButton />
       </Video>
       <MainContent />
-      {/* <Example setCards={setCards} /> */}
       <CategoryButtonContainer>
         <ButtonLearningQueue status={status} onClick={onLearningClick} />
         <ButtonLearned status={status} onClick={onLearnedClick} />

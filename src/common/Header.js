@@ -59,8 +59,6 @@ export default function Header({ history }) {
     return null
   }
 
-  function Modal() {}
-
   return (
     <Container>
       <StyledHeader>

@@ -25,7 +25,8 @@
     "react-youtube": "^7.9.0",
     "styled-components": "4.1.3",
     "uid": "0.0.2",
-    "use-react-router": "^1.0.3"
+    "use-react-router": "^1.0.3",
+    "youtube-iframe": "^1.0.3"
   },
   "scripts": {
     "start": "REACT_APP_BACKEND_IP=`./node_modules/internal-ip-cli/cli.js --ipv4` craco start",
