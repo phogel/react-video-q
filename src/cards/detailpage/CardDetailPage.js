@@ -21,7 +21,7 @@ const Grid = styled.section`
   overflow-y: scroll;
   margin: 0 auto;
   max-width: 500px;
-  background: #fcfcfc;
+  background: rgb(250, 250, 250);
   box-shadow: 0 1px 15px rgba(0, 0, 0, 0.06), 0 1px 5px rgba(0, 0, 0, 0.14);
   transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
 `
@@ -72,18 +72,21 @@ const StyledNotes = styled.div`
   font-size: 16px;
   overflow: scroll;
   overflow-wrap: break-word;
-  &:after {
-    content: '';
-    position: absolute;
-    top: 0;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    background-image: linear-gradient(
-      rgba(255, 255, 255, 0) 50%,
-      rgba(255, 255, 255, 1) 100%
-    );
-  }
+  max-height: 76px;
+  background: rgb(250, 250, 250);
+`
+
+const StyledNotesFade = styled.div`
+  position: sticky;
+  content: '';
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 100px;
+  background-image: linear-gradient(
+    rgba(255, 255, 255, 0) 50%,
+    rgba(250, 250, 250, 1) 100%
+  );
 `
 
 const CategoryButtonContainer = styled.section`
@@ -111,7 +114,6 @@ export default function CardsDetailPage(props) {
     status,
     onDeleteCardClick,
     onSaveCardClick,
-    onGoClick,
     cards,
     setCards,
   } = props
@@ -171,6 +173,7 @@ export default function CardsDetailPage(props) {
   }
 
   const [go, setGo] = useState(false)
+
   function onGoClickHandler(event) {
     event.preventDefault()
     setGo(true)
@@ -222,7 +225,11 @@ export default function CardsDetailPage(props) {
           <ContentGrid>
             <StyledTitle>{card.title}</StyledTitle>
             {card.tags && <TagList>{card.tags.map(renderTag)}</TagList>}
-            <StyledNotes>{card.notes}</StyledNotes>
+
+            <StyledNotes>
+              {card.notes}
+              <StyledNotesFade />
+            </StyledNotes>
           </ContentGrid>
           {card.status === 2 ? (
             <SwitchButton

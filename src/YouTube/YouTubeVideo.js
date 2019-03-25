@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import YouTubeIframeLoader from 'youtube-iframe'
 import styled from 'styled-components'
 
@@ -8,6 +8,7 @@ const VideoWrapper = styled.div`
   height: 0;
   border: none;
 `
+
 const StyledDiv = styled.div`
   position: absolute;
   top: 0;
@@ -25,10 +26,13 @@ export default function YouTubeVideo({
   onGoClick,
   setGo,
 }) {
+  const [player, setPlayer] = useState({})
   YouTubeIframeLoader.load(function(YT) {
-    const player = new YT.Player('player', {
+    new YT.Player('player', {
       height: 'auto',
       width: '100%',
+      host: 'https://www.youtube.com',
+      origin: 'http://localhost:3000',
       videoId: videoId,
       enablejsapi: 1,
       showinfo: 0,
@@ -49,13 +53,11 @@ export default function YouTubeVideo({
   })
 
   function onPlayerReady(event) {
-    console.log(event.target.seekTo(20))
+    setPlayer(event.target)
   }
 
-  const player = document.getElementById('player')
-
   if (onGoClick) {
-    //player.seekTo(startSeconds)
+    player.seekTo(startSeconds).playVideo()
     setGo(false)
   }
 
