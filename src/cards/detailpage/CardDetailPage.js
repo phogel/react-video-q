@@ -53,6 +53,8 @@ const StyledTitle = styled.h3`
 const TagList = styled.ul`
   padding: 0;
   flex-wrap: wrap;
+  max-height: 64px;
+  overflow: scroll;
 `
 
 const Tag = styled.li`
@@ -68,6 +70,7 @@ const Tag = styled.li`
 `
 
 const StyledNotes = styled.div`
+  border: 1px solid #e0e0e0;
   position: relative;
   font-size: 16px;
   overflow: scroll;
@@ -76,18 +79,19 @@ const StyledNotes = styled.div`
   background: rgb(250, 250, 250);
 `
 
-const StyledNotesFade = styled.div`
-  position: sticky;
-  content: '';
-  bottom: 0;
-  left: 0;
-  width: 100%;
-  height: 100px;
-  background-image: linear-gradient(
-    rgba(255, 255, 255, 0) 50%,
-    rgba(250, 250, 250, 1) 100%
-  );
-`
+// const StyledNotesFade = styled.div`
+//   position: sticky;
+//   border: 1px solid black;
+//   content: '';
+//   bottom: 0;
+//   left: 0;
+//   width: 100%;
+//   height: 100px;
+//   background-image: linear-gradient(
+//     rgba(255, 255, 255, 0) 50%,
+//     rgba(250, 250, 250, 1) 100%
+//   );
+// `
 
 const CategoryButtonContainer = styled.section`
   display: grid;
@@ -116,6 +120,10 @@ export default function CardsDetailPage(props) {
     onSaveCardClick,
     cards,
     setCards,
+    setTime,
+    time,
+    setPlayer,
+    player,
   } = props
 
   const [isEditable, setIsEditable] = useState(false)
@@ -174,11 +182,6 @@ export default function CardsDetailPage(props) {
 
   const [go, setGo] = useState(false)
 
-  function onGoClickHandler(event) {
-    event.preventDefault()
-    setGo(true)
-  }
-
   function MainContent() {
     if (isEditable) {
       return (
@@ -220,7 +223,10 @@ export default function CardsDetailPage(props) {
             card={card}
             cards={cards}
             setCards={setCards}
-            onGoClick={onGoClickHandler}
+            setGo={setGo}
+            setTime={setTime}
+            time={time}
+            player={player}
           />
           <ContentGrid>
             <StyledTitle>{card.title}</StyledTitle>
@@ -228,7 +234,7 @@ export default function CardsDetailPage(props) {
 
             <StyledNotes>
               {card.notes}
-              <StyledNotesFade />
+              {/* {card.notes.length > 300 ? <StyledNotesFade /> : null} */}
             </StyledNotes>
           </ContentGrid>
           {card.status === 2 ? (
@@ -251,7 +257,9 @@ export default function CardsDetailPage(props) {
           startSeconds={card.startSeconds}
           endSeconds={card.endSeconds}
           onStateChange={onVideoStateChange}
-          onGoClick={go}
+          setPlayer={setPlayer}
+          player={player}
+          go={go}
           setGo={setGo}
           videoId={card.id}
         />

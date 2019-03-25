@@ -25,6 +25,7 @@ const Grid = styled.section`
 
 export default function App() {
   const [cards, setCards] = useState(getCardsFromStorage())
+  const [searchString, setSearchString] = useState('')
 
   useEffect(() => {
     saveCardsToStorage(cards)
@@ -71,8 +72,6 @@ export default function App() {
       ...cards.slice(index + 1),
     ])
   }
-
-  const [searchString, setSearchString] = useState('')
 
   function searchWithinAllCards() {
     return cards

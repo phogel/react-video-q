@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import styled from 'styled-components'
 import { FaStopwatch } from 'react-icons/fa'
 
@@ -31,51 +31,37 @@ const StyledButton = styled.button`
   width: 36px;
 `
 
-export default function Timer({ card, cards, setCards, onGoClick }) {
-  const [firstRenderStart, setFirstRenderStart] = useState(true)
-  const [firstRenderEnd, setFirstRenderEnd] = useState(true)
+export default function Timer({ card, cards, setCards, player, setGo }) {
+  const [startTime, setStartTime] = useState(card.startSeconds)
+  const [endTime, setEndTime] = useState(card.endSeconds)
 
-  const [startSeconds, setStartSeconds] = useState('')
-  const [endSeconds, setEndSeconds] = useState('')
+  useEffect(() => {
+    setStartTime(card.startSeconds)
+    setEndTime(card.endSeconds)
+    console.log('d')
+  }, [])
 
   function onStartInputChange(event) {
-    setStartSeconds(event.target.value)
-    const index = cards.indexOf(card)
-    setFirstRenderStart(false)
-    setCards([
-      ...cards.slice(0, index),
-      {
-        ...card,
-        startSeconds: event.target.value,
-      },
-      ...cards.slice(index + 1),
-    ])
+    setStartTime(event.target.value)
   }
 
   function onEndInputChange(event) {
-    setEndSeconds(event.target.value)
+    setEndTime(event.target.value)
+  }
+
+  function onGoClick() {
     const index = cards.indexOf(card)
-    setFirstRenderEnd(false)
+    console.log('onGoClick')
     setCards([
       ...cards.slice(0, index),
       {
         ...card,
-        endSeconds: event.target.value,
+        startSeconds: startTime,
+        endSeconds: endTime,
       },
       ...cards.slice(index + 1),
     ])
-  }
-
-  function checkForStartSeconds() {
-    if (card.startSeconds !== '') {
-      return card.startSeconds
-    }
-  }
-
-  function checkForEndSeconds() {
-    if (card.endSeconds !== '') {
-      return card.endSeconds
-    }
+    // setGo(true)
   }
 
   return (
@@ -86,16 +72,17 @@ export default function Timer({ card, cards, setCards, onGoClick }) {
         name="startSeconds"
         type="number"
         onChange={onStartInputChange}
-        value={firstRenderStart ? checkForStartSeconds() : startSeconds}
+        value={startTime}
       />
       to
       <StyledInput
         name="endSeconds"
         type="number"
         onChange={onEndInputChange}
-        value={firstRenderEnd ? checkForEndSeconds() : endSeconds}
+        value={endTime}
       />
-      seconds <StyledButton onClick={onGoClick}>GO</StyledButton>
+      seconds
+      <StyledButton onClick={onGoClick}>GO</StyledButton>
     </StyledForm>
   )
 }
