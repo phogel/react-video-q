@@ -6,7 +6,6 @@ const Container = styled.div`
   grid-template-columns: 1fr 1fr 1fr;
   width: auto;
   grid-gap: 6px;
-  height: 50px;
   color: #fefdfd;
   margin: 6px 6px 0 6px;
   z-index: 1;
@@ -41,18 +40,41 @@ const StyledItem = styled.div`
   }
 `
 
-export default function AddPage({ history }) {
+const Modal = styled.div`
+  background: rgba(0, 0, 0, 0.6);
+  height: calc(100vh - 48px);
+  overflow: hidden;
+  width: 100vw;
+  z-index: 1;
+  animation: fade-in 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+
+  @keyframes fade-in {
+    0% {
+      opacity: 0;
+    }
+    100% {
+      opacity: 1;
+    }
+  }
+`
+
+export default function AddPage({ history, setAddClick }) {
+  function setAddClickHandler() {
+    setAddClick(false)
+  }
   return (
-    <Container>
-      <StyledItem onClick={() => history.push('/add/id')}>
-        Add by YouTube ID
-      </StyledItem>
-      <StyledItem onClick={() => history.push('/add/playlist')}>
-        Add playlist from YouTube
-      </StyledItem>
-      <StyledItem onClick={() => history.push('/add/playlist')}>
-        Upload to YouTube
-      </StyledItem>
-    </Container>
+    <Modal onClick={setAddClickHandler}>
+      <Container>
+        <StyledItem onClick={() => history.push('/add/id')}>
+          Add by YouTube ID
+        </StyledItem>
+        <StyledItem onClick={() => history.push('/add/playlist')}>
+          Add playlist from YouTube
+        </StyledItem>
+        <StyledItem onClick={() => history.push('/add/playlist')}>
+          Upload to YouTube
+        </StyledItem>
+      </Container>
+    </Modal>
   )
 }

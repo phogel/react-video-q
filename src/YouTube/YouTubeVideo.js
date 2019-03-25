@@ -54,20 +54,16 @@ export default function YouTubeVideo({
   // useEffect(() => {
   //   player &&
   // }, [go])
-  // function onPlayerReady(event) {
-  //   event.target.seekTo(startSeconds).playVideo()
-  // }
 
+  const [player, setPlayer] = useState()
   function onPlayerReady(event) {
-    // if (go) {
-    event.target.seekTo(startSeconds).playVideo()
-    // setGo(false)
-    // }
+    setPlayer(event.target)
   }
-  // if (go) {
-  //   player.seekTo(startSeconds).playVideo()
-  //   setGo(false)
-  // }
+
+  if (go) {
+    player.seekTo(startSeconds).playVideo()
+    setGo(false)
+  }
 
   return (
     <VideoWrapper>

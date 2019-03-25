@@ -53,7 +53,7 @@ export default function Header({ history }) {
   function AddPageComponent() {
     if (addClick) {
       setAddButtonColor('#fefdfd')
-      return <AddPage history={history} />
+      return <AddPage history={history} setAddClick={setAddClick} />
     }
     setAddButtonColor('#8A8A8A')
     return null
