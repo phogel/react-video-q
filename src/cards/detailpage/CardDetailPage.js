@@ -70,7 +70,6 @@ const Tag = styled.li`
 `
 
 const StyledNotes = styled.div`
-  /* border: 1px solid #e0e0e0; */
   position: relative;
   font-size: 16px;
   overflow: scroll;
@@ -78,20 +77,6 @@ const StyledNotes = styled.div`
   max-height: 76px;
   background: rgb(250, 250, 250);
 `
-
-// const StyledNotesFade = styled.div`
-//   position: sticky;
-//   border: 1px solid black;
-//   content: '';
-//   bottom: 0;
-//   left: 0;
-//   width: 100%;
-//   height: 100px;
-//   background-image: linear-gradient(
-//     rgba(255, 255, 255, 0) 50%,
-//     rgba(250, 250, 250, 1) 100%
-//   );
-// `
 
 const CategoryButtonContainer = styled.section`
   display: grid;
