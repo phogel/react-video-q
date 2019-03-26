@@ -91,7 +91,7 @@ export default function SwitchButton({
           />
         </span>
         <span className="toggle--off">
-          Move video automatically to refresh queue in 0 days
+          <RefreshSlider disabled={true} />
         </span>
       </label>
     </StyledSwitchButton>

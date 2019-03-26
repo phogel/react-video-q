@@ -5,6 +5,7 @@ import Spinner from '../../common/Spinner'
 import ChannelSelect from './ChannelSelect'
 import PlaylistSelect from './PlaylistSelect'
 import PlaylistCards from './PlaylistCards'
+import BackButton from '../../common/BackButton'
 
 const Grid = styled.section`
   display: grid;
@@ -36,6 +37,15 @@ const StyledAbortLink = styled.div`
   color: #dcdcdc;
 `
 
+const Error = styled.div`
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 10px;
+`
+
 const CLIENT_ID =
   '843342214316-febn2vufffq9heqdut8vhtlfvqjh15sd.apps.googleusercontent.com'
 // const CLIENT_ID =
@@ -51,24 +61,36 @@ export default function AddPlaylistPage({ history, cards, setCards }) {
   const [initialized, setInitialized] = useState(false)
   const [playlistItems, setPlaylistItems] = useState([])
 
-  gapi.load('client:auth2', () => {
-    gapi.client
-      .init({
-        discoveryDocs: DISCOVERY_DOCS,
-        clientId: CLIENT_ID,
-        scope: SCOPES,
-      })
-      .then(() => {
-        setInitialized(true)
-
-        // Listen for sign in state changes
-        gapi.auth2.getAuthInstance().isSignedIn.listen(isSignedIn => {
-          onSigninStateChange(isSignedIn)
+  try {
+    gapi.load('client:auth2', () => {
+      gapi.client
+        .init({
+          discoveryDocs: DISCOVERY_DOCS,
+          clientId: CLIENT_ID,
+          scope: SCOPES,
         })
-        // Handle initial sign in state
-        setIsSignedIn(gapi.auth2.getAuthInstance().isSignedIn.get())
-      })
-  })
+        .then(() => {
+          setInitialized(true)
+
+          // Listen for sign in state changes
+          gapi.auth2.getAuthInstance().isSignedIn.listen(isSignedIn => {
+            onSigninStateChange(isSignedIn)
+          })
+          // Handle initial sign in state
+          setIsSignedIn(gapi.auth2.getAuthInstance().isSignedIn.get())
+        })
+    })
+  } catch (error) {
+    return (
+      <Error>
+        <BackButton />
+        <h1>Uh oh...</h1>
+        <br />
+        Error while connecting to YouTube. <br />
+        Check your internet connection.
+      </Error>
+    )
+  }
 
   function onSigninStateChange(isSignedIn) {
     setIsSignedIn({ isSignedIn })

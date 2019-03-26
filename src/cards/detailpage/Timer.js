@@ -31,15 +31,16 @@ const StyledButton = styled.button`
   width: 36px;
 `
 
-export default function Timer({ card, cards, setCards, player, setGo }) {
+export default function Timer({ card, cards, setCards, setGo }) {
   const [startTime, setStartTime] = useState(card.startSeconds)
   const [endTime, setEndTime] = useState(card.endSeconds)
+  const [goQueue, setGoQueue] = useState(false)
 
   useEffect(() => {
+    setGoQueue(false)
     setStartTime(card.startSeconds)
     setEndTime(card.endSeconds)
-    console.log('useEffect Timer setStartTime=card.startSeconds')
-  }, [])
+  }, [goQueue])
 
   function onStartInputChange(event) {
     setStartTime(event.target.value)
@@ -51,7 +52,6 @@ export default function Timer({ card, cards, setCards, player, setGo }) {
 
   function onGoClick() {
     const index = cards.indexOf(card)
-    console.log('onGoClick')
     setCards([
       ...cards.slice(0, index),
       {
@@ -61,6 +61,7 @@ export default function Timer({ card, cards, setCards, player, setGo }) {
       },
       ...cards.slice(index + 1),
     ])
+    setGoQueue(true)
     setGo(true)
   }
 

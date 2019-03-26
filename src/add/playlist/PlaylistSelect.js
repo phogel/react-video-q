@@ -106,7 +106,7 @@ export default function PlaylistComponent({
                 return {
                   id: item.contentDetails.videoId,
                   title: item.snippet.title,
-                  notes: item.snippet.description,
+                  notes: '',
                   backgroundImageUrl: url(),
                   status: 0,
                   tags: [],

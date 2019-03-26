@@ -21,7 +21,10 @@ const StyledLink = styled(Link)`
 export default function Nav({ status }) {
   return (
     <StyledNav>
-      <StyledLink to="/" fill={status === 0 ? '#2DDBE3' : 'transparent'}>
+      <StyledLink
+        to="/notlearnedyet"
+        fill={status === 0 ? '#2DDBE3' : 'transparent'}
+      >
         <Icon
           fill={status === 0 ? '#2DDBE3' : '#8A8A8A'}
           height="25px"
