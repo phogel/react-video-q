@@ -70,7 +70,7 @@ const Tag = styled.li`
 `
 
 const StyledNotes = styled.div`
-  border: 1px solid #e0e0e0;
+  /* border: 1px solid #e0e0e0; */
   position: relative;
   font-size: 16px;
   overflow: scroll;

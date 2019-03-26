@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import styled from 'styled-components'
 import { MdArrowUpward } from 'react-icons/md'
 import logo from '../images/logo.svg'
+import ProgressBar from './ProgressBar'
 
 const WelcomeLogo = styled.section`
   pointer-events: none;
@@ -30,12 +31,39 @@ const WelcomeLogo = styled.section`
   }
 `
 
-const AddVideoNotice = styled.section`
+const AddVideoNoticeContainer = styled.section`
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: flex-start;
   padding: 10px 25px;
+`
+
+const UpArrow = styled.div`
+  animation: move-up 2s ease-out infinite;
+
+  @keyframes move-up {
+    0% {
+      transform: translateY(0px);
+      opacity: 1;
+    }
+    40% {
+      opacity: 1;
+    }
+    100% {
+      transform: translateY(-40px);
+      opacity: 0;
+    }
+  }
+`
+
+const AddVideoNotice = styled.div`
+  padding: 20px;
+  border-radius: 20px;
+  background: #1a1a1a;
+  color: rgb(250, 250, 250);
+  margin-top: 10px;
+  text-align: center;
 `
 
 const StatisticsContainer = styled.div`
@@ -53,34 +81,6 @@ const Statistics = styled.section`
   height: 60%;
 `
 
-const BarBackground = styled.div`
-  position: relative;
-  background: #e0e0e0;
-  border-radius: 15px;
-`
-
-const BarFill = styled.div`
-  position: absolute;
-  padding-top: 10px;
-  font-size: 14px;
-  bottom: 0;
-  background: ${p => p.fill};
-  border-radius: 15px;
-  width: 100%;
-  text-align: center;
-  height: ${p => p.height};
-  animation: move-up 3s ease-out;
-
-  @keyframes move-up {
-    0% {
-      height: 0;
-    }
-    100% {
-      height: ${p => p.height};
-    }
-  }
-`
-
 const Label = styled.div`
   font-size: 12px;
   text-align: center;
@@ -90,8 +90,6 @@ export default function Dashboard({ showLogo, setShowLogo, cards }) {
   setTimeout(() => {
     setShowLogo(false)
   }, 3500)
-
-  const barFill = ['#2DDBE3', '#EFA5D4', '#00CCA9', '#FF328B']
 
   return (
     <React.Fragment>
@@ -103,58 +101,10 @@ export default function Dashboard({ showLogo, setShowLogo, cards }) {
       {cards.length !== 0 ? (
         <StatisticsContainer>
           <Statistics>
-            <BarBackground>
-              <BarFill
-                height={
-                  (cards.filter(card => card.status === 0).length /
-                    cards.length) *
-                    100 +
-                  '%'
-                }
-                fill={barFill[0]}
-              >
-                {cards.filter(card => card.status === 0).length}
-              </BarFill>
-            </BarBackground>
-            <BarBackground>
-              <BarFill
-                height={
-                  (cards.filter(card => card.status === 1).length /
-                    cards.length) *
-                    100 +
-                  '%'
-                }
-                fill={barFill[1]}
-              >
-                {cards.filter(card => card.status === 1).length}
-              </BarFill>
-            </BarBackground>
-            <BarBackground>
-              <BarFill
-                height={
-                  (cards.filter(card => card.status === 2).length /
-                    cards.length) *
-                    100 +
-                  '%'
-                }
-                fill={barFill[2]}
-              >
-                {cards.filter(card => card.status === 2).length}
-              </BarFill>
-            </BarBackground>
-            <BarBackground>
-              <BarFill
-                height={
-                  (cards.filter(card => card.status === 3).length /
-                    cards.length) *
-                    100 +
-                  '%'
-                }
-                fill={barFill[3]}
-              >
-                {cards.filter(card => card.status === 3).length}
-              </BarFill>
-            </BarBackground>
+            <ProgressBar cards={cards} status={0} />
+            <ProgressBar cards={cards} status={1} />
+            <ProgressBar cards={cards} status={2} />
+            <ProgressBar cards={cards} status={3} />
             <Label>Not learned</Label>
             <Label>Learning queue</Label>
             <Label>Learned</Label>
@@ -162,13 +112,18 @@ export default function Dashboard({ showLogo, setShowLogo, cards }) {
           </Statistics>
         </StatisticsContainer>
       ) : (
-        <AddVideoNotice>
-          <MdArrowUpward color="" size="30px" />
-          <div style={{ marginTop: '10px', textAlign: 'center' }}>
-            There are no videos in your VIDE<strong>Q</strong> yet. <br />
+        <AddVideoNoticeContainer>
+          <UpArrow>
+            <MdArrowUpward size="30px" />
+          </UpArrow>
+          <AddVideoNotice>
+            There are no videos in your VIDE
+            <span style={{ color: '#FF328B', fontWeight: 'bold' }}>
+              Q
+            </span> yet. <br />
             Start by adding some now.
-          </div>
-        </AddVideoNotice>
+          </AddVideoNotice>
+        </AddVideoNoticeContainer>
       )}
     </React.Fragment>
   )
