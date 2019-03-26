@@ -44,7 +44,7 @@ const StyledAddButton = styled.div`
 
 export default function Header({ history }) {
   const [addClick, setAddClick] = useState(false)
-  const [addButtonColor, setAddButtonColor] = useState('#8A8A8A')
+  const [addButtonColor, setAddButtonColor] = useState('')
 
   function onClickHandler() {
     setAddClick(!addClick)
@@ -53,26 +53,24 @@ export default function Header({ history }) {
   function AddPageComponent() {
     if (addClick) {
       setAddButtonColor('#fefdfd')
-      return <AddPage history={history} />
+      return <AddPage history={history} setAddClick={setAddClick} />
     }
-    setAddButtonColor('#8A8A8A')
+    setAddButtonColor('#fefdfd')
     return null
   }
-
-  function Modal() {}
 
   return (
     <Container>
       <StyledHeader>
         <StyledLink to="/" style={{ position: 'absolute', left: '10px' }}>
-          <img src={logo} alt="video-q" style={{ userSelect: 'none' }} />
+          <img src={logo} alt="VIDEQ" style={{ userSelect: 'none' }} />
         </StyledLink>
         <StyledAddButton onClick={onClickHandler}>
           <MdAdd color={addButtonColor} size="30px" />
         </StyledAddButton>
         <StyledLink to="/search">
           <FiSearch
-            color="#8A8A8A"
+            color="#fefdfd"
             size="24px"
             style={{ position: 'absolute', right: '10px' }}
           />

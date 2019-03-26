@@ -1,29 +1,69 @@
-import React, { Component } from 'react'
-import YouTube from 'react-youtube'
+import React, { useState, useEffect } from 'react'
+import YouTubeIframeLoader from 'youtube-iframe'
+import styled from 'styled-components'
 
-export default class YouTubeVideo extends Component {
-  videoOnReady(event) {
-    // access to player in all event handlers via event.target
-    event.target.stopVideo()
-  }
+const VideoWrapper = styled.div`
+  position: relative;
+  padding-bottom: 56.25%;
+  height: 0;
+  border: none;
+`
 
-  render() {
-    const opts = {
-      height: '210',
+const StyledDiv = styled.div`
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  border: none;
+`
+
+export default function YouTubeVideo({
+  videoId,
+  onStateChange,
+  startSeconds,
+  endSeconds,
+  setGo,
+  go,
+}) {
+  YouTubeIframeLoader.load(function(YT) {
+    new YT.Player('player', {
+      height: 'auto',
       width: '100%',
+      host: 'https://www.youtube.com',
+      origin: 'http://localhost:3000',
+      videoId: videoId,
+      enablejsapi: 1,
+      showinfo: 0,
+      cc_load_policy: 0,
+      controls: 0,
+      disablekb: 0,
+      modestbranding: 1,
+      rel: 0,
       playerVars: {
-        // https://developers.google.com/youtube/player_parameters
-        //  autoplay: 1,
+        start: startSeconds,
+        end: endSeconds,
       },
-    }
-    const { videoId, onStateChange } = this.props
-    return (
-      <YouTube
-        videoId={videoId}
-        opts={opts}
-        onStateChange={onStateChange}
-        onReady={this.videoOnReady}
-      />
-    )
+      events: {
+        onReady: onPlayerReady,
+        onStateChange: onStateChange,
+      },
+    })
+  })
+
+  const [player, setPlayer] = useState()
+  function onPlayerReady(event) {
+    setPlayer(event.target)
   }
+
+  if (go) {
+    player.seekTo(startSeconds).playVideo()
+    setGo(false)
+  }
+
+  return (
+    <VideoWrapper>
+      <StyledDiv id="player" />
+    </VideoWrapper>
+  )
 }

@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import styled from 'styled-components'
-import { MdExpandMore, MdDeleteForever, MdEdit } from 'react-icons/md'
+import { MdDeleteForever, MdEdit } from 'react-icons/md'
 import ButtonLearningQueue from './ButtonLearningQueue'
 import ButtonLearned from './ButtonLearned'
 import ButtonRefreshQueue from './ButtonRefreshQueue'
@@ -8,8 +8,8 @@ import YouTubeVideo from '../../youtube/YouTubeVideo'
 import SwitchButton from './SwitchButton'
 import CardEditForm from './CardEditForm'
 import LastSeen from './LastSeen'
-import { Slider } from 'antd'
 import BackButton from '../../common/BackButton'
+import Timer from './Timer'
 
 const Grid = styled.section`
   display: grid;
@@ -21,14 +21,14 @@ const Grid = styled.section`
   overflow-y: scroll;
   margin: 0 auto;
   max-width: 500px;
-  background: #fcfcfc;
+  background: rgb(250, 250, 250);
   box-shadow: 0 1px 15px rgba(0, 0, 0, 0.06), 0 1px 5px rgba(0, 0, 0, 0.14);
   transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
 `
-const MainContentGrid = styled.section`
+const MainGrid = styled.section`
   display: grid;
   margin: 0 30px 0 30px;
-  grid-template-rows: 30px 1fr auto;
+  grid-template-rows: 30px auto 1fr;
 `
 
 const ContentGrid = styled.div`
@@ -36,7 +36,11 @@ const ContentGrid = styled.div`
   grid-template-rows: auto auto auto 1fr;
 `
 
-const Video = styled.section``
+const Video = styled.section`
+  position: sticky;
+  top: 0;
+  left: 0;
+`
 
 const StyledTitle = styled.h3`
   display: block;
@@ -49,6 +53,8 @@ const StyledTitle = styled.h3`
 const TagList = styled.ul`
   padding: 0;
   flex-wrap: wrap;
+  max-height: 64px;
+  overflow: scroll;
 `
 
 const Tag = styled.li`
@@ -64,21 +70,24 @@ const Tag = styled.li`
 `
 
 const StyledNotes = styled.div`
+  position: relative;
   font-size: 16px;
-  width: auto;
   overflow: scroll;
+  overflow-wrap: break-word;
+  max-height: 76px;
+  background: rgb(250, 250, 250);
 `
 
 const CategoryButtonContainer = styled.section`
   display: grid;
+  position: sticky;
+  bottom: 0;
+  background: rgb(250, 250, 250);
   grid-template-columns: repeat(3, 1fr);
   justify-content: center;
   align-items: flex-start;
   margin-bottom: 10px;
   user-select: none;
-  > * {
-    user-select: none;
-  }
 `
 
 const ButtonList = styled.div`
@@ -86,13 +95,21 @@ const ButtonList = styled.div`
   grid-template-columns: 1fr auto auto;
   justify-content: flex-end;
   align-items: center;
-  > * {
-    user-select: none;
-  }
 `
 
 export default function CardsDetailPage(props) {
-  const { card, status, onDeleteCardClick, onSaveCardClick } = props
+  const {
+    card,
+    status,
+    onDeleteCardClick,
+    onSaveCardClick,
+    cards,
+    setCards,
+    setTime,
+    time,
+    setPlayer,
+    player,
+  } = props
 
   const [isEditable, setIsEditable] = useState(false)
 
@@ -148,12 +165,14 @@ export default function CardsDetailPage(props) {
     return { background: backgrounds[status - 1] || 'rgba(26, 26, 26, 0.57)' }
   }
 
+  const [go, setGo] = useState(false)
+
   function MainContent() {
     if (isEditable) {
       return (
-        <MainContentGrid>
+        <MainGrid>
           <ButtonList>
-            <div>{card.lastSeenTime && <LastSeen card={card} />}</div>
+            {card.lastSeenTime ? <LastSeen card={card} /> : <div />}
             <MdDeleteForever
               color={'rgba(26, 26, 26, 0.57)'}
               size={'20px'}
@@ -166,18 +185,27 @@ export default function CardsDetailPage(props) {
               onClick={onEditCardClickHandler}
             />
           </ButtonList>
+          <Timer
+            card={card}
+            cards={cards}
+            setCards={setCards}
+            setGo={setGo}
+            setTime={setTime}
+            time={time}
+            player={player}
+          />
           <CardEditForm
             card={card}
             onSubmit={onSaveCardClick}
             setIsEditable={setIsEditable}
           />
-        </MainContentGrid>
+        </MainGrid>
       )
     } else {
       return (
-        <MainContentGrid>
+        <MainGrid>
           <ButtonList>
-            <div>{card.lastSeenTime && <LastSeen card={card} />}</div>
+            {card.lastSeenTime ? <LastSeen card={card} /> : <div />}
             <div />
             <MdEdit
               color={'rgba(26, 26, 26, 0.57)'}
@@ -185,12 +213,24 @@ export default function CardsDetailPage(props) {
               onClick={onEditCardClickHandler}
             />
           </ButtonList>
+          <Timer
+            card={card}
+            cards={cards}
+            setCards={setCards}
+            setGo={setGo}
+            setTime={setTime}
+            time={time}
+            player={player}
+          />
           <ContentGrid>
             <StyledTitle>{card.title}</StyledTitle>
             {card.tags && <TagList>{card.tags.map(renderTag)}</TagList>}
-            <StyledNotes>{card.notes}</StyledNotes>
+
+            <StyledNotes>
+              {card.notes}
+              {/* {card.notes.length > 300 ? <StyledNotesFade /> : null} */}
+            </StyledNotes>
           </ContentGrid>
-          <Slider range defaultValue={[20, 50]} />
           {card.status === 2 ? (
             <SwitchButton
               cardRefreshDate={card.refreshDate}
@@ -199,7 +239,7 @@ export default function CardsDetailPage(props) {
               onSliderChange={onSliderChange}
             />
           ) : null}
-        </MainContentGrid>
+        </MainGrid>
       )
     }
   }
@@ -207,7 +247,16 @@ export default function CardsDetailPage(props) {
   return (
     <Grid>
       <Video>
-        <YouTubeVideo onStateChange={onVideoStateChange} videoId={card.id} />
+        <YouTubeVideo
+          startSeconds={card.startSeconds}
+          endSeconds={card.endSeconds}
+          onStateChange={onVideoStateChange}
+          setPlayer={setPlayer}
+          player={player}
+          go={go}
+          setGo={setGo}
+          videoId={card.id}
+        />
         <BackButton />
       </Video>
       <MainContent />

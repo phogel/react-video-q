@@ -1,19 +1,19 @@
 import React, { useEffect, useState } from 'react'
-import GlobalStyle from './GlobalStyle'
-import { Helmet } from 'react-helmet'
-import CardDetailPage from '../cards/detailpage/CardDetailPage'
-import CardsContainer from '../cards/CardsContainer'
-import { BrowserRouter as Router, Route } from 'react-router-dom'
 import styled from 'styled-components'
+import { BrowserRouter as Router, Route } from 'react-router-dom'
 import { getCardsFromStorage, saveCardsToStorage } from '../services'
-import PageTitle from '../common/PageTitle'
-import Nav from '../common/Nav'
+import { Helmet } from 'react-helmet'
+import dayjs from 'dayjs'
+import GlobalStyle from './GlobalStyle'
 import Header from '../common/Header'
 import HeaderSearchBar from '../search/HeaderSearchBar'
-import dayjs from 'dayjs'
-import AddPage from '../add/AddPage'
+import PageTitle from '../common/PageTitle'
+import CardsContainer from '../cards/CardsContainer'
+import Nav from '../common/Nav'
+import CardDetailPage from '../cards/detailpage/CardDetailPage'
 import AddIdPage from '../add/id/AddIdPage'
 import AddPlaylistPage from '../add/playlist/AddPlaylistPage'
+import Dashboard from '../dashboard/Dashboard'
 
 const Grid = styled.section`
   display: grid;
@@ -26,6 +26,8 @@ const Grid = styled.section`
 
 export default function App() {
   const [cards, setCards] = useState(getCardsFromStorage())
+  const [searchString, setSearchString] = useState('')
+  const [showLogo, setShowLogo] = useState(true)
 
   useEffect(() => {
     saveCardsToStorage(cards)
@@ -72,8 +74,6 @@ export default function App() {
       ...cards.slice(index + 1),
     ])
   }
-
-  const [searchString, setSearchString] = useState('')
 
   function searchWithinAllCards() {
     return cards
@@ -156,6 +156,41 @@ export default function App() {
           />
         </Helmet>
         <Route
+          path="/"
+          exact
+          render={({ history }) => (
+            <Grid>
+              <Header history={history} />
+              <PageTitle
+                title={cards.length !== 0 ? 'Progress' : null}
+                status={''}
+              />
+              <Dashboard
+                showLogo={showLogo}
+                setShowLogo={setShowLogo}
+                cards={cards}
+              />
+              <Nav status={''} />
+            </Grid>
+          )}
+        />
+        <Route
+          path="/add/id"
+          render={({ history }) => (
+            <AddIdPage cards={cards} history={history} onSubmit={createCard} />
+          )}
+        />
+        <Route
+          path="/add/playlist"
+          render={({ history }) => (
+            <AddPlaylistPage
+              cards={cards}
+              setCards={setCards}
+              history={history}
+            />
+          )}
+        />
+        <Route
           path="/search"
           render={() => (
             <Grid>
@@ -173,8 +208,7 @@ export default function App() {
           )}
         />
         <Route
-          exact
-          path="/"
+          path="/notlearnedyet"
           render={({ history }) => (
             <Grid>
               <Header history={history} />
@@ -229,6 +263,7 @@ export default function App() {
             </Grid>
           )}
         />
+
         <Route
           path="/videos/:id"
           render={({ match }) => (
@@ -245,27 +280,8 @@ export default function App() {
               card={cards.find(card => card.id === match.params.id) || []}
               onDeleteCardClick={deleteCardClickHandler}
               onSaveCardClick={saveCardClickHandler}
-            />
-          )}
-        />
-        {/* <Route
-          exact
-          path="/add"
-          render={({ history }) => <AddPage history={history} />}
-        /> */}
-        <Route
-          path="/add/id"
-          render={({ history }) => (
-            <AddIdPage cards={cards} history={history} onSubmit={createCard} />
-          )}
-        />
-        <Route
-          path="/add/playlist"
-          render={({ history }) => (
-            <AddPlaylistPage
               cards={cards}
               setCards={setCards}
-              history={history}
             />
           )}
         />

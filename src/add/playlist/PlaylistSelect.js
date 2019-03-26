@@ -19,7 +19,6 @@ const StyledForm = styled.form`
     position: absolute;
     top: 10px;
     right: 10px;
-    /* Styling the down arrow */
     width: 0;
     height: 0;
     padding: 0;
@@ -107,7 +106,7 @@ export default function PlaylistComponent({
                 return {
                   id: item.contentDetails.videoId,
                   title: item.snippet.title,
-                  notes: item.snippet.description,
+                  notes: '',
                   backgroundImageUrl: url(),
                   status: 0,
                   tags: [],
@@ -118,7 +117,6 @@ export default function PlaylistComponent({
         )
       })
       .catch(err => console.log(err))
-    // onChange(playlistItems)
   }
 
   function onSubmitHandler(event) {
