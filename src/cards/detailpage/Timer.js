@@ -38,8 +38,7 @@ export default function Timer({ card, cards, setCards, player, setGo }) {
   useEffect(() => {
     setStartTime(card.startSeconds)
     setEndTime(card.endSeconds)
-    console.log('useEffect Timer setStartTime=card.startSeconds')
-  }, [])
+  }, [card])
 
   function onStartInputChange(event) {
     setStartTime(event.target.value)
@@ -51,7 +50,7 @@ export default function Timer({ card, cards, setCards, player, setGo }) {
 
   function onGoClick() {
     const index = cards.indexOf(card)
-    console.log('onGoClick')
+    setGo(true)
     setCards([
       ...cards.slice(0, index),
       {
@@ -61,7 +60,6 @@ export default function Timer({ card, cards, setCards, player, setGo }) {
       },
       ...cards.slice(index + 1),
     ])
-    setGo(true)
   }
 
   return (

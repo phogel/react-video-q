@@ -51,10 +51,6 @@ export default function YouTubeVideo({
     })
   })
 
-  // useEffect(() => {
-  //   player &&
-  // }, [go])
-
   const [player, setPlayer] = useState()
   function onPlayerReady(event) {
     setPlayer(event.target)

@@ -200,6 +200,15 @@ export default function CardsDetailPage(props) {
               onClick={onEditCardClickHandler}
             />
           </ButtonList>
+          <Timer
+            card={card}
+            cards={cards}
+            setCards={setCards}
+            setGo={setGo}
+            setTime={setTime}
+            time={time}
+            player={player}
+          />
           <CardEditForm
             card={card}
             onSubmit={onSaveCardClick}

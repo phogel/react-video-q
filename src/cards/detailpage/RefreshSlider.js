@@ -18,7 +18,7 @@ const StyledSlider = styled.div`
         opacity: 0.38;
         ::-webkit-slider-thumb {
           position: absolute;
-          left: 48px;
+          left: 50%;
         }
       }
       ::-webkit-slider-runnable-track {
@@ -42,7 +42,11 @@ const StyledSlider = styled.div`
   }
 `
 
-export default function RefreshSlider({ cardRefreshDate, onSliderChange }) {
+export default function RefreshSlider({
+  cardRefreshDate,
+  onSliderChange,
+  disabled,
+}) {
   const [firstRender, setFirstRender] = useState(true)
   const [daysBeforeRefresh, setDaysBeforeRefresh] = useState(51)
   function checkForRefreshDate() {
@@ -61,25 +65,28 @@ export default function RefreshSlider({ cardRefreshDate, onSliderChange }) {
   }
 
   return (
-    <React.Fragment>
-      Move video automatically to refresh queue in{' '}
-      <span style={{ fontWeight: 'bold', color: '#00cca9' }}>
-        {firstRender ? checkForRefreshDate() : daysBeforeRefresh}
-      </span>{' '}
-      days
-      <StyledSlider>
-        <label className="slider">
-          <input
-            defaultValue={
-              firstRender ? checkForRefreshDate() : daysBeforeRefresh
-            }
-            onChange={onSliderChangeHandler}
-            type="range"
-            min="1"
-            max="100"
-          />
-        </label>
-      </StyledSlider>
-    </React.Fragment>
+    <StyledSlider>
+      <label className="slider">
+        Move video automatically to refresh queue in{' '}
+        {disabled ? (
+          '50'
+        ) : (
+          <span style={{ fontWeight: 'bold', color: '#00cca9' }}>
+            {firstRender ? checkForRefreshDate() : daysBeforeRefresh}
+          </span>
+        )}{' '}
+        days
+        <input
+          disabled={disabled}
+          defaultValue={firstRender ? checkForRefreshDate() : daysBeforeRefresh}
+          onInput={onSliderChangeHandler}
+          // onmouseup={onSliderChangeHandler}
+          // ontouchend={onSliderChangeHandler}
+          type="range"
+          min="1"
+          max="100"
+        />
+      </label>
+    </StyledSlider>
   )
 }
