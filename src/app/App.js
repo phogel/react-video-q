@@ -14,6 +14,8 @@ import CardDetailPage from '../cards/detailpage/CardDetailPage'
 import AddIdPage from '../add/id/AddIdPage'
 import AddPlaylistPage from '../add/playlist/AddPlaylistPage'
 import Dashboard from '../dashboard/Dashboard'
+import SwipeableRoutes from 'react-swipeable-routes'
+import CategoryPage from './CategoryPage'
 
 const Grid = styled.section`
   display: grid;
@@ -148,7 +150,7 @@ export default function App() {
           <title>VIDEQ</title>
           <meta
             name="description"
-            content="Learn videos with VIDEO-Q: your app to keep track of learned videos. Check it out now!"
+            content="Learn videos with VIDEQ: your app to keep track of learned videos. Check it out now!"
           />
           <link
             href="https://fonts.googleapis.com/css?family=Dosis:700|Roboto:400,700"
@@ -208,59 +210,10 @@ export default function App() {
           )}
         />
         <Route
-          path="/notlearnedyet"
+          exact
+          path="/category"
           render={({ history }) => (
-            <Grid>
-              <Header history={history} />
-              <PageTitle title="Not learned yet" status={0} />
-              <CardsContainer
-                checkIfRefresh={checkIfRefresh()}
-                cards={cards.filter(card => card.status === 0)}
-              />
-              <Nav status={0} />
-            </Grid>
-          )}
-        />
-        <Route
-          path="/learningqueue"
-          render={({ history }) => (
-            <Grid>
-              <Header history={history} />
-              <PageTitle title="Learning queue" status={1} />
-              <CardsContainer
-                checkIfRefresh={checkIfRefresh()}
-                cards={cards.filter(card => card.status === 1)}
-              />
-              <Nav status={1} />
-            </Grid>
-          )}
-        />
-        <Route
-          path="/learned"
-          render={({ history }) => (
-            <Grid>
-              <Header history={history} />
-              <PageTitle title="Learned" status={2} />
-              <CardsContainer
-                checkIfRefresh={checkIfRefresh()}
-                cards={cards.filter(card => card.status === 2)}
-              />
-              <Nav status={2} />
-            </Grid>
-          )}
-        />
-        <Route
-          path="/refreshqueue"
-          render={({ history }) => (
-            <Grid>
-              <Header history={history} />
-              <PageTitle title="Refresh Queue" status={3} />
-              <CardsContainer
-                checkIfRefresh={checkIfRefresh()}
-                cards={cards.filter(card => card.status === 3)}
-              />
-              <Nav status={3} />
-            </Grid>
+            <CategoryPage history={history} checkIfRefresh={checkIfRefresh} />
           )}
         />
 

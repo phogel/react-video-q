@@ -22,7 +22,7 @@ export default function Nav({ status }) {
   return (
     <StyledNav>
       <StyledLink
-        to="/notlearnedyet"
+        to="category/notlearnedyet"
         fill={status === 0 ? '#2DDBE3' : 'transparent'}
       >
         <Icon
@@ -32,7 +32,7 @@ export default function Nav({ status }) {
         />
       </StyledLink>
       <StyledLink
-        to="/learningqueue"
+        to="category/learningqueue"
         fill={status === 1 ? '#EFA5D4' : 'transparent'}
       >
         <Icon
@@ -41,7 +41,10 @@ export default function Nav({ status }) {
           name="learning-queue"
         />
       </StyledLink>
-      <StyledLink to="/learned" fill={status === 2 ? '#00CCA9' : 'transparent'}>
+      <StyledLink
+        to="category/learned"
+        fill={status === 2 ? '#00CCA9' : 'transparent'}
+      >
         <Icon
           fill={status === 2 ? '#00CCA9' : '#8A8A8A'}
           height="25px"
@@ -49,7 +52,7 @@ export default function Nav({ status }) {
         />
       </StyledLink>
       <StyledLink
-        to="/refreshqueue"
+        to="category/refreshqueue"
         fill={status === 3 ? '#FF328B' : 'transparent'}
       >
         <Icon
