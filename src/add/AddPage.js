@@ -3,7 +3,7 @@ import styled from 'styled-components'
 
 const Container = styled.div`
   display: grid;
-  grid-template-columns: 1fr 1fr 1fr;
+  grid-template-columns: 1fr 1fr;
   width: auto;
   grid-gap: 6px;
   color: #fefdfd;
@@ -71,9 +71,9 @@ export default function AddPage({ history, setAddClick }) {
         <StyledItem onClick={() => history.push('/add/playlist')}>
           Add playlist from YouTube
         </StyledItem>
-        <StyledItem onClick={() => history.push('/add/playlist')}>
+        {/* <StyledItem onClick={() => history.push('/add/playlist')}>
           Upload to YouTube
-        </StyledItem>
+        </StyledItem> */}
       </Container>
     </Modal>
   )

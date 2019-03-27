@@ -3,8 +3,9 @@ import styled from 'styled-components'
 import logo from '../images/logo.svg'
 import { Link } from 'react-router-dom'
 import { FiSearch } from 'react-icons/fi'
-import { MdAdd } from 'react-icons/md'
+import { MdAdd, MdInsertChart } from 'react-icons/md'
 import AddPage from '../add/AddPage'
+import Dashboard from '../dashboard/Dashboard'
 
 const Container = styled.section`
   display: grid;
@@ -31,7 +32,7 @@ const StyledLink = styled(Link)`
   height: 24px;
 `
 
-const StyledAddButton = styled.div`
+const StyledIcon = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -42,20 +43,35 @@ const StyledAddButton = styled.div`
   height: 24px;
 `
 
-export default function Header({ history }) {
+export default function Header({ history, cards }) {
   const [addClick, setAddClick] = useState(false)
-  const [addButtonColor, setAddButtonColor] = useState('')
+  const [dashboardClick, setDashboardClick] = useState(false)
 
-  function onClickHandler() {
+  function onAddClickHandler() {
     setAddClick(!addClick)
+    if (dashboardClick === true) {
+      setDashboardClick(false)
+    }
+  }
+
+  function onDashboardClickHandler() {
+    setDashboardClick(!dashboardClick)
+    if (addClick === true) {
+      setAddClick(false)
+    }
   }
 
   function AddPageComponent() {
     if (addClick) {
-      setAddButtonColor('#fefdfd')
       return <AddPage history={history} setAddClick={setAddClick} />
     }
-    setAddButtonColor('#fefdfd')
+    return null
+  }
+
+  function DashboardComponent() {
+    if (dashboardClick) {
+      return <Dashboard cards={cards} setDashboardClick={setDashboardClick} />
+    }
     return null
   }
 
@@ -65,18 +81,37 @@ export default function Header({ history }) {
         <StyledLink to="/" style={{ position: 'absolute', left: '10px' }}>
           <img src={logo} alt="VIDEQ" style={{ userSelect: 'none' }} />
         </StyledLink>
-        <StyledAddButton onClick={onClickHandler}>
-          <MdAdd color={addButtonColor} size="30px" />
-        </StyledAddButton>
-        <StyledLink to="/search">
-          <FiSearch
-            color="#fefdfd"
-            size="24px"
-            style={{ position: 'absolute', right: '10px' }}
+        <StyledIcon
+          onClick={onAddClickHandler}
+          style={{
+            position: 'absolute',
+            right: '50%',
+            transform: 'translateX(50%)',
+          }}
+        >
+          <MdAdd color={addClick ? '#FF328B' : '#fefdfd'} size="30px" />
+        </StyledIcon>
+        <StyledIcon
+          onClick={onDashboardClickHandler}
+          style={{
+            position: 'absolute',
+            right: '25%',
+          }}
+        >
+          <MdInsertChart
+            color={dashboardClick ? '#FF328B' : '#fefdfd'}
+            size="30px"
           />
+        </StyledIcon>
+        <StyledLink
+          to="/search"
+          style={{ position: 'absolute', right: '10px' }}
+        >
+          <FiSearch color="#fefdfd" size="24px" />
         </StyledLink>
       </StyledHeader>
       <AddPageComponent />
+      <DashboardComponent />
     </Container>
   )
 }

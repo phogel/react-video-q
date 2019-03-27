@@ -82,7 +82,7 @@ export default function SearchBar({ onSearchChange, searchString }) {
         onChange={onSearchChange}
       />
       <BackButton onClick={goBack}>
-        <MdKeyboardArrowRight color={'#8A8A8A'} size={'30px'} />
+        <MdKeyboardArrowRight color="#fefdfd" size="30px" />
       </BackButton>
     </Grid>
   )

@@ -106,6 +106,7 @@ export default function AddPlaylistPage({ history, cards, setCards }) {
 
   function onSubmitPlaylist() {
     setCards([...cards, ...playlistItems])
+    history.push('/')
   }
 
   if (!initialized) {

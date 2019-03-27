@@ -13,7 +13,8 @@ import Nav from '../common/Nav'
 import CardDetailPage from '../cards/detailpage/CardDetailPage'
 import AddIdPage from '../add/id/AddIdPage'
 import AddPlaylistPage from '../add/playlist/AddPlaylistPage'
-import Dashboard from '../dashboard/Dashboard'
+import NoCardsPage from './NoCardsPage'
+import WelcomeLogo from './WelcomeLogo'
 
 const Grid = styled.section`
   display: grid;
@@ -156,25 +157,6 @@ export default function App() {
           />
         </Helmet>
         <Route
-          path="/"
-          exact
-          render={({ history }) => (
-            <Grid>
-              <Header history={history} />
-              <PageTitle
-                title={cards.length !== 0 ? 'Progress' : null}
-                status={''}
-              />
-              <Dashboard
-                showLogo={showLogo}
-                setShowLogo={setShowLogo}
-                cards={cards}
-              />
-              <Nav status={''} />
-            </Grid>
-          )}
-        />
-        <Route
           path="/add/id"
           render={({ history }) => (
             <AddIdPage cards={cards} history={history} onSubmit={createCard} />
@@ -208,24 +190,44 @@ export default function App() {
           )}
         />
         <Route
-          path="/notlearnedyet"
+          exact
+          path="/"
           render={({ history }) => (
-            <Grid>
-              <Header history={history} />
-              <PageTitle title="Not learned yet" status={0} />
-              <CardsContainer
-                checkIfRefresh={checkIfRefresh()}
-                cards={cards.filter(card => card.status === 0)}
-              />
-              <Nav status={0} />
-            </Grid>
+            <React.Fragment>
+              {showLogo ? (
+                <WelcomeLogo showLogo={showLogo} setShowLogo={setShowLogo} />
+              ) : null}
+              <Grid>
+                <Header history={history} cards={cards} />
+                <PageTitle
+                  title={cards.length !== 0 ? 'Not learned yet' : null}
+                  status={cards.length !== 0 ? 0 : ''}
+                />
+                {cards.length !== 0 ? (
+                  <CardsContainer
+                    checkIfRefresh={checkIfRefresh()}
+                    cards={cards.filter(card => card.status === 0)}
+                    showLogo={showLogo}
+                    setShowLogo={setShowLogo}
+                  />
+                ) : (
+                  <NoCardsPage
+                    showLogo={showLogo}
+                    setShowLogo={setShowLogo}
+                    cards={cards}
+                  />
+                )}
+
+                <Nav status={0} />
+              </Grid>
+            </React.Fragment>
           )}
         />
         <Route
           path="/learningqueue"
           render={({ history }) => (
             <Grid>
-              <Header history={history} />
+              <Header history={history} cards={cards} />
               <PageTitle title="Learning queue" status={1} />
               <CardsContainer
                 checkIfRefresh={checkIfRefresh()}
@@ -239,7 +241,7 @@ export default function App() {
           path="/learned"
           render={({ history }) => (
             <Grid>
-              <Header history={history} />
+              <Header history={history} cards={cards} />
               <PageTitle title="Learned" status={2} />
               <CardsContainer
                 checkIfRefresh={checkIfRefresh()}
@@ -253,7 +255,7 @@ export default function App() {
           path="/refreshqueue"
           render={({ history }) => (
             <Grid>
-              <Header history={history} />
+              <Header history={history} cards={cards} />
               <PageTitle title="Refresh Queue" status={3} />
               <CardsContainer
                 checkIfRefresh={checkIfRefresh()}

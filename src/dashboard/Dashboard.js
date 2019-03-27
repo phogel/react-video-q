@@ -1,69 +1,63 @@
-import React, { useState } from 'react'
+import React from 'react'
 import styled from 'styled-components'
-import { MdArrowUpward } from 'react-icons/md'
-import logo from '../images/logo.svg'
 import ProgressBar from './ProgressBar'
 
-const WelcomeLogo = styled.section`
-  pointer-events: none;
-  position: fixed;
-  top: 0;
-  left: 0;
-  height: 100vh;
-  width: 100vw;
-  background: #1a1a1a;
+const Container = styled.div`
+  display: grid;
+  grid-template-rows: 60px 4fr;
+  height: 100%;
+  width: auto;
+  grid-gap: 6px;
+  color: #fefdfd;
+  margin: 6px 6px 0 6px;
+  z-index: 1;
+  animation: move-down 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+
+  @keyframes move-down {
+    0% {
+      transform: translateY(-80px);
+    }
+    100% {
+      transform: translateY(0);
+    }
+  }
+`
+
+const StyledItem = styled.div`
+  font-size: 16px;
+  font-family: 'Dosis', sans-serif;
   display: flex;
-  align-content: center;
   justify-content: center;
-  z-index: 20;
-  animation: fade-out 1.5s normal ease-out;
-  animation-fill-mode: forwards;
-  @keyframes fade-out {
-    0% {
-      opacity: 1;
-    }
-    60% {
-      opacity: 1;
-    }
-    100% {
-      opacity: 0;
-    }
-  }
-`
-
-const AddVideoNoticeContainer = styled.section`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: flex-start;
-  padding: 10px 25px;
-`
-
-const UpArrow = styled.div`
-  animation: move-up 2s ease-out infinite;
-
-  @keyframes move-up {
-    0% {
-      transform: translateY(0px);
-      opacity: 1;
-    }
-    40% {
-      opacity: 1;
-    }
-    100% {
-      transform: translateY(-40px);
-      opacity: 0;
-    }
-  }
-`
-
-const AddVideoNotice = styled.div`
-  padding: 20px;
-  border-radius: 20px;
-  background: #1a1a1a;
-  color: rgb(250, 250, 250);
-  margin-top: 10px;
   text-align: center;
+  align-items: center;
+  background: #1a1a1a;
+  padding: 10px;
+  border-radius: 10px;
+  z-index: 10;
+  transition: background-color 0.3s;
+  :hover,
+  :focus {
+    background-color: rgb(255, 50, 139, 0.9);
+    outline: 0;
+  }
+`
+
+const Modal = styled.div`
+  background: rgba(0, 0, 0, 0.8);
+  height: calc(100vh - 48px);
+  overflow: hidden;
+  width: 100vw;
+  z-index: 1;
+  animation: fade-in 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+
+  @keyframes fade-in {
+    0% {
+      opacity: 0;
+    }
+    100% {
+      opacity: 1;
+    }
+  }
 `
 
 const StatisticsContainer = styled.div`
@@ -86,19 +80,14 @@ const Label = styled.div`
   text-align: center;
 `
 
-export default function Dashboard({ showLogo, setShowLogo, cards }) {
-  setTimeout(() => {
-    setShowLogo(false)
-  }, 3500)
-
+export default function Dashboard({ setDashboardClick, cards }) {
+  function setAddClickHandler() {
+    setDashboardClick(false)
+  }
   return (
-    <React.Fragment>
-      {showLogo ? (
-        <WelcomeLogo>
-          <img src={logo} alt="VIDEQ" style={{ userSelect: 'none' }} />
-        </WelcomeLogo>
-      ) : null}
-      {cards.length !== 0 ? (
+    <Modal onClick={setAddClickHandler}>
+      <Container>
+        <StyledItem>Your progress</StyledItem>
         <StatisticsContainer>
           <Statistics>
             <ProgressBar cards={cards} status={0} />
@@ -111,20 +100,7 @@ export default function Dashboard({ showLogo, setShowLogo, cards }) {
             <Label>Refresh queue</Label>
           </Statistics>
         </StatisticsContainer>
-      ) : (
-        <AddVideoNoticeContainer>
-          <UpArrow>
-            <MdArrowUpward size="30px" />
-          </UpArrow>
-          <AddVideoNotice>
-            There are no videos in your VIDE
-            <span style={{ color: '#FF328B', fontWeight: 'bold' }}>
-              Q
-            </span> yet. <br />
-            Start by adding some now.
-          </AddVideoNotice>
-        </AddVideoNoticeContainer>
-      )}
-    </React.Fragment>
+      </Container>
+    </Modal>
   )
 }
