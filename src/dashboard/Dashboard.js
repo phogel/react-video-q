@@ -74,9 +74,9 @@ const StatisticsContainer = styled.div`
 
 const Statistics = styled.section`
   display: grid;
-  grid-template-columns: repeat(4, 40px);
+  grid-template-columns: repeat(4, 45px);
   grid-template-rows: 1fr auto;
-  grid-gap: 30px;
+  grid-gap: 20px;
   margin: 0 auto;
   height: 60%;
 `
@@ -95,7 +95,11 @@ export default function Dashboard({ showLogo, setShowLogo, cards }) {
     <React.Fragment>
       {showLogo ? (
         <WelcomeLogo>
-          <img src={logo} alt="VIDEQ" style={{ userSelect: 'none' }} />
+          <img
+            src={logo}
+            alt="VIDEQ"
+            style={{ transform: 'translateY(-5%)' }}
+          />
         </WelcomeLogo>
       ) : null}
       {cards.length !== 0 ? (

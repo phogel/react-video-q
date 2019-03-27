@@ -26,25 +26,24 @@ const CategoryGrid = styled.section`
 `
 
 export default function CategoryPage({ history, cards, checkIfRefresh }) {
+  const NotLearnedYet = () => (
+    <CategoryGrid style={{ height: '100vh', 'overflow-y': 'scroll' }}>
+      <PageTitle title="Not learned yet" status={0} />
+      <CardsContainer
+        checkIfRefresh={checkIfRefresh()}
+        cards={cards.filter(card => card.status === 0)}
+      />
+    </CategoryGrid>
+  )
+
   return (
     <Router>
       <Grid>
         <Header history={history} />
         <SwipeableRoutes>
-          <Route
-            path="/notlearnedyet"
-            render={({ history }) => (
-              <CategoryGrid>
-                <PageTitle title="Not learned yet" status={0} />
-                <CardsContainer
-                  checkIfRefresh={checkIfRefresh()}
-                  cards={cards.filter(card => card.status === 0)}
-                />
-              </CategoryGrid>
-            )}
-          />
-          <Route
-            path="/learningqueue"
+          <Route path="category/notlearnedyet" component={NotLearnedYet} />
+          {/* <Route
+            path="category/learningqueue"
             render={({ history }) => (
               <CategoryGrid>
                 <PageTitle title="Learning queue" status={1} />
@@ -56,7 +55,7 @@ export default function CategoryPage({ history, cards, checkIfRefresh }) {
             )}
           />
           <Route
-            path="/learned"
+            path="category/learned"
             render={({ history }) => (
               <CategoryGrid>
                 <PageTitle title="Learned" status={2} />
@@ -68,7 +67,7 @@ export default function CategoryPage({ history, cards, checkIfRefresh }) {
             )}
           />
           <Route
-            path="/refreshqueue"
+            path="category/refreshqueue"
             render={({ history }) => (
               <CategoryGrid>
                 <PageTitle title="Refresh Queue" status={3} />
@@ -78,7 +77,7 @@ export default function CategoryPage({ history, cards, checkIfRefresh }) {
                 />
               </CategoryGrid>
             )}
-          />
+          /> */}
         </SwipeableRoutes>
         <Nav status={0} />
       </Grid>

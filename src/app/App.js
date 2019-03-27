@@ -14,7 +14,6 @@ import CardDetailPage from '../cards/detailpage/CardDetailPage'
 import AddIdPage from '../add/id/AddIdPage'
 import AddPlaylistPage from '../add/playlist/AddPlaylistPage'
 import Dashboard from '../dashboard/Dashboard'
-import SwipeableRoutes from 'react-swipeable-routes'
 import CategoryPage from './CategoryPage'
 
 const Grid = styled.section`
@@ -210,7 +209,6 @@ export default function App() {
           )}
         />
         <Route
-          exact
           path="/category"
           render={({ history }) => (
             <CategoryPage history={history} checkIfRefresh={checkIfRefresh} />
