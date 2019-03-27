@@ -22,7 +22,7 @@ const WelcomeLogo = styled.section`
     0% {
       opacity: 1;
     }
-    75% {
+    60% {
       opacity: 1;
     }
     100% {
