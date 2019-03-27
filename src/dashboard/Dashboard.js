@@ -4,10 +4,9 @@ import ProgressBar from './ProgressBar'
 
 const Container = styled.div`
   display: grid;
-  grid-template-rows: 60px 4fr;
+  grid-template-rows: 60px auto;
   height: 100%;
   width: auto;
-  grid-gap: 6px;
   color: #fefdfd;
   margin: 6px 6px 0 6px;
   z-index: 1;
@@ -63,7 +62,6 @@ const Modal = styled.div`
 const StatisticsContainer = styled.div`
   display: flex;
   justify-content: center;
-  align-items: center;
 `
 
 const Statistics = styled.section`
