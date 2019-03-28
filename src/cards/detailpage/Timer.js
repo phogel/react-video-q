@@ -8,6 +8,8 @@ const StyledForm = styled.div`
   align-items: center;
   font-size: 14px;
   color: rgba(26, 26, 26, 0.57);
+  padding-bottom: 20px;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.06);
 `
 
 const StyledInput = styled.input`
@@ -34,13 +36,13 @@ const StyledButton = styled.button`
 export default function Timer({ card, cards, setCards, setGo }) {
   const [startTime, setStartTime] = useState(card.startSeconds)
   const [endTime, setEndTime] = useState(card.endSeconds)
-  const [goQueue, setGoQueue] = useState(false)
+  // const [goQueue, setGoQueue] = useState(false)
 
   useEffect(() => {
-    setGoQueue(false)
+    // setGoQueue(false)
     setStartTime(card.startSeconds)
     setEndTime(card.endSeconds)
-  }, [goQueue])
+  }, [card])
 
   function onStartInputChange(event) {
     setStartTime(event.target.value)
@@ -51,6 +53,7 @@ export default function Timer({ card, cards, setCards, setGo }) {
   }
 
   function onGoClick() {
+    setGo(true)
     const index = cards.indexOf(card)
     setCards([
       ...cards.slice(0, index),
@@ -61,8 +64,7 @@ export default function Timer({ card, cards, setCards, setGo }) {
       },
       ...cards.slice(index + 1),
     ])
-    setGoQueue(true)
-    setGo(true)
+    // setGoQueue(true)
   }
 
   return (

@@ -5,6 +5,7 @@ import ProgressBar from './ProgressBar'
 const Container = styled.div`
   display: grid;
   grid-template-rows: 60px auto;
+  grid-gap: 10px;
   height: 100%;
   width: auto;
   color: #fefdfd;

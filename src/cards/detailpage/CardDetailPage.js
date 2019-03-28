@@ -13,7 +13,7 @@ import Timer from './Timer'
 
 const Grid = styled.section`
   display: grid;
-  grid-gap: 20px;
+  grid-gap: 10px;
   grid-template-rows: auto 1fr auto;
   position: relative;
   width: 100vw;
@@ -32,7 +32,9 @@ const MainGrid = styled.section`
 `
 
 const ContentGrid = styled.div`
+  margin-top: 20px;
   display: grid;
+  grid-gap: 20px;
   grid-template-rows: auto auto auto 1fr;
 `
 
@@ -46,7 +48,6 @@ const StyledTitle = styled.h3`
   display: block;
   font-size: 22px;
   font-weight: bold;
-  padding: 10px 10px 10px 0;
   display: ${p => (p.isEditable ? 'none' : null)};
 `
 
@@ -71,11 +72,12 @@ const Tag = styled.li`
 
 const StyledNotes = styled.div`
   position: relative;
-  font-size: 16px;
+  font-size: 15px;
   overflow: scroll;
   overflow-wrap: break-word;
   max-height: 76px;
   background: rgb(250, 250, 250);
+  padding-bottom: 30px;
 `
 
 const CategoryButtonContainer = styled.section`

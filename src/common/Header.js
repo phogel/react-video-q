@@ -95,7 +95,7 @@ export default function Header({ history, cards }) {
           onClick={onDashboardClickHandler}
           style={{
             position: 'absolute',
-            right: '25%',
+            right: '12%',
           }}
         >
           <MdInsertChart

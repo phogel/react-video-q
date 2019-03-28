@@ -32,7 +32,7 @@ const StyledWelcomeLogo = styled.section`
 export default function WelcomeLogo({ showLogo, setShowLogo }) {
   setTimeout(() => {
     setShowLogo(false)
-  }, 3000)
+  }, 2000)
 
   return (
     <React.Fragment>

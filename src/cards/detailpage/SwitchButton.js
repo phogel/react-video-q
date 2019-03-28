@@ -5,8 +5,7 @@ import RefreshSlider from './RefreshSlider'
 const StyledSwitchButton = styled.div`
   font-size: 15px;
   height: 0;
-  margin-bottom: 40px;
-  }
+  margin-bottom: 48px;
   .switch-input {
     display: none;
   }
