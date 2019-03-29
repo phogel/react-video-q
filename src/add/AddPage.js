@@ -71,9 +71,6 @@ export default function AddPage({ history, setAddClick }) {
         <StyledItem onClick={() => history.push('/add/playlist')}>
           Add playlist from YouTube
         </StyledItem>
-        {/* <StyledItem onClick={() => history.push('/add/playlist')}>
-          Upload to YouTube
-        </StyledItem> */}
       </Container>
     </Modal>
   )

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import YouTubeIframeLoader from 'youtube-iframe'
 import styled from 'styled-components'
 

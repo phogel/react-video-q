@@ -5,7 +5,6 @@ import dayjs from 'dayjs'
 const StyledLabel = styled.label`
   width: 110%;
   > input {
-    -webkit-appearance: none;
     width: 100%;
     background-color: transparent;
     cursor: pointer;

@@ -3,7 +3,6 @@ import styled from 'styled-components'
 
 const ProgressBarBackground = styled.div`
   position: relative;
-  /* background: #e0e0e0; */
   border-radius: 15px;
 `
 
@@ -19,16 +18,6 @@ const ProgressBarFill = styled.div`
   min-height: 22px;
   text-align: center;
   height: ${p => p.height};
-  /* animation: fill-bar 1s ease-out;
-
-  @keyframes fill-bar {
-    0% {
-      height: 0;
-    }
-    100% {
-      height: ${p => p.height};
-    }
-  } */
 `
 
 export default function ProgressBar({ cards, status }) {
