@@ -15,7 +15,7 @@ const StyledLink = styled(Link)`
   align-items: center;
   text-decoration: none;
   transition: all 0.5s ease-in;
-  border-top: 3px solid ${p => p.topBorderColor};
+  border-top: 3px solid ${p => p.topbordercolor};
 `
 
 export default function Nav({ status }) {
@@ -23,7 +23,7 @@ export default function Nav({ status }) {
     <StyledNav>
       <StyledLink
         to="/"
-        topBorderColor={status === 0 ? '#2DDBE3' : 'transparent'}
+        topbordercolor={status === 0 ? '#2DDBE3' : 'transparent'}
       >
         <Icon
           fill={status === 0 ? '#2DDBE3' : '#8A8A8A'}
@@ -33,7 +33,7 @@ export default function Nav({ status }) {
       </StyledLink>
       <StyledLink
         to="/learningqueue"
-        topBorderColor={status === 1 ? '#EFA5D4' : 'transparent'}
+        topbordercolor={status === 1 ? '#EFA5D4' : 'transparent'}
       >
         <Icon
           fill={status === 1 ? '#EFA5D4' : '#8A8A8A'}
@@ -43,7 +43,7 @@ export default function Nav({ status }) {
       </StyledLink>
       <StyledLink
         to="/learned"
-        topBorderColor={status === 2 ? '#00CCA9' : 'transparent'}
+        topbordercolor={status === 2 ? '#00CCA9' : 'transparent'}
       >
         <Icon
           fill={status === 2 ? '#00CCA9' : '#8A8A8A'}
@@ -53,7 +53,7 @@ export default function Nav({ status }) {
       </StyledLink>
       <StyledLink
         to="/refreshqueue"
-        topBorderColor={status === 3 ? '#FF328B' : 'transparent'}
+        topbordercolor={status === 3 ? '#FF328B' : 'transparent'}
       >
         <Icon
           fill={status === 3 ? '#FF328B' : '#8A8A8A'}

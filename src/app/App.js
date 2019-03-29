@@ -13,7 +13,7 @@ import Nav from '../common/Nav'
 import CardDetailPage from '../cards/detailpage/CardDetailPage'
 import AddIdPage from '../add/id/AddIdPage'
 import AddPlaylistPage from '../add/playlist/AddPlaylistPage'
-import NoCardsPage from './NoCardsPage'
+import NoCardsPage from '../cards/NoCardsPage'
 import WelcomeLogo from './WelcomeLogo'
 
 const Grid = styled.section`
@@ -38,9 +38,17 @@ export default function App() {
     setCards([...cards, data])
   }
 
-  function clickHandler(id, status) {
+  function clickHandler(id, status, startSeconds, endSeconds) {
     const card = cards.find(card => card.id === id)
     const index = cards.indexOf(card)
+    if (startSeconds !== card.startSeconds || endSeconds !== card.endSeconds) {
+      setCards([
+        ...cards.slice(0, index),
+        { ...card, status: 0, startSeconds, endSeconds },
+        ...cards.slice(index + 1),
+      ])
+    }
+
     if (status === card.status) {
       setCards([
         ...cards.slice(0, index),
@@ -193,34 +201,32 @@ export default function App() {
           exact
           path="/"
           render={({ history }) => (
-            <React.Fragment>
+            <Grid>
               {showLogo ? (
                 <WelcomeLogo showLogo={showLogo} setShowLogo={setShowLogo} />
               ) : null}
-              <Grid>
-                <Header history={history} cards={cards} />
-                <PageTitle
-                  title={cards.length !== 0 ? 'Not learned yet' : null}
-                  status={cards.length !== 0 ? 0 : ''}
+              <Header history={history} cards={cards} />
+              <PageTitle
+                title={cards.length !== 0 ? 'Not learned yet' : null}
+                status={cards.length !== 0 ? 0 : ''}
+              />
+              {cards.length !== 0 ? (
+                <CardsContainer
+                  checkIfRefresh={checkIfRefresh()}
+                  cards={cards.filter(card => card.status === 0)}
+                  showLogo={showLogo}
+                  setShowLogo={setShowLogo}
                 />
-                {cards.length !== 0 ? (
-                  <CardsContainer
-                    checkIfRefresh={checkIfRefresh()}
-                    cards={cards.filter(card => card.status === 0)}
-                    showLogo={showLogo}
-                    setShowLogo={setShowLogo}
-                  />
-                ) : (
-                  <NoCardsPage
-                    showLogo={showLogo}
-                    setShowLogo={setShowLogo}
-                    cards={cards}
-                  />
-                )}
+              ) : (
+                <NoCardsPage
+                  showLogo={showLogo}
+                  setShowLogo={setShowLogo}
+                  cards={cards}
+                />
+              )}
 
-                <Nav status={0} />
-              </Grid>
-            </React.Fragment>
+              <Nav status={0} />
+            </Grid>
           )}
         />
         <Route

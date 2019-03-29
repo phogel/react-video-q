@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import YouTubeIframeLoader from 'youtube-iframe'
 import styled from 'styled-components'
 
@@ -26,6 +26,18 @@ export default function YouTubeVideo({
   setGo,
   go,
 }) {
+  useEffect(() => {
+    console.log('ytpage load')
+  }, [])
+
+  useEffect(() => {
+    console.log('endseconds load')
+  }, [endSeconds])
+
+  useEffect(() => {
+    console.log('startseconds load')
+  }, [startSeconds])
+
   YouTubeIframeLoader.load(function(YT) {
     new YT.Player('player', {
       height: 'auto',

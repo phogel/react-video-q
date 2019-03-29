@@ -60,12 +60,12 @@ const Modal = styled.div`
   }
 `
 
-const StatisticsContainer = styled.div`
+const ProgressContainer = styled.div`
   display: flex;
   justify-content: center;
 `
 
-const Statistics = styled.section`
+const Progress = styled.section`
   display: grid;
   grid-template-columns: repeat(4, 40px);
   grid-template-rows: 1fr auto;
@@ -87,8 +87,8 @@ export default function Dashboard({ setDashboardClick, cards }) {
     <Modal onClick={setAddClickHandler}>
       <Container>
         <StyledItem>Your progress</StyledItem>
-        <StatisticsContainer>
-          <Statistics>
+        <ProgressContainer>
+          <Progress>
             <ProgressBar cards={cards} status={0} />
             <ProgressBar cards={cards} status={1} />
             <ProgressBar cards={cards} status={2} />
@@ -97,8 +97,8 @@ export default function Dashboard({ setDashboardClick, cards }) {
             <Label>Learning queue</Label>
             <Label>Learned</Label>
             <Label>Refresh queue</Label>
-          </Statistics>
-        </StatisticsContainer>
+          </Progress>
+        </ProgressContainer>
       </Container>
     </Modal>
   )

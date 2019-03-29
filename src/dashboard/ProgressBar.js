@@ -19,7 +19,7 @@ const ProgressBarFill = styled.div`
   min-height: 22px;
   text-align: center;
   height: ${p => p.height};
-  /* animation: fill-bar 1s ease-out;
+  animation: fill-bar 1s ease-out;
 
   @keyframes fill-bar {
     0% {
@@ -28,7 +28,7 @@ const ProgressBarFill = styled.div`
     100% {
       height: ${p => p.height};
     }
-  } */
+  }
 `
 
 export default function ProgressBar({ cards, status }) {

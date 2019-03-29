@@ -16,7 +16,7 @@ const Grid = styled.section`
   grid-gap: 10px;
   grid-template-rows: auto 1fr auto;
   position: relative;
-  width: 100vw;
+  width: 100%;
   height: 100vh;
   overflow-y: scroll;
   margin: 0 auto;
@@ -107,10 +107,6 @@ export default function CardsDetailPage(props) {
     onSaveCardClick,
     cards,
     setCards,
-    setTime,
-    time,
-    setPlayer,
-    player,
   } = props
 
   const [isEditable, setIsEditable] = useState(false)
@@ -187,15 +183,7 @@ export default function CardsDetailPage(props) {
               onClick={onEditCardClickHandler}
             />
           </ButtonList>
-          <Timer
-            card={card}
-            cards={cards}
-            setCards={setCards}
-            setGo={setGo}
-            setTime={setTime}
-            time={time}
-            player={player}
-          />
+          <Timer card={card} cards={cards} setCards={setCards} setGo={setGo} />
           <CardEditForm
             card={card}
             onSubmit={onSaveCardClick}
@@ -215,19 +203,10 @@ export default function CardsDetailPage(props) {
               onClick={onEditCardClickHandler}
             />
           </ButtonList>
-          <Timer
-            card={card}
-            cards={cards}
-            setCards={setCards}
-            setGo={setGo}
-            setTime={setTime}
-            time={time}
-            player={player}
-          />
+          <Timer card={card} cards={cards} setCards={setCards} setGo={setGo} />
           <ContentGrid>
             <StyledTitle>{card.title}</StyledTitle>
             {card.tags && <TagList>{card.tags.map(renderTag)}</TagList>}
-
             <StyledNotes>
               {card.notes}
               {/* {card.notes.length > 300 ? <StyledNotesFade /> : null} */}
@@ -253,8 +232,6 @@ export default function CardsDetailPage(props) {
           startSeconds={card.startSeconds}
           endSeconds={card.endSeconds}
           onStateChange={onVideoStateChange}
-          setPlayer={setPlayer}
-          player={player}
           go={go}
           setGo={setGo}
           videoId={card.id}

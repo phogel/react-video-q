@@ -1,7 +1,6 @@
 import React from 'react'
 import styled from 'styled-components'
 
-const Group = styled.div``
 const StyledInput = styled.input`
   font-size: 16px;
   padding: 10px 10px 10px 5px;
@@ -19,7 +18,7 @@ const StyledInput = styled.input`
   }
 `
 
-const Bar = styled.span`
+const InputUnderline = styled.span`
   position: relative;
   display: block;
   width: 100%;
@@ -43,7 +42,7 @@ const Bar = styled.span`
 
 export default function Input({ placeholder, name, value, onChange }) {
   return (
-    <Group className="group">
+    <React.Fragment>
       <StyledInput
         className="input"
         type="text"
@@ -52,7 +51,7 @@ export default function Input({ placeholder, name, value, onChange }) {
         value={value}
         onChange={onChange}
       />
-      <Bar className="bar" />
-    </Group>
+      <InputUnderline />
+    </React.Fragment>
   )
 }

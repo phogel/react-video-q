@@ -80,8 +80,6 @@ export default function RefreshSlider({
           disabled={disabled}
           defaultValue={firstRender ? checkForRefreshDate() : daysBeforeRefresh}
           onInput={onSliderChangeHandler}
-          // onmouseup={onSliderChangeHandler}
-          // ontouchend={onSliderChangeHandler}
           type="range"
           min="1"
           max="100"

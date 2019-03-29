@@ -20,27 +20,37 @@ const StyledHeader = styled.header`
   padding: 0 10px 0 10px;
   z-index: 2;
   position: relative;
-`
-const StyledLink = styled(Link)`
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  user-select: none;
-  &:focus {
-    outline: none;
+  & > {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    user-select: none;
+    &:focus {
+      outline: none;
+    }
+    height: 24px;
   }
-  height: 24px;
 `
 
-const StyledIcon = styled.div`
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  user-select: none;
-  &:focus {
-    outline: none;
-  }
-  height: 24px;
+const StyledLogo = styled(Link)`
+  position: absolute;
+  left: 10px;
+`
+
+const StyledAddIcon = styled.div`
+  position: absolute;
+  right: 50%;
+  transform: translateX(50%);
+`
+
+const StyledDashboardIcon = styled.div`
+  position: absolute;
+  right: 12%;
+`
+
+const StyledSearchLink = styled(Link)`
+  position: absolute;
+  right: 10px;
 `
 
 export default function Header({ history, cards }) {
@@ -78,37 +88,21 @@ export default function Header({ history, cards }) {
   return (
     <Container>
       <StyledHeader>
-        <StyledLink to="/" style={{ position: 'absolute', left: '10px' }}>
+        <StyledLogo to="/">
           <img src={logo} alt="VIDEQ" style={{ userSelect: 'none' }} />
-        </StyledLink>
-        <StyledIcon
-          onClick={onAddClickHandler}
-          style={{
-            position: 'absolute',
-            right: '50%',
-            transform: 'translateX(50%)',
-          }}
-        >
+        </StyledLogo>
+        <StyledAddIcon onClick={onAddClickHandler}>
           <MdAdd color={addClick ? '#FF328B' : '#fefdfd'} size="30px" />
-        </StyledIcon>
-        <StyledIcon
-          onClick={onDashboardClickHandler}
-          style={{
-            position: 'absolute',
-            right: '12%',
-          }}
-        >
+        </StyledAddIcon>
+        <StyledDashboardIcon onClick={onDashboardClickHandler}>
           <MdInsertChart
             color={dashboardClick ? '#FF328B' : '#fefdfd'}
             size="30px"
           />
-        </StyledIcon>
-        <StyledLink
-          to="/search"
-          style={{ position: 'absolute', right: '10px' }}
-        >
+        </StyledDashboardIcon>
+        <StyledSearchLink to="/search">
           <FiSearch color="#fefdfd" size="24px" />
-        </StyledLink>
+        </StyledSearchLink>
       </StyledHeader>
       <AddPageComponent />
       <DashboardComponent />

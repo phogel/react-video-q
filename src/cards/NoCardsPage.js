@@ -37,7 +37,7 @@ const AddVideoNotice = styled.div`
   text-align: center;
 `
 
-export default function Dashboard() {
+export default function NoCardsPage() {
   return (
     <AddVideoNoticeContainer>
       <UpArrow>

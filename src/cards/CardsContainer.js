@@ -15,7 +15,7 @@ const CardContainer = styled.section`
   -webkit-overflow-scrolling: touch;
 `
 
-export default function CardsRender({ cards }) {
+export default function CardsContainer({ cards }) {
   return (
     <CardContainer>
       {cards.map((card, index) => (
