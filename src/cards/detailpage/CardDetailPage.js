@@ -54,7 +54,7 @@ const StyledTitle = styled.h3`
 const TagList = styled.ul`
   padding: 0;
   flex-wrap: wrap;
-  max-height: 64px;
+  max-height: 66px;
   overflow: scroll;
 `
 
@@ -95,7 +95,7 @@ const CategoryButtonContainer = styled.section`
   grid-template-columns: repeat(3, 1fr);
   justify-content: center;
   align-items: flex-start;
-  margin-bottom: 10px;
+  padding-bottom: 10px;
   user-select: none;
 `
 
