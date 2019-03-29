@@ -3,8 +3,9 @@ import styled from 'styled-components'
 import logo from '../images/logo.svg'
 import { Link } from 'react-router-dom'
 import { FiSearch } from 'react-icons/fi'
-import { MdAdd } from 'react-icons/md'
+import { MdAdd, MdInsertChart } from 'react-icons/md'
 import AddPage from '../add/AddPage'
+import Dashboard from '../dashboard/Dashboard'
 
 const Container = styled.section`
   display: grid;
@@ -19,64 +20,92 @@ const StyledHeader = styled.header`
   padding: 0 10px 0 10px;
   z-index: 2;
   position: relative;
-`
-const StyledLink = styled(Link)`
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  user-select: none;
-  &:focus {
-    outline: none;
+  & > {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    user-select: none;
+    &:focus {
+      outline: none;
+    }
+    height: 24px;
   }
-  height: 24px;
 `
 
-const StyledAddButton = styled.div`
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  user-select: none;
-  &:focus {
-    outline: none;
-  }
-  height: 24px;
+const StyledLogo = styled(Link)`
+  position: absolute;
+  left: 10px;
 `
 
-export default function Header({ history }) {
+const StyledAddIcon = styled.div`
+  position: absolute;
+  right: 50%;
+  transform: translateX(50%);
+`
+
+const StyledDashboardIcon = styled.div`
+  position: absolute;
+  right: 12%;
+`
+
+const StyledSearchLink = styled(Link)`
+  position: absolute;
+  right: 10px;
+`
+
+export default function Header({ history, cards }) {
   const [addClick, setAddClick] = useState(false)
-  const [addButtonColor, setAddButtonColor] = useState('')
+  const [dashboardClick, setDashboardClick] = useState(false)
 
-  function onClickHandler() {
+  function onAddClickHandler() {
     setAddClick(!addClick)
+    if (dashboardClick === true) {
+      setDashboardClick(false)
+    }
+  }
+
+  function onDashboardClickHandler() {
+    setDashboardClick(!dashboardClick)
+    if (addClick === true) {
+      setAddClick(false)
+    }
   }
 
   function AddPageComponent() {
     if (addClick) {
-      setAddButtonColor('#fefdfd')
       return <AddPage history={history} setAddClick={setAddClick} />
     }
-    setAddButtonColor('#fefdfd')
+    return null
+  }
+
+  function DashboardComponent() {
+    if (dashboardClick) {
+      return <Dashboard cards={cards} setDashboardClick={setDashboardClick} />
+    }
     return null
   }
 
   return (
     <Container>
       <StyledHeader>
-        <StyledLink to="/" style={{ position: 'absolute', left: '10px' }}>
+        <StyledLogo to="/">
           <img src={logo} alt="VIDEQ" style={{ userSelect: 'none' }} />
-        </StyledLink>
-        <StyledAddButton onClick={onClickHandler}>
-          <MdAdd color={addButtonColor} size="30px" />
-        </StyledAddButton>
-        <StyledLink to="/search">
-          <FiSearch
-            color="#fefdfd"
-            size="24px"
-            style={{ position: 'absolute', right: '10px' }}
+        </StyledLogo>
+        <StyledAddIcon onClick={onAddClickHandler}>
+          <MdAdd color={addClick ? '#FF328B' : '#fefdfd'} size="30px" />
+        </StyledAddIcon>
+        <StyledDashboardIcon onClick={onDashboardClickHandler}>
+          <MdInsertChart
+            color={dashboardClick ? '#FF328B' : '#fefdfd'}
+            size="30px"
           />
-        </StyledLink>
+        </StyledDashboardIcon>
+        <StyledSearchLink to="/search">
+          <FiSearch color="#fefdfd" size="24px" />
+        </StyledSearchLink>
       </StyledHeader>
       <AddPageComponent />
+      <DashboardComponent />
     </Container>
   )
 }

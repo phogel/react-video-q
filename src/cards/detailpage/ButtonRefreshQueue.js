@@ -8,26 +8,29 @@ const IconGrid = styled.div`
   text-align: center;
   font-size: 12px;
   user-select: none;
+  color: ${p => p.color};
 `
 
 export default function ButtonRefreshQueue({ status, onClick }) {
   let line1 = 'Move to'
   let line2 = 'refresh queue'
-  let color = '#C4C4C4'
+  let fill = '#C4C4C4'
   let shadow = 'drop-shadow( 0 1px 1px #ddd)'
+  let color = 'rgba(26, 26, 26, 0.57)'
 
   if (status === 3) {
     line1 = <strong>In refresh</strong>
     line2 = <strong>queue</strong>
-    color = '#FF328B'
+    fill = '#FF328B'
     shadow = ''
+    color = '#1a1a1a'
   }
 
   return (
-    <IconGrid onClick={onClick}>
+    <IconGrid onClick={onClick} color={color}>
       <Icon
         style={{ marginBottom: '10px', filter: shadow }}
-        fill={color}
+        fill={fill}
         height="30px"
         name="refresh-queue"
       />

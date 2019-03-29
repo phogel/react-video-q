@@ -13,7 +13,8 @@ import Nav from '../common/Nav'
 import CardDetailPage from '../cards/detailpage/CardDetailPage'
 import AddIdPage from '../add/id/AddIdPage'
 import AddPlaylistPage from '../add/playlist/AddPlaylistPage'
-import Dashboard from '../dashboard/Dashboard'
+import NoCardsPage from '../cards/NoCardsPage'
+import WelcomeLogo from './WelcomeLogo'
 
 const Grid = styled.section`
   display: grid;
@@ -37,9 +38,17 @@ export default function App() {
     setCards([...cards, data])
   }
 
-  function clickHandler(id, status) {
+  function clickHandler(id, status, startSeconds, endSeconds) {
     const card = cards.find(card => card.id === id)
     const index = cards.indexOf(card)
+    if (startSeconds !== card.startSeconds || endSeconds !== card.endSeconds) {
+      setCards([
+        ...cards.slice(0, index),
+        { ...card, status: 0, startSeconds, endSeconds },
+        ...cards.slice(index + 1),
+      ])
+    }
+
     if (status === card.status) {
       setCards([
         ...cards.slice(0, index),
@@ -156,25 +165,6 @@ export default function App() {
           />
         </Helmet>
         <Route
-          path="/"
-          exact
-          render={({ history }) => (
-            <Grid>
-              <Header history={history} />
-              <PageTitle
-                title={cards.length !== 0 ? 'Progress' : null}
-                status={''}
-              />
-              <Dashboard
-                showLogo={showLogo}
-                setShowLogo={setShowLogo}
-                cards={cards}
-              />
-              <Nav status={''} />
-            </Grid>
-          )}
-        />
-        <Route
           path="/add/id"
           render={({ history }) => (
             <AddIdPage cards={cards} history={history} onSubmit={createCard} />
@@ -208,15 +198,33 @@ export default function App() {
           )}
         />
         <Route
-          path="/notlearnedyet"
+          exact
+          path="/"
           render={({ history }) => (
             <Grid>
-              <Header history={history} />
-              <PageTitle title="Not learned yet" status={0} />
-              <CardsContainer
-                checkIfRefresh={checkIfRefresh()}
-                cards={cards.filter(card => card.status === 0)}
+              {showLogo ? (
+                <WelcomeLogo showLogo={showLogo} setShowLogo={setShowLogo} />
+              ) : null}
+              <Header history={history} cards={cards} />
+              <PageTitle
+                title={cards.length !== 0 ? 'Not learned yet' : null}
+                status={cards.length !== 0 ? 0 : ''}
               />
+              {cards.length !== 0 ? (
+                <CardsContainer
+                  checkIfRefresh={checkIfRefresh()}
+                  cards={cards.filter(card => card.status === 0)}
+                  showLogo={showLogo}
+                  setShowLogo={setShowLogo}
+                />
+              ) : (
+                <NoCardsPage
+                  showLogo={showLogo}
+                  setShowLogo={setShowLogo}
+                  cards={cards}
+                />
+              )}
+
               <Nav status={0} />
             </Grid>
           )}
@@ -225,7 +233,7 @@ export default function App() {
           path="/learningqueue"
           render={({ history }) => (
             <Grid>
-              <Header history={history} />
+              <Header history={history} cards={cards} />
               <PageTitle title="Learning queue" status={1} />
               <CardsContainer
                 checkIfRefresh={checkIfRefresh()}
@@ -239,7 +247,7 @@ export default function App() {
           path="/learned"
           render={({ history }) => (
             <Grid>
-              <Header history={history} />
+              <Header history={history} cards={cards} />
               <PageTitle title="Learned" status={2} />
               <CardsContainer
                 checkIfRefresh={checkIfRefresh()}
@@ -253,7 +261,7 @@ export default function App() {
           path="/refreshqueue"
           render={({ history }) => (
             <Grid>
-              <Header history={history} />
+              <Header history={history} cards={cards} />
               <PageTitle title="Refresh Queue" status={3} />
               <CardsContainer
                 checkIfRefresh={checkIfRefresh()}

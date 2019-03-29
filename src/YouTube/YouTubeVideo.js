@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState } from 'react'
 import YouTubeIframeLoader from 'youtube-iframe'
 import styled from 'styled-components'
 
@@ -58,7 +58,9 @@ export default function YouTubeVideo({
 
   if (go) {
     player.seekTo(startSeconds).playVideo()
-    setGo(false)
+    setTimeout(() => {
+      setGo(false)
+    }, 500)
   }
 
   return (

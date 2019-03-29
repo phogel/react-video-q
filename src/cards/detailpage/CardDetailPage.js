@@ -13,10 +13,10 @@ import Timer from './Timer'
 
 const Grid = styled.section`
   display: grid;
-  grid-gap: 20px;
+  grid-gap: 10px;
   grid-template-rows: auto 1fr auto;
   position: relative;
-  width: 100vw;
+  width: 100%;
   height: 100vh;
   overflow-y: scroll;
   margin: 0 auto;
@@ -32,7 +32,9 @@ const MainGrid = styled.section`
 `
 
 const ContentGrid = styled.div`
+  margin-top: 20px;
   display: grid;
+  grid-gap: 20px;
   grid-template-rows: auto auto auto 1fr;
 `
 
@@ -46,14 +48,13 @@ const StyledTitle = styled.h3`
   display: block;
   font-size: 22px;
   font-weight: bold;
-  padding: 10px 10px 10px 0;
   display: ${p => (p.isEditable ? 'none' : null)};
 `
 
 const TagList = styled.ul`
   padding: 0;
   flex-wrap: wrap;
-  max-height: 64px;
+  max-height: 66px;
   overflow: scroll;
 `
 
@@ -71,11 +72,19 @@ const Tag = styled.li`
 
 const StyledNotes = styled.div`
   position: relative;
-  font-size: 16px;
+  font-size: 15px;
   overflow: scroll;
   overflow-wrap: break-word;
   max-height: 76px;
   background: rgb(250, 250, 250);
+  padding-bottom: 30px;
+`
+
+const ButtonList = styled.div`
+  display: grid;
+  grid-template-columns: 1fr auto auto;
+  justify-content: flex-end;
+  align-items: center;
 `
 
 const CategoryButtonContainer = styled.section`
@@ -86,15 +95,8 @@ const CategoryButtonContainer = styled.section`
   grid-template-columns: repeat(3, 1fr);
   justify-content: center;
   align-items: flex-start;
-  margin-bottom: 10px;
+  padding-bottom: 10px;
   user-select: none;
-`
-
-const ButtonList = styled.div`
-  display: grid;
-  grid-template-columns: 1fr auto auto;
-  justify-content: flex-end;
-  align-items: center;
 `
 
 export default function CardsDetailPage(props) {
@@ -105,10 +107,6 @@ export default function CardsDetailPage(props) {
     onSaveCardClick,
     cards,
     setCards,
-    setTime,
-    time,
-    setPlayer,
-    player,
   } = props
 
   const [isEditable, setIsEditable] = useState(false)
@@ -185,15 +183,7 @@ export default function CardsDetailPage(props) {
               onClick={onEditCardClickHandler}
             />
           </ButtonList>
-          <Timer
-            card={card}
-            cards={cards}
-            setCards={setCards}
-            setGo={setGo}
-            setTime={setTime}
-            time={time}
-            player={player}
-          />
+          <Timer card={card} cards={cards} setCards={setCards} setGo={setGo} />
           <CardEditForm
             card={card}
             onSubmit={onSaveCardClick}
@@ -213,19 +203,10 @@ export default function CardsDetailPage(props) {
               onClick={onEditCardClickHandler}
             />
           </ButtonList>
-          <Timer
-            card={card}
-            cards={cards}
-            setCards={setCards}
-            setGo={setGo}
-            setTime={setTime}
-            time={time}
-            player={player}
-          />
+          <Timer card={card} cards={cards} setCards={setCards} setGo={setGo} />
           <ContentGrid>
             <StyledTitle>{card.title}</StyledTitle>
             {card.tags && <TagList>{card.tags.map(renderTag)}</TagList>}
-
             <StyledNotes>
               {card.notes}
               {/* {card.notes.length > 300 ? <StyledNotesFade /> : null} */}
@@ -251,8 +232,6 @@ export default function CardsDetailPage(props) {
           startSeconds={card.startSeconds}
           endSeconds={card.endSeconds}
           onStateChange={onVideoStateChange}
-          setPlayer={setPlayer}
-          player={player}
           go={go}
           setGo={setGo}
           videoId={card.id}
