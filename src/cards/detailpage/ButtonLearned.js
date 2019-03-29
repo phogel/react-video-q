@@ -8,29 +8,32 @@ const IconGrid = styled.div`
   text-align: center;
   font-size: 12px;
   user-select: none;
+  color: ${p => p.color};
 `
 
 export default function ButtonLearned({ status, onClick }) {
   let line1 = 'Mark as'
   let line2 = 'learned'
-  let color = '#C4C4C4'
+  let fill = '#C4C4C4'
   let shadow = 'drop-shadow( 0 1px 1px #ddd)'
+  let color = 'rgba(26, 26, 26, 0.57)'
 
   if (status === 2) {
     line1 = <strong>Learned</strong>
     line2 = ''
-    color = '#00CCA9'
+    fill = '#00CCA9'
     shadow = ''
+    color = '#1a1a1a'
   }
 
   return (
-    <IconGrid onClick={onClick}>
+    <IconGrid onClick={onClick} color={color}>
       <Icon
         style={{
           marginBottom: '10px',
           filter: shadow,
         }}
-        fill={color}
+        fill={fill}
         height="30px"
         name="learned"
       />

@@ -26,18 +26,6 @@ export default function YouTubeVideo({
   setGo,
   go,
 }) {
-  useEffect(() => {
-    console.log('ytpage load')
-  }, [])
-
-  useEffect(() => {
-    console.log('endseconds load')
-  }, [endSeconds])
-
-  useEffect(() => {
-    console.log('startseconds load')
-  }, [startSeconds])
-
   YouTubeIframeLoader.load(function(YT) {
     new YT.Player('player', {
       height: 'auto',

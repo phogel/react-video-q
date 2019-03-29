@@ -80,6 +80,13 @@ const StyledNotes = styled.div`
   padding-bottom: 30px;
 `
 
+const ButtonList = styled.div`
+  display: grid;
+  grid-template-columns: 1fr auto auto;
+  justify-content: flex-end;
+  align-items: center;
+`
+
 const CategoryButtonContainer = styled.section`
   display: grid;
   position: sticky;
@@ -90,13 +97,6 @@ const CategoryButtonContainer = styled.section`
   align-items: flex-start;
   margin-bottom: 10px;
   user-select: none;
-`
-
-const ButtonList = styled.div`
-  display: grid;
-  grid-template-columns: 1fr auto auto;
-  justify-content: flex-end;
-  align-items: center;
 `
 
 export default function CardsDetailPage(props) {
