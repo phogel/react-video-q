@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import YouTubeIframeLoader from 'youtube-iframe'
 import styled from 'styled-components'
 
@@ -26,41 +26,41 @@ export default function YouTubeVideo({
   setGo,
   go,
 }) {
-  YouTubeIframeLoader.load(function(YT) {
-    new YT.Player('player', {
-      height: 'auto',
-      width: '100%',
-      host: 'https://www.youtube.com',
-      origin: 'http://localhost:3000',
-      videoId: videoId,
-      enablejsapi: 1,
-      showinfo: 0,
-      cc_load_policy: 0,
-      controls: 0,
-      disablekb: 0,
-      modestbranding: 1,
-      rel: 0,
-      playerVars: {
-        start: startSeconds,
-        end: endSeconds,
-      },
-      events: {
-        onReady: onPlayerReady,
-        onStateChange: onStateChange,
-      },
-    })
+  const [player, setPlayer] = useState()
+  useEffect(() => {
+    YouTubeIframeLoader.load(function(YT) {
+      new YT.Player('player', {
+        height: 'auto',
+        width: '100%',
+        host: 'https://www.youtube.com',
+        origin: 'http://localhost:3000',
+        videoId: videoId,
+        enablejsapi: 1,
+        showinfo: 0,
+        cc_load_policy: 0,
+        controls: 0,
+        disablekb: 0,
+        modestbranding: 1,
+        rel: 0,
+        playerVars: {
+          start: startSeconds,
+          end: endSeconds,
+        },
+        events: {
+          onReady: onPlayerReady,
+          onStateChange: onStateChange,
+        },
+      })
+    }, [])
   })
 
-  const [player, setPlayer] = useState()
   function onPlayerReady(event) {
     setPlayer(event.target)
   }
 
   if (go) {
     player.seekTo(startSeconds).playVideo()
-    setTimeout(() => {
-      setGo(false)
-    }, 500)
+    setGo(false)
   }
 
   return (

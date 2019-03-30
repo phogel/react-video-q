@@ -248,9 +248,6 @@ export default function CardsDetailPage(props) {
       />
       <MainContent />
 
-      {editable && <EditComponent />}
-      {!editable && <DefaultComponent />}
-
       <CategoryButtonContainer>
         <ButtonLearningQueue status={status} onClick={onLearningClick} />
         <ButtonLearned status={status} onClick={onLearnedClick} />
