@@ -1,7 +1,6 @@
 import React, { useRef, useEffect } from 'react'
 import styled from 'styled-components'
 import { MdKeyboardArrowRight } from 'react-icons/md'
-import logo from '../images/logo.svg'
 
 const Grid = styled.div`
   display: flex;
@@ -11,9 +10,6 @@ const Grid = styled.div`
   padding: 10px 10px 10px 10px;
   z-index: 0;
   overflow: hidden;
-  /* background-image: url("${logo}");
-  background-repeat: no-repeat;
-  background-position: 10px 12px; */
 `
 
 const StyledInput = styled.input`
@@ -30,14 +26,7 @@ const StyledInput = styled.input`
   ::placeholder {
     color: #c4c4c4;
   }
-  /* ::-webkit-search-cancel-button {
-    -webkit-appearance: none;
-    content: 'X';
-    color: white;
-    height: 10px;
-    width: 10px;
-    background: red;
-  } */
+
   :focus {
     outline: none;
   }

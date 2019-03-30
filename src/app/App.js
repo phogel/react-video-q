@@ -190,6 +190,7 @@ export default function App() {
               />
               <PageTitle title="All videos" status={''} />
               <CardsContainer
+                hasLink={true}
                 checkIfRefresh={checkIfRefresh()}
                 cards={searchWithinAllCards()}
               />
@@ -212,6 +213,7 @@ export default function App() {
               />
               {cards.length !== 0 ? (
                 <CardsContainer
+                  hasLink={true}
                   checkIfRefresh={checkIfRefresh()}
                   cards={cards.filter(card => card.status === 0)}
                   showLogo={showLogo}
@@ -236,6 +238,7 @@ export default function App() {
               <Header history={history} cards={cards} />
               <PageTitle title="Learning queue" status={1} />
               <CardsContainer
+                hasLink={true}
                 checkIfRefresh={checkIfRefresh()}
                 cards={cards.filter(card => card.status === 1)}
               />
@@ -250,6 +253,7 @@ export default function App() {
               <Header history={history} cards={cards} />
               <PageTitle title="Learned" status={2} />
               <CardsContainer
+                hasLink={true}
                 checkIfRefresh={checkIfRefresh()}
                 cards={cards.filter(card => card.status === 2)}
               />
@@ -264,6 +268,7 @@ export default function App() {
               <Header history={history} cards={cards} />
               <PageTitle title="Refresh Queue" status={3} />
               <CardsContainer
+                hasLink={true}
                 checkIfRefresh={checkIfRefresh()}
                 cards={cards.filter(card => card.status === 3)}
               />
