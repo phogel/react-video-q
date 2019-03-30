@@ -110,8 +110,11 @@ export default function App() {
     ])
   }
 
-  function changeCardTimer(card, startSeconds, endSeconds) {
+  function timerChangeHandler(card, startSeconds, endSeconds) {
     const index = cards.indexOf(card)
+    console.log(card)
+    console.log(startSeconds)
+    console.log(endSeconds)
     setCards([
       ...cards.slice(0, index),
       {
@@ -299,7 +302,7 @@ export default function App() {
               onSliderChange={sliderChangeHandler}
               onClick={clickHandler}
               onVideoStateChange={videoStateChangeHandler}
-              onCardTimerChange={changeCardTimer}
+              onTimerChange={timerChangeHandler}
               status={
                 cards.find(card => card.id === match.params.id).status || null
               }

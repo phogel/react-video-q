@@ -22,7 +22,7 @@ const ProgressBarFill = styled.div`
 `
 
 export default function ProgressBar({ cards, status }) {
-  const progressBarFill = ['#2DDBE3', '#EFA5D4', '#00CCA9', '#FF328B']
+  const progressBarFill = ['#2DDBE3', '#FFBA49', '#00CCA9', '#FF328B']
   return (
     <ProgressBarBackground>
       <ProgressBarFill
