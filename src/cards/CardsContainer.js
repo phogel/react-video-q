@@ -15,11 +15,11 @@ const CardContainer = styled.section`
   -webkit-overflow-scrolling: touch;
 `
 
-export default function CardsContainer({ cards }) {
+export default function CardsContainer({ cards, hasLink }) {
   return (
     <CardContainer>
       {cards.map((card, index) => (
-        <Card card={card} key={index} />
+        <Card hasLink={hasLink} card={card} key={index} />
       ))}
     </CardContainer>
   )

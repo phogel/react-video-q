@@ -51,7 +51,6 @@ export default function ChannelComponent() {
         <PageTitleFullscreen title="Enter your YouTube channel ID" />
         <StyledForm onSubmit={onSubmitHandler}>
           <Input
-            id="input-field"
             name="channel"
             placeholder="Channel name"
             value={channel}

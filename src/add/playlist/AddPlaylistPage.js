@@ -48,8 +48,6 @@ const Error = styled.div`
 
 const CLIENT_ID =
   '843342214316-febn2vufffq9heqdut8vhtlfvqjh15sd.apps.googleusercontent.com'
-// const CLIENT_ID =
-//   '362023861090-is752sg2d40q908ejsd5k9g7f387uinl.apps.googleusercontent.com'
 const DISCOVERY_DOCS = [
   'https://www.googleapis.com/discovery/v1/apis/youtube/v3/rest',
 ]
@@ -71,12 +69,9 @@ export default function AddPlaylistPage({ history, cards, setCards }) {
         })
         .then(() => {
           setInitialized(true)
-
-          // Listen for sign in state changes
           gapi.auth2.getAuthInstance().isSignedIn.listen(isSignedIn => {
             onSigninStateChange(isSignedIn)
           })
-          // Handle initial sign in state
           setIsSignedIn(gapi.auth2.getAuthInstance().isSignedIn.get())
         })
     })

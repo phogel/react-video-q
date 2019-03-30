@@ -17,8 +17,8 @@ export default function LastSeen({ card }) {
   return (
     <Container>
       <MdRemoveRedEye
-        color={'rgba(26, 26, 26, 0.57)'}
-        size={'20px'}
+        color="rgba(26, 26, 26, 0.57)"
+        size="20px"
         style={{ marginRight: '4px' }}
       />
       {dayjs().to(card.lastSeenTime)}
