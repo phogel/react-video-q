@@ -10,7 +10,8 @@ const ProgressBarFill = styled.div`
   position: absolute;
   padding-top: 5px;
   font-size: 14px;
-  color: #1a1a1a;
+  color: #fefefe;
+  font-weight: bold;
   bottom: 0;
   background: ${p => p.fill};
   border-radius: 15px;

@@ -110,6 +110,19 @@ export default function App() {
     ])
   }
 
+  function changeCardTimer(card, startSeconds, endSeconds) {
+    const index = cards.indexOf(card)
+    setCards([
+      ...cards.slice(0, index),
+      {
+        ...card,
+        startSeconds: startSeconds || card.startSeconds,
+        endSeconds: endSeconds || card.endSeconds,
+      },
+      ...cards.slice(index + 1),
+    ])
+  }
+
   function videoStateChangeHandler(event, id) {
     if (event.data === 1) {
       const date = dayjs()
@@ -281,6 +294,7 @@ export default function App() {
               onSliderChange={sliderChangeHandler}
               onClick={clickHandler}
               onVideoStateChange={videoStateChangeHandler}
+              onCardTimerChange={changeCardTimer}
               status={
                 cards.find(card => card.id === match.params.id).status || null
               }
