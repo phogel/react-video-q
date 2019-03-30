@@ -92,9 +92,9 @@ Card.defaultProps = {
   ],
 }
 
-const iconFill = ['#EFA5D4', '#00CCA9', '#FF328B']
+const iconFill = ['#FFBA49', '#00CCA9', '#FF328B']
 const iconName = ['learning-queue', 'learned', 'refresh-queue']
-const cardFade = ['239,165,212,0.65', '0,204,169,0.65', '255,50,139,0.65']
+const cardFade = ['255,186,73,0.65', '0,204,169,0.65', '255,50,139,0.65']
 
 export default function Card({ card }) {
   function renderTag(text, index) {

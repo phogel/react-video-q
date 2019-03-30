@@ -34,11 +34,23 @@ const StyledButton = styled.button`
 `
 
 export default function Timer({ card, setGo, onTimerChange }) {
-  const [start, setStart] = useState('0')
-  const [end, setEnd] = useState('0')
+  const [start, setStart] = useState(card.startSeconds)
+  const [end, setEnd] = useState(card.endSeconds)
 
   function onGoClick() {
     setGo(true)
+    onTimerChange(card, start, end)
+    onTimerChange(card, start, end)
+  }
+
+  function onStartChangeHandler(event) {
+    setStart(event.target.value)
+    onTimerChange(card, start, end)
+  }
+
+  function onEndChangeHandler(event) {
+    setEnd(event.target.value)
+    onTimerChange(card, start, end)
   }
 
   return (
@@ -49,14 +61,14 @@ export default function Timer({ card, setGo, onTimerChange }) {
         name="startSeconds"
         type="number"
         value={start}
-        onChange={event => setStart(event.target.value)}
+        onChange={event => onStartChangeHandler(event)}
       />
       to
       <StyledInput
         name="endSeconds"
         type="number"
         value={end}
-        onChange={event => setEnd(event.target.value)}
+        onChange={event => onEndChangeHandler(event)}
       />
       seconds
       <StyledButton onClick={onGoClick}>GO</StyledButton>
