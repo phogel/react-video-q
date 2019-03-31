@@ -25,8 +25,9 @@ export default function YouTubeVideo({
   endSeconds,
   setGo,
   go,
+  setPlayer,
+  player,
 }) {
-  const [player, setPlayer] = useState()
   useEffect(() => {
     YouTubeIframeLoader.load(function(YT) {
       new YT.Player('player', {

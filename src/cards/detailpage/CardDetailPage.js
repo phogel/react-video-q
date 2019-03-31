@@ -12,7 +12,7 @@ import MainDefaultComponent from './MainDefaultComponent'
 const Grid = styled.section`
   display: grid;
   grid-gap: 10px;
-  grid-template-rows: auto 1fr auto;
+  grid-template-rows: auto 50px 1fr auto;
   position: relative;
   width: 100%;
   height: 100vh;
@@ -51,6 +51,10 @@ export default function CardsDetailPage(props) {
     cards,
     setCards,
     onTimerChange,
+    player,
+    setPlayer,
+    isLoop,
+    setIsLoop,
   } = props
 
   const [isEditable, setIsEditable] = useState(false)
@@ -91,7 +95,7 @@ export default function CardsDetailPage(props) {
   }
 
   function onVideoStateChange(event) {
-    props.onVideoStateChange(event, card.id)
+    props.onVideoStateChange(event, card)
   }
 
   const [go, setGo] = useState(false)
@@ -106,6 +110,8 @@ export default function CardsDetailPage(props) {
           go={go}
           setGo={setGo}
           videoId={card.id}
+          player={player}
+          setPlayer={setPlayer}
         />
         <BackButton />
       </Video>
@@ -115,6 +121,8 @@ export default function CardsDetailPage(props) {
         setCards={setCards}
         setGo={setGo}
         onTimerChange={onTimerChange}
+        isLoop={isLoop}
+        setIsLoop={setIsLoop}
       />
       {isEditable && (
         <MainEditComponent

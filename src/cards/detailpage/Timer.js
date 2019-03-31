@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import styled from 'styled-components'
 import { FaStopwatch } from 'react-icons/fa'
+import { MdPlayCircleFilled, MdPauseCircleFilled } from 'react-icons/md'
 
 const StyledForm = styled.div`
   display: flex;
@@ -10,6 +11,7 @@ const StyledForm = styled.div`
   color: rgba(26, 26, 26, 0.57);
   padding-bottom: 20px;
   border-bottom: 1px solid rgba(0, 0, 0, 0.06);
+  margin: 0 30px 0 30px;
 `
 
 const StyledInput = styled.input`
@@ -30,17 +32,33 @@ const StyledInput = styled.input`
 const StyledButton = styled.button`
   font-size: 14px;
   height: 24px;
-  width: 36px;
+  width: auto;
 `
 
-export default function Timer({ card, setGo, onTimerChange }) {
+export default function Timer({
+  card,
+  setGo,
+  onTimerChange,
+  isLoop,
+  setIsLoop,
+}) {
   const [start, setStart] = useState(card.startSeconds)
   const [end, setEnd] = useState(card.endSeconds)
+  const [playing, setPlaying] = useState(false)
 
   function onGoClick() {
+    setPlaying(!playing)
     setGo(true)
     onTimerChange(card, start, end)
     onTimerChange(card, start, end)
+  }
+
+  function onLoopClick() {
+    console.log(isLoop)
+    setIsLoop(!isLoop)
+    setTimeout(() => {
+      console.log('look clicked. status: ' + isLoop)
+    }, 500)
   }
 
   function onStartChangeHandler(event) {
@@ -56,7 +74,7 @@ export default function Timer({ card, setGo, onTimerChange }) {
   return (
     <StyledForm>
       <FaStopwatch color={'rgba(26, 26, 26, 0.57)'} size={'20px'} />
-      Practice from
+      Play from
       <StyledInput
         name="startSeconds"
         type="number"
@@ -70,8 +88,17 @@ export default function Timer({ card, setGo, onTimerChange }) {
         value={end}
         onChange={event => onEndChangeHandler(event)}
       />
-      seconds
-      <StyledButton onClick={onGoClick}>GO</StyledButton>
+      sec's
+      <StyledButton onClick={() => onGoClick()}>
+        {playing ? (
+          <MdPauseCircleFilled color={'rgba(26, 26, 26, 0.57)'} size={'20px'} />
+        ) : (
+          <MdPlayCircleFilled color={'rgba(26, 26, 26, 0.57)'} size={'20px'} />
+        )}
+      </StyledButton>
+      <StyledButton onClick={() => onLoopClick()}>
+        {isLoop ? 'UNLOOP' : 'LOOP'}
+      </StyledButton>
     </StyledForm>
   )
 }

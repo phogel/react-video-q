@@ -21,7 +21,7 @@ export default function ButtonLearningQueue({ status, onClick }) {
   if (status === 1) {
     line1 = <strong>In learning</strong>
     line2 = <strong>queue</strong>
-    fill = '#FFBA49'
+    fill = '#FFBA49 '
     shadow = ''
     color = '#1a1a1a'
   }

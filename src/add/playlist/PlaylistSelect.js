@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import styled from 'styled-components'
 import PageTitleFullscreen from '../../common/PageTitleFullscreen'
+import qlogo from '../../images/refresh-queue-light.svg'
 
 const Grid = styled.div`
   display: grid;
@@ -42,6 +43,12 @@ const StyledSelect = styled.select`
   :focus {
     outline: none;
   }
+`
+
+const StyledButton = styled.button`
+  display: flex;
+  justify-content: center;
+  align-items: center;
 `
 
 const gapi = window.gapi
@@ -153,7 +160,10 @@ export default function PlaylistComponent({
               </option>
             ))}
         </StyledSelect>
-        <input type="submit" value="Add to VIDEQ" />
+        <StyledButton>
+          Add to VIDE
+          <img height="16px" alt="VIDEQ" src={qlogo} />
+        </StyledButton>
       </StyledForm>
     </React.Fragment>
   )

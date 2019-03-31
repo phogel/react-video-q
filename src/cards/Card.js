@@ -92,7 +92,7 @@ Card.defaultProps = {
   ],
 }
 
-const iconFill = ['#FFBA49', '#00CCA9', '#FF328B']
+const iconFill = ['#FFBA49 ', '#00CCA9', '#FF328B']
 const iconName = ['learning-queue', 'learned', 'refresh-queue']
 const cardFade = ['255,186,73,0.65', '0,204,169,0.65', '255,50,139,0.65']
 

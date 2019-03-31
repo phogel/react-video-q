@@ -49,14 +49,14 @@ export default function RefreshSlider({
   const [daysBeforeRefresh, setDaysBeforeRefresh] = useState(51)
   function checkForRefreshDate() {
     if (cardRefreshDate !== '') {
-      return dayjs(cardRefreshDate).diff(dayjs(), 'day')
+      return dayjs(cardRefreshDate).diff(dayjs(), 'second')
     }
-    const refreshDate = dayjs().add(51, 'day')
+    const refreshDate = dayjs().add(51, 'second')
     return daysBeforeRefresh && onSliderChange(refreshDate)
   }
 
   function onSliderChangeHandler(event) {
-    const refreshDate = dayjs().add(event.target.value, 'day')
+    const refreshDate = dayjs().add(event.target.value, 'second')
     setDaysBeforeRefresh(event.target.value)
     setFirstRender(false)
     onSliderChange(refreshDate)

@@ -32,7 +32,13 @@ export default function App() {
 
   useEffect(() => {
     saveCardsToStorage(cards)
+    console.log('App useEffect, cards changed')
   }, [cards])
+
+  useEffect(() => {
+    saveCardsToStorage(cards)
+    console.log('App useEffect, anything changed')
+  }, [])
 
   function createCard(data) {
     setCards([...cards, data])
@@ -125,17 +131,26 @@ export default function App() {
       ...cards.slice(index + 1),
     ])
   }
+  const [player, setPlayer] = useState()
+  const [isLoop, setIsLoop] = useState(false)
 
-  function videoStateChangeHandler(event, id) {
+  function videoStateChangeHandler(event, inComingCard) {
+    console.log('video state changed')
+    console.log(event.data)
+    console.log('is loop in app: ' + isLoop)
     if (event.data === 1) {
       const date = dayjs()
-      const card = cards.find(card => card.id === id)
+      const card = cards.find(card => card.id === inComingCard.id)
       const index = cards.indexOf(card)
       setCards([
         ...cards.slice(0, index),
         { ...card, lastSeenTime: date },
         ...cards.slice(index + 1),
       ])
+    }
+    if (isLoop && event.data === 0) {
+      player.seekTo(inComingCard.startSeconds).playVideo()
+      console.log('looped')
     }
   }
 
@@ -312,6 +327,10 @@ export default function App() {
               onSaveCardClick={saveCardClickHandler}
               cards={cards}
               setCards={setCards}
+              player={player}
+              setPlayer={setPlayer}
+              isLoop={isLoop}
+              setIsLoop={setIsLoop}
             />
           )}
         />

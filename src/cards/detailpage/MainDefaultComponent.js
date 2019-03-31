@@ -7,7 +7,7 @@ import SwitchButton from './SwitchButton'
 const MainGrid = styled.section`
   display: grid;
   margin: 0 30px 0 30px;
-  grid-template-rows: 30px auto 1fr;
+  grid-template-rows: 30px 1fr auto;
 `
 
 const ContentGrid = styled.div`
@@ -67,7 +67,7 @@ export default function CardsDetailPage({
   status,
 }) {
   function tagColor(status) {
-    let backgrounds = ['#FFBA49', '#00CCA9', '#FF328B']
+    let backgrounds = ['#FFBA49 ', '#00CCA9', '#FF328B']
     return { background: backgrounds[status - 1] || 'rgba(26, 26, 26, 0.57)' }
   }
 

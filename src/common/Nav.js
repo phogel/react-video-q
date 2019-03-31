@@ -33,10 +33,10 @@ export default function Nav({ status }) {
       </StyledLink>
       <StyledLink
         to="/learningqueue"
-        topbordercolor={status === 1 ? '#FFBA49' : 'transparent'}
+        topbordercolor={status === 1 ? '#FFBA49 ' : 'transparent'}
       >
         <Icon
-          fill={status === 1 ? '#FFBA49' : '#8A8A8A'}
+          fill={status === 1 ? '#FFBA49 ' : '#8A8A8A'}
           height="25px"
           name="learning-queue"
         />
