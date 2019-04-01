@@ -16,7 +16,7 @@ const ProgressBarFill = styled.div`
   background: ${p => p.fill};
   border-radius: 15px;
   width: 100%;
-  min-height: 8px;
+  min-height: 14px;
   text-align: center;
   height: ${p => p.height};
   animation: 'fill-bar${p => p.name}' 2s ease-out;
@@ -24,12 +24,18 @@ const ProgressBarFill = styled.div`
   @keyframes 'fill-bar${p => p.name}' {
     0% {
       height: 0;
+      padding-top: 0;
     }
     20% {
       height: 0;
+      padding-top: 0;
+    }
+    60% {
+      padding-top: 0;
     }
     100% {
       height: ${p => p.height};
+      padding-top: ${p=>p.paddingTop};
     }
   }
 `
