@@ -21,7 +21,6 @@ const Grid = styled.section`
   max-width: 500px;
   background: rgb(250, 250, 250);
   box-shadow: 0 1px 15px rgba(0, 0, 0, 0.06), 0 1px 5px rgba(0, 0, 0, 0.14);
-  transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
 `
 
 const Video = styled.section`
@@ -50,7 +49,8 @@ export default function CardsDetailPage(props) {
     onSaveCardClick,
     cards,
     setCards,
-    onTimerChange,
+    onStartSecondsChange,
+    onEndSecondsChange,
     player,
     setPlayer,
     isLoop,
@@ -58,7 +58,9 @@ export default function CardsDetailPage(props) {
   } = props
 
   const [isEditable, setIsEditable] = useState(false)
+  const [go, setGo] = useState(false)
 
+  console.log('Detailpage render')
   function onEditCardClickHandler() {
     setIsEditable(!isEditable)
   }
@@ -77,13 +79,13 @@ export default function CardsDetailPage(props) {
   }
 
   function onLearningClick() {
-    props.onClick(card.id, 1)
+    props.onCategoryClick(card.id, 1)
   }
   function onLearnedClick() {
-    props.onClick(card.id, 2)
+    props.onCategoryClick(card.id, 2)
   }
   function onRefreshClick() {
-    props.onClick(card.id, 3)
+    props.onCategoryClick(card.id, 3)
   }
 
   function onCheckboxClick() {
@@ -95,15 +97,15 @@ export default function CardsDetailPage(props) {
   }
 
   function onVideoStateChange(event) {
-    props.onVideoStateChange(event, card)
+    console.log(event)
+    props.onVideoStateChange(event, event.card)
   }
-
-  const [go, setGo] = useState(false)
 
   return (
     <Grid>
       <Video>
         <YouTubeVideo
+          card={card}
           startSeconds={card.startSeconds}
           endSeconds={card.endSeconds}
           onStateChange={onVideoStateChange}
@@ -120,11 +122,12 @@ export default function CardsDetailPage(props) {
         cards={cards}
         setCards={setCards}
         setGo={setGo}
-        onTimerChange={onTimerChange}
+        onStartSecondsChange={onStartSecondsChange}
+        onEndSecondsChange={onEndSecondsChange}
         isLoop={isLoop}
         setIsLoop={setIsLoop}
       />
-      {isEditable && (
+      {isEditable ? (
         <MainEditComponent
           card={card}
           onDeleteCardClick={onDeleteCardClickHandler}
@@ -132,8 +135,7 @@ export default function CardsDetailPage(props) {
           onSaveCardClick={onSaveCardClick}
           setIsEditable={setIsEditable}
         />
-      )}
-      {!isEditable && (
+      ) : (
         <MainDefaultComponent
           card={card}
           onEditCardClickHandler={onEditCardClickHandler}

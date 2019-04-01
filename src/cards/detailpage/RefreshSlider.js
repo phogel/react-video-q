@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import styled from 'styled-components'
 import dayjs from 'dayjs'
 
@@ -45,10 +45,13 @@ export default function RefreshSlider({
   onSliderChange,
   disabled,
 }) {
+  useEffect(() => {}, [cardRefreshDate])
+
   const [firstRender, setFirstRender] = useState(true)
   const [daysBeforeRefresh, setDaysBeforeRefresh] = useState(51)
   function checkForRefreshDate() {
     if (cardRefreshDate !== '') {
+      console.log(cardRefreshDate)
       return dayjs(cardRefreshDate).diff(dayjs(), 'second')
     }
     const refreshDate = dayjs().add(51, 'second')
@@ -66,7 +69,7 @@ export default function RefreshSlider({
     <StyledLabel>
       Move video automatically to refresh queue in{' '}
       {disabled ? (
-        '50'
+        'X'
       ) : (
         <span style={{ fontWeight: 'bold', color: '#00cca9' }}>
           {firstRender ? checkForRefreshDate() : daysBeforeRefresh}

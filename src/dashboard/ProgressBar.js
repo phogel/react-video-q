@@ -8,7 +8,7 @@ const ProgressBarBackground = styled.div`
 
 const ProgressBarFill = styled.div`
   position: absolute;
-  padding-top: ${p=>p.paddingTop};
+  padding-top: ${p => p.paddingTop};
   font-size: 14px;
   color: #fefefe;
   font-weight: bold;
@@ -19,7 +19,7 @@ const ProgressBarFill = styled.div`
   min-height: 14px;
   text-align: center;
   height: ${p => p.height};
-  animation: 'fill-bar${p => p.name}' 2s ease-out;
+  animation: 'fill-bar${p => p.name}' 1.5s ease-out;
 
   @keyframes 'fill-bar${p => p.name}' {
     0% {
@@ -35,13 +35,12 @@ const ProgressBarFill = styled.div`
     }
     100% {
       height: ${p => p.height};
-      padding-top: ${p=>p.paddingTop};
+      padding-top: ${p => p.paddingTop};
     }
   }
 `
 
 export default function ProgressBar({ cards, status }) {
-
   function paddingTop() {
     if (cards.filter(card => card.status === status).length > 1) {
       return '8px'
@@ -49,6 +48,7 @@ export default function ProgressBar({ cards, status }) {
       return '0px'
     }
   }
+
   const progressBarFill = ['#2DDBE3', '#FFBA49 ', '#00CCA9', '#FF328B']
   return (
     <ProgressBarBackground>

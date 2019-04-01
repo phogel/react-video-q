@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import YouTubeIframeLoader from 'youtube-iframe'
 import styled from 'styled-components'
 
@@ -27,8 +27,18 @@ export default function YouTubeVideo({
   go,
   setPlayer,
   player,
+  card,
 }) {
+  function onStateChangeHandler(event) {
+    event.card = cardToChange
+    onStateChange(event)
+  }
+
+  const [cardToChange, setCardToChange] = useState(card)
   useEffect(() => {
+    console.log('YTplayer useEffect')
+    console.log(card)
+    console.log('YTplayer useEffect endSeconds: ' + endSeconds)
     YouTubeIframeLoader.load(function(YT) {
       new YT.Player('player', {
         height: 'auto',
@@ -46,14 +56,16 @@ export default function YouTubeVideo({
         playerVars: {
           start: startSeconds,
           end: endSeconds,
+          // loop: 1,
         },
         events: {
           onReady: onPlayerReady,
-          onStateChange: onStateChange,
+          onStateChange: onStateChangeHandler,
         },
       })
-    }, [])
-  })
+    })
+    setCardToChange(card)
+  }, [card])
 
   function onPlayerReady(event) {
     setPlayer(event.target)

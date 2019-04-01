@@ -29,6 +29,8 @@ export default function App() {
   const [cards, setCards] = useState(getCardsFromStorage())
   const [searchString, setSearchString] = useState('')
   const [showLogo, setShowLogo] = useState(true)
+  const [player, setPlayer] = useState()
+  const [isLoop, setIsLoop] = useState(false)
 
   useEffect(() => {
     saveCardsToStorage(cards)
@@ -44,16 +46,17 @@ export default function App() {
     setCards([...cards, data])
   }
 
-  function clickHandler(id, status, startSeconds, endSeconds) {
+  function categoryClickHandler(id, status, startSeconds, endSeconds) {
     const card = cards.find(card => card.id === id)
     const index = cards.indexOf(card)
-    if (startSeconds !== card.startSeconds || endSeconds !== card.endSeconds) {
-      setCards([
-        ...cards.slice(0, index),
-        { ...card, status: 0, startSeconds, endSeconds },
-        ...cards.slice(index + 1),
-      ])
-    }
+    // if (startSeconds !== card.startSeconds || endSeconds !== card.endSeconds) {
+    //   console.log('startSeconds, endSeconds')
+    //   setCards([
+    //     ...cards.slice(0, index),
+    //     { ...card, startSeconds, endSeconds },
+    //     ...cards.slice(index + 1),
+    //   ])
+    // }
 
     if (status === card.status) {
       setCards([
@@ -78,6 +81,7 @@ export default function App() {
       { ...card, refresh: !card.refresh, refreshDate: '' },
       ...cards.slice(index + 1),
     ])
+    console.log('App checkbox changed')
   }
 
   function sliderChangeHandler(id, refreshDate) {
@@ -88,6 +92,7 @@ export default function App() {
       { ...card, refreshDate: refreshDate },
       ...cards.slice(index + 1),
     ])
+    console.log('App slider changed')
   }
 
   function searchWithinAllCards() {
@@ -107,59 +112,78 @@ export default function App() {
     setSearchString(event.target.value)
   }
 
-  function changeCardStatus(card) {
+  function startSecondsChangeHandler(card, startSeconds) {
     const index = cards.indexOf(card)
+    // if (startSeconds !== card.startSeconds || endSeconds !== card.endSeconds) {
+    //   console.log('startSeconds, endSeconds')
+    //   setCards([
+    //     ...cards.slice(0, index),
+    //     { ...card, startSeconds, endSeconds },
+    //     ...cards.slice(index + 1),
+    //   ])
+    // }
+
+    console.log(startSeconds)
     setCards([
       ...cards.slice(0, index),
-      { ...card, status: 3, refresh: false, refreshDate: '' },
+      {
+        ...card,
+        startSeconds: startSeconds,
+      },
       ...cards.slice(index + 1),
     ])
+    console.log(card)
   }
 
-  function timerChangeHandler(card, startSeconds, endSeconds) {
+  function endSecondsChangeHandler(card, endSeconds) {
     const index = cards.indexOf(card)
-    console.log(card)
-    console.log(startSeconds)
+
     console.log(endSeconds)
     setCards([
       ...cards.slice(0, index),
       {
         ...card,
-        startSeconds: startSeconds || card.startSeconds,
-        endSeconds: endSeconds || card.endSeconds,
+        endSeconds: endSeconds,
       },
       ...cards.slice(index + 1),
     ])
+    console.log(card)
   }
-  const [player, setPlayer] = useState()
-  const [isLoop, setIsLoop] = useState(false)
 
-  function videoStateChangeHandler(event, inComingCard) {
-    console.log('video state changed')
-    console.log(event.data)
-    console.log('is loop in app: ' + isLoop)
+  function videoStateChangeHandler(event, card) {
+    console.log('let us see videostatechangehandler')
+    console.log(cards)
     if (event.data === 1) {
-      const date = dayjs()
-      const card = cards.find(card => card.id === inComingCard.id)
       const index = cards.indexOf(card)
-      setCards([
-        ...cards.slice(0, index),
-        { ...card, lastSeenTime: date },
-        ...cards.slice(index + 1),
-      ])
+      if (index !== -1) {
+        setCards([
+          ...cards.slice(0, index),
+          { ...card, lastSeenTime: dayjs() },
+          ...cards.slice(index + 1),
+        ])
+      }
     }
     if (isLoop && event.data === 0) {
-      player.seekTo(inComingCard.startSeconds).playVideo()
-      console.log('looped')
+      player.seekTo(card.startSeconds).playVideo()
     }
   }
 
   function checkIfRefresh() {
     cards.forEach(card => {
       if (card.refresh && dayjs().isAfter(card.refreshDate)) {
-        changeCardStatus(card)
+        changeCardStatusToRefresh(card)
       }
     })
+  }
+
+  function changeCardStatusToRefresh(card) {
+    const index = cards.indexOf(card)
+    setCards([
+      ...cards.slice(0, index),
+      { ...card, status: 3, refresh: false, refreshDate: '' },
+      ...cards.slice(index + 1),
+    ])
+    console.log('App CardStatus changed')
   }
 
   function deleteCardClickHandler(card) {
@@ -315,9 +339,10 @@ export default function App() {
               checkIfRefresh={checkIfRefresh()}
               onCheckboxClick={checkboxClickHandler}
               onSliderChange={sliderChangeHandler}
-              onClick={clickHandler}
+              onCategoryClick={categoryClickHandler}
               onVideoStateChange={videoStateChangeHandler}
-              onTimerChange={timerChangeHandler}
+              onStartSecondsChange={startSecondsChangeHandler}
+              onEndSecondsChange={endSecondsChangeHandler}
               status={
                 cards.find(card => card.id === match.params.id).status || null
               }

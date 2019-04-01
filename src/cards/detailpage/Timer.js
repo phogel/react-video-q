@@ -1,7 +1,11 @@
 import React, { useState } from 'react'
 import styled from 'styled-components'
 import { FaStopwatch } from 'react-icons/fa'
-import { MdPlayCircleFilled, MdPauseCircleFilled } from 'react-icons/md'
+import {
+  MdPlayCircleFilled,
+  MdPauseCircleFilled,
+  // MdRepeat,
+} from 'react-icons/md'
 
 const StyledForm = styled.div`
   display: flex;
@@ -38,7 +42,8 @@ const StyledButton = styled.button`
 export default function Timer({
   card,
   setGo,
-  onTimerChange,
+  onStartSecondsChange,
+  onEndSecondsChange,
   isLoop,
   setIsLoop,
 }) {
@@ -49,26 +54,21 @@ export default function Timer({
   function onGoClick() {
     setPlaying(!playing)
     setGo(true)
-    onTimerChange(card, start, end)
-    onTimerChange(card, start, end)
   }
 
   function onLoopClick() {
-    console.log(isLoop)
+    console.log('loop clicked. status: ' + isLoop)
     setIsLoop(!isLoop)
-    setTimeout(() => {
-      console.log('look clicked. status: ' + isLoop)
-    }, 500)
   }
 
   function onStartChangeHandler(event) {
     setStart(event.target.value)
-    onTimerChange(card, start, end)
+    onStartSecondsChange(card, event.target.value)
   }
 
   function onEndChangeHandler(event) {
     setEnd(event.target.value)
-    onTimerChange(card, start, end)
+    onEndSecondsChange(card, event.target.value)
   }
 
   return (
@@ -97,7 +97,16 @@ export default function Timer({
         )}
       </StyledButton>
       <StyledButton onClick={() => onLoopClick()}>
-        {isLoop ? 'UNLOOP' : 'LOOP'}
+        {isLoop
+          ? // <MdRepeat onClick={() => onLoopClick()} color="#FF328B" size="20px" />
+            'UNLOOP'
+          : 'LOOP'
+        // <MdRepeat
+        //   onClick={() => onLoopClick()}
+        //   color="rgba(26, 26, 26, 0.57)"
+        //   size="20px"
+        // />
+        }
       </StyledButton>
     </StyledForm>
   )
