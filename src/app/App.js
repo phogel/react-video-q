@@ -29,7 +29,7 @@ export default function App() {
   const [cards, setCards] = useState(getCardsFromStorage())
   const [searchString, setSearchString] = useState('')
   const [showLogo, setShowLogo] = useState(true)
-  const [player, setPlayer] = useState()
+  const [player, setPlayer] = useState(null)
   const [isLoop, setIsLoop] = useState(false)
 
   useEffect(() => {
@@ -129,8 +129,11 @@ export default function App() {
   }
 
   function videoStateChangeHandler(event, card) {
+    console.log(event.data, card)
     if (event.data === 1) {
       const index = cards.indexOf(card)
+      console.log('1', event.data)
+
       if (index !== -1) {
         setCards([
           ...cards.slice(0, index),

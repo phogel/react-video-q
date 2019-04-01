@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from 'react'
-import YouTubeIframeLoader from 'youtube-iframe'
+import React, { useEffect, useState, useRef } from 'react'
+import YouTube from 'react-youtube'
 import styled from 'styled-components'
 
 const VideoWrapper = styled.div`
@@ -9,7 +9,7 @@ const VideoWrapper = styled.div`
   border: none;
 `
 
-const StyledDiv = styled.div`
+const StyledYouTube = styled(YouTube)`
   position: absolute;
   top: 0;
   left: 0;
@@ -23,51 +23,77 @@ export default function YouTubeVideo({
   onStateChange,
   startSeconds,
   endSeconds,
-  setGo,
-  go,
-  setPlayer,
-  player,
+  playing,
 }) {
-  useEffect(() => {
-    YouTubeIframeLoader.load(function(YT) {
-      new YT.Player('player', {
-        height: 'auto',
-        width: '100%',
-        host: 'https://www.youtube.com',
-        origin: 'http://localhost:3000',
-        videoId: videoId,
-        enablejsapi: 1,
-        showinfo: 0,
-        cc_load_policy: 0,
-        controls: 0,
-        disablekb: 0,
-        modestbranding: 1,
-        rel: 0,
-        playerVars: {
-          start: startSeconds,
-          end: endSeconds,
-          // loop: 1,
-        },
-        events: {
-          onReady: onPlayerReady,
-          onStateChange: onStateChange,
-        },
-      })
-    })
-  }, [startSeconds, endSeconds])
+  // useEffect(() => {
+  //   YouTubeIframeLoader.load(function(YT) {
+  //     new YT.Player('player', {
+  //       height: 'auto',
+  //       width: '100%',
+  //       host: 'https://www.youtube.com',
+  //       origin: 'http://localhost:3000',
+  //       videoId: videoId,
+  //       enablejsapi: 1,
+  //       showinfo: 0,
+  //       cc_load_policy: 0,
+  //       controls: 0,
+  //       disablekb: 0,
+  //       modestbranding: 1,
+  //       rel: 0,
+  //       playerVars: {
+  //         autoplay: Number(playing),
+  //         start: startSeconds,
+  //         end: endSeconds,
+  //         // loop: 1,
+  //       },
+  //       events: {
+  //         onReady: onPlayerReady,
+  //         onStateChange: onStateChange,
+  //       },
+  //     })
+  //   })
+  // }, [playing, startSeconds, endSeconds])
 
-  function onPlayerReady(event) {
-    setPlayer(event.target)
+  // function onPlayerReady(event) {
+  //   console.log('onPlayerReady', playing)
+  //   playing && event.target.playVideo(startSeconds)
+  // }
+
+  const videoRef = useRef(null)
+
+  useEffect(() => {
+    const video = videoRef.current
+    if (video) {
+      playing ? video.playVideo(startSeconds) : video.pauseVideo()
+    }
+  }, [playing])
+
+  function onReady(event) {
+    // access to player in all event handlers via event.target
+    videoRef.current = event.target
+    //playing && event.target.playVideo(startSeconds)
   }
 
-  if (go) {
-    player.seekTo(startSeconds).playVideo()
-    setGo(false)
+  const opts = {
+    height: 'auto',
+    width: '100%',
+    playerVars: {
+      autoplay: Number(playing),
+      start: startSeconds,
+      end: endSeconds,
+    },
   }
 
   return (
     <VideoWrapper>
-      <StyledDiv id="player" />
+      <StyledYouTube
+        videoId={videoId}
+        opts={opts}
+        onStateChange={event => {
+          onStateChange(event)
+        }}
+        onReady={onReady}
+      />
     </VideoWrapper>
   )
 }

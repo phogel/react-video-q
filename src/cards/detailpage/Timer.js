@@ -41,17 +41,15 @@ const StyledButton = styled.button`
 
 export default function Timer({
   card,
-  setGo,
   onStartSecondsChange,
   onEndSecondsChange,
   isLoop,
   setIsLoop,
+  playing,
+  setPlaying,
 }) {
-  const [playing, setPlaying] = useState(false)
-
   function onGoClick() {
     setPlaying(!playing)
-    setGo(true)
   }
 
   function onLoopClick() {

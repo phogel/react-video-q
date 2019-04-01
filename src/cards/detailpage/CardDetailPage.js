@@ -58,9 +58,7 @@ export default function CardsDetailPage(props) {
   } = props
 
   const [isEditable, setIsEditable] = useState(false)
-  const [go, setGo] = useState(false)
 
-  console.log('Detailpage render')
   function onEditCardClickHandler() {
     setIsEditable(!isEditable)
   }
@@ -98,11 +96,12 @@ export default function CardsDetailPage(props) {
 
   function onVideoStateChange(event) {
     console.log(event)
-    props.onVideoStateChange(event, event.card)
+    props.onVideoStateChange(event, card)
   }
 
   const [start, setStart] = useState(card.startSeconds)
   const [end, setEnd] = useState(card.endSeconds)
+  const [playing, setPlaying] = useState(false)
 
   return (
     <Grid>
@@ -112,11 +111,10 @@ export default function CardsDetailPage(props) {
           startSeconds={card.startSeconds}
           endSeconds={card.endSeconds}
           onStateChange={onVideoStateChange}
-          go={go}
-          setGo={setGo}
           videoId={card.id}
           player={player}
           setPlayer={setPlayer}
+          playing={playing}
         />
         <BackButton />
       </Video>
@@ -128,7 +126,8 @@ export default function CardsDetailPage(props) {
         setEnd={setEnd}
         cards={cards}
         setCards={setCards}
-        setGo={setGo}
+        setPlaying={setPlaying}
+        playing={playing}
         onStartSecondsChange={onStartSecondsChange}
         onEndSecondsChange={onEndSecondsChange}
         isLoop={isLoop}
