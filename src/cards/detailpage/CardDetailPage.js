@@ -101,6 +101,9 @@ export default function CardsDetailPage(props) {
     props.onVideoStateChange(event, event.card)
   }
 
+  const [start, setStart] = useState(card.startSeconds)
+  const [end, setEnd] = useState(card.endSeconds)
+
   return (
     <Grid>
       <Video>
@@ -118,7 +121,11 @@ export default function CardsDetailPage(props) {
         <BackButton />
       </Video>
       <Timer
+        start={start}
+        end={end}
         card={card}
+        setStart={setStart}
+        setEnd={setEnd}
         cards={cards}
         setCards={setCards}
         setGo={setGo}

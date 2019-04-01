@@ -49,14 +49,6 @@ export default function App() {
   function categoryClickHandler(id, status, startSeconds, endSeconds) {
     const card = cards.find(card => card.id === id)
     const index = cards.indexOf(card)
-    // if (startSeconds !== card.startSeconds || endSeconds !== card.endSeconds) {
-    //   console.log('startSeconds, endSeconds')
-    //   setCards([
-    //     ...cards.slice(0, index),
-    //     { ...card, startSeconds, endSeconds },
-    //     ...cards.slice(index + 1),
-    //   ])
-    // }
 
     if (status === card.status) {
       setCards([
@@ -92,7 +84,6 @@ export default function App() {
       { ...card, refreshDate: refreshDate },
       ...cards.slice(index + 1),
     ])
-    console.log('App slider changed')
   }
 
   function searchWithinAllCards() {
@@ -114,16 +105,7 @@ export default function App() {
 
   function startSecondsChangeHandler(card, startSeconds) {
     const index = cards.indexOf(card)
-    // if (startSeconds !== card.startSeconds || endSeconds !== card.endSeconds) {
-    //   console.log('startSeconds, endSeconds')
-    //   setCards([
-    //     ...cards.slice(0, index),
-    //     { ...card, startSeconds, endSeconds },
-    //     ...cards.slice(index + 1),
-    //   ])
-    // }
 
-    console.log(startSeconds)
     setCards([
       ...cards.slice(0, index),
       {
@@ -132,13 +114,10 @@ export default function App() {
       },
       ...cards.slice(index + 1),
     ])
-    console.log(card)
   }
 
   function endSecondsChangeHandler(card, endSeconds) {
     const index = cards.indexOf(card)
-
-    console.log(endSeconds)
     setCards([
       ...cards.slice(0, index),
       {
@@ -147,12 +126,9 @@ export default function App() {
       },
       ...cards.slice(index + 1),
     ])
-    console.log(card)
   }
 
   function videoStateChangeHandler(event, card) {
-    console.log('let us see videostatechangehandler')
-    console.log(cards)
     if (event.data === 1) {
       const index = cards.indexOf(card)
       if (index !== -1) {
@@ -169,6 +145,7 @@ export default function App() {
   }
 
   function checkIfRefresh() {
+    console.log('checkIfRefresh')
     cards.forEach(card => {
       if (card.refresh && dayjs().isAfter(card.refreshDate)) {
         changeCardStatusToRefresh(card)
@@ -183,7 +160,6 @@ export default function App() {
       { ...card, status: 3, refresh: false, refreshDate: '' },
       ...cards.slice(index + 1),
     ])
-    console.log('App CardStatus changed')
   }
 
   function deleteCardClickHandler(card) {
@@ -263,10 +239,10 @@ export default function App() {
               ) : null}
               <Header history={history} cards={cards} />
               <PageTitle
-                title={cards.length !== 0 ? 'Not learned yet' : null}
-                status={cards.length !== 0 ? 0 : ''}
+                title={cards.length ? 'Not learned yet' : null}
+                status={cards.length ? 0 : ''}
               />
-              {cards.length !== 0 ? (
+              {cards.length ? (
                 <CardsContainer
                   hasLink={true}
                   checkIfRefresh={checkIfRefresh()}
@@ -336,7 +312,6 @@ export default function App() {
           path="/videos/:id"
           render={({ match }) => (
             <CardDetailPage
-              checkIfRefresh={checkIfRefresh()}
               onCheckboxClick={checkboxClickHandler}
               onSliderChange={sliderChangeHandler}
               onCategoryClick={categoryClickHandler}

@@ -47,8 +47,6 @@ export default function Timer({
   isLoop,
   setIsLoop,
 }) {
-  const [start, setStart] = useState(card.startSeconds)
-  const [end, setEnd] = useState(card.endSeconds)
   const [playing, setPlaying] = useState(false)
 
   function onGoClick() {
@@ -57,17 +55,14 @@ export default function Timer({
   }
 
   function onLoopClick() {
-    console.log('loop clicked. status: ' + isLoop)
     setIsLoop(!isLoop)
   }
 
   function onStartChangeHandler(event) {
-    setStart(event.target.value)
     onStartSecondsChange(card, event.target.value)
   }
 
   function onEndChangeHandler(event) {
-    setEnd(event.target.value)
     onEndSecondsChange(card, event.target.value)
   }
 
@@ -78,14 +73,14 @@ export default function Timer({
       <StyledInput
         name="startSeconds"
         type="number"
-        value={start}
+        value={card.startSeconds}
         onChange={event => onStartChangeHandler(event)}
       />
       to
       <StyledInput
         name="endSeconds"
         type="number"
-        value={end}
+        value={card.endSeconds}
         onChange={event => onEndChangeHandler(event)}
       />
       sec's

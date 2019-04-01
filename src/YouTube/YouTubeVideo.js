@@ -27,18 +27,8 @@ export default function YouTubeVideo({
   go,
   setPlayer,
   player,
-  card,
 }) {
-  function onStateChangeHandler(event) {
-    event.card = cardToChange
-    onStateChange(event)
-  }
-
-  const [cardToChange, setCardToChange] = useState(card)
   useEffect(() => {
-    console.log('YTplayer useEffect')
-    console.log(card)
-    console.log('YTplayer useEffect endSeconds: ' + endSeconds)
     YouTubeIframeLoader.load(function(YT) {
       new YT.Player('player', {
         height: 'auto',
@@ -60,12 +50,11 @@ export default function YouTubeVideo({
         },
         events: {
           onReady: onPlayerReady,
-          onStateChange: onStateChangeHandler,
+          onStateChange: onStateChange,
         },
       })
     })
-    setCardToChange(card)
-  }, [card])
+  }, [startSeconds, endSeconds])
 
   function onPlayerReady(event) {
     setPlayer(event.target)
