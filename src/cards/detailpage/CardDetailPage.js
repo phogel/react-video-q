@@ -95,12 +95,11 @@ export default function CardsDetailPage(props) {
   }
 
   function onVideoStateChange(event) {
-    console.log(event)
+    console.log(event.data)
     props.onVideoStateChange(event, card)
+    event.data === 0 && setPlaying(false)
+    // event.data === 1 && setPlaying(true)
   }
-
-  const [start, setStart] = useState(card.startSeconds)
-  const [end, setEnd] = useState(card.endSeconds)
   const [playing, setPlaying] = useState(false)
 
   return (
@@ -108,6 +107,8 @@ export default function CardsDetailPage(props) {
       <Video>
         <YouTubeVideo
           card={card}
+          setStart={onStartSecondsChange}
+          setEnd={onEndSecondsChange}
           startSeconds={card.startSeconds}
           endSeconds={card.endSeconds}
           onStateChange={onVideoStateChange}
@@ -119,11 +120,11 @@ export default function CardsDetailPage(props) {
         <BackButton />
       </Video>
       <Timer
-        start={start}
-        end={end}
+        start={card.startSeconds}
+        end={card.endSeconds}
         card={card}
-        setStart={setStart}
-        setEnd={setEnd}
+        setStart={onStartSecondsChange}
+        setEnd={onEndSecondsChange}
         cards={cards}
         setCards={setCards}
         setPlaying={setPlaying}

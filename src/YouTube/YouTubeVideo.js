@@ -24,6 +24,9 @@ export default function YouTubeVideo({
   startSeconds,
   endSeconds,
   playing,
+  setStart,
+  setEnd,
+  card,
 }) {
   // useEffect(() => {
   //   YouTubeIframeLoader.load(function(YT) {
@@ -72,6 +75,8 @@ export default function YouTubeVideo({
     // access to player in all event handlers via event.target
     videoRef.current = event.target
     //playing && event.target.playVideo(startSeconds)
+    startSeconds || setStart(card, 0)
+    endSeconds || setEnd(card, videoRef.current.getDuration())
   }
 
   const opts = {
@@ -89,9 +94,7 @@ export default function YouTubeVideo({
       <StyledYouTube
         videoId={videoId}
         opts={opts}
-        onStateChange={event => {
-          onStateChange(event)
-        }}
+        onStateChange={onStateChange}
         onReady={onReady}
       />
     </VideoWrapper>

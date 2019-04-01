@@ -73,7 +73,6 @@ export default function App() {
       { ...card, refresh: !card.refresh, refreshDate: '' },
       ...cards.slice(index + 1),
     ])
-    console.log('App checkbox changed')
   }
 
   function sliderChangeHandler(id, refreshDate) {
@@ -129,7 +128,6 @@ export default function App() {
   }
 
   function videoStateChangeHandler(event, card) {
-    console.log(event.data, card)
     if (event.data === 1) {
       const index = cards.indexOf(card)
       console.log('1', event.data)
@@ -215,103 +213,6 @@ export default function App() {
           )}
         />
         <Route
-          path="/search"
-          render={() => (
-            <Grid>
-              <HeaderSearchBar
-                searchString={searchString}
-                onSearchChange={onSearchChange}
-              />
-              <PageTitle title="All videos" status={''} />
-              <CardsContainer
-                hasLink={true}
-                checkIfRefresh={checkIfRefresh()}
-                cards={searchWithinAllCards()}
-              />
-              <Nav status={''} />
-            </Grid>
-          )}
-        />
-        <Route
-          exact
-          path="/"
-          render={({ history }) => (
-            <Grid>
-              {showLogo ? (
-                <WelcomeLogo showLogo={showLogo} setShowLogo={setShowLogo} />
-              ) : null}
-              <Header history={history} cards={cards} />
-              <PageTitle
-                title={cards.length ? 'Not learned yet' : null}
-                status={cards.length ? 0 : ''}
-              />
-              {cards.length ? (
-                <CardsContainer
-                  hasLink={true}
-                  checkIfRefresh={checkIfRefresh()}
-                  cards={cards.filter(card => card.status === 0)}
-                  showLogo={showLogo}
-                  setShowLogo={setShowLogo}
-                />
-              ) : (
-                <NoCardsPage
-                  showLogo={showLogo}
-                  setShowLogo={setShowLogo}
-                  cards={cards}
-                />
-              )}
-
-              <Nav status={0} />
-            </Grid>
-          )}
-        />
-        <Route
-          path="/learningqueue"
-          render={({ history }) => (
-            <Grid>
-              <Header history={history} cards={cards} />
-              <PageTitle title="Learning queue" status={1} />
-              <CardsContainer
-                hasLink={true}
-                checkIfRefresh={checkIfRefresh()}
-                cards={cards.filter(card => card.status === 1)}
-              />
-              <Nav status={1} />
-            </Grid>
-          )}
-        />
-        <Route
-          path="/learned"
-          render={({ history }) => (
-            <Grid>
-              <Header history={history} cards={cards} />
-              <PageTitle title="Learned" status={2} />
-              <CardsContainer
-                hasLink={true}
-                checkIfRefresh={checkIfRefresh()}
-                cards={cards.filter(card => card.status === 2)}
-              />
-              <Nav status={2} />
-            </Grid>
-          )}
-        />
-        <Route
-          path="/refreshqueue"
-          render={({ history }) => (
-            <Grid>
-              <Header history={history} cards={cards} />
-              <PageTitle title="Refresh Queue" status={3} />
-              <CardsContainer
-                hasLink={true}
-                checkIfRefresh={checkIfRefresh()}
-                cards={cards.filter(card => card.status === 3)}
-              />
-              <Nav status={3} />
-            </Grid>
-          )}
-        />
-
-        <Route
           path="/videos/:id"
           render={({ match }) => (
             <CardDetailPage
@@ -337,6 +238,106 @@ export default function App() {
             />
           )}
         />
+        <Route
+          path="/search"
+          render={() => (
+            <Grid>
+              <HeaderSearchBar
+                searchString={searchString}
+                onSearchChange={onSearchChange}
+              />
+              <PageTitle title="All videos" status={''} />
+              <CardsContainer
+                hasLink={true}
+                checkIfRefresh={checkIfRefresh()}
+                cards={searchWithinAllCards()}
+              />
+              <Nav status={''} />
+            </Grid>
+          )}
+        />
+        <Grid>
+          <Route
+            exact
+            path={['/', '/learningqueue', '/learned', '/refreshqueue']}
+            render={({ history }) => <Header history={history} cards={cards} />}
+          />
+          <Route
+            exact
+            path="/"
+            render={() => (
+              <React.Fragment>
+                {showLogo ? (
+                  <WelcomeLogo showLogo={showLogo} setShowLogo={setShowLogo} />
+                ) : null}
+                <PageTitle
+                  title={cards.length ? 'Not learned yet' : null}
+                  status={cards.length ? 0 : ''}
+                />
+                {cards.length ? (
+                  <CardsContainer
+                    hasLink={true}
+                    checkIfRefresh={checkIfRefresh()}
+                    cards={cards.filter(card => card.status === 0)}
+                    showLogo={showLogo}
+                    setShowLogo={setShowLogo}
+                  />
+                ) : (
+                  <NoCardsPage
+                    showLogo={showLogo}
+                    setShowLogo={setShowLogo}
+                    cards={cards}
+                  />
+                )}
+              </React.Fragment>
+            )}
+          />
+
+          <Route
+            path="/learningqueue"
+            render={() => (
+              <React.Fragment>
+                <PageTitle title="Learning queue" status={1} />
+                <CardsContainer
+                  hasLink={true}
+                  checkIfRefresh={checkIfRefresh()}
+                  cards={cards.filter(card => card.status === 1)}
+                />
+              </React.Fragment>
+            )}
+          />
+          <Route
+            path="/learned"
+            render={() => (
+              <React.Fragment>
+                <PageTitle title="Learned" status={2} />
+                <CardsContainer
+                  hasLink={true}
+                  checkIfRefresh={checkIfRefresh()}
+                  cards={cards.filter(card => card.status === 2)}
+                />
+              </React.Fragment>
+            )}
+          />
+          <Route
+            path="/refreshqueue"
+            render={() => (
+              <React.Fragment>
+                <PageTitle title="Refresh Queue" status={3} />
+                <CardsContainer
+                  hasLink={true}
+                  checkIfRefresh={checkIfRefresh()}
+                  cards={cards.filter(card => card.status === 3)}
+                />
+              </React.Fragment>
+            )}
+          />
+          <Route
+            exact
+            path={['/', '/learningqueue', '/learned', '/refreshqueue']}
+            render={() => <Nav status={3} />}
+          />
+        </Grid>
         <GlobalStyle />
       </React.Fragment>
     </Router>

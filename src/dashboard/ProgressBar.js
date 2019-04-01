@@ -21,7 +21,7 @@ const ProgressBarFill = styled.div`
   height: ${p => p.height};
   animation: 'fill-bar${p => p.name}' 1.5s ease-out;
 
-  @keyframes 'fill-bar${p => p.name}' {
+  @keyframes fill-bar${p => p.name} {
     0% {
       height: 0;
       padding-top: 0;
@@ -45,7 +45,7 @@ export default function ProgressBar({ cards, status }) {
     if (cards.filter(card => card.status === status).length > 1) {
       return '8px'
     } else {
-      return '0px'
+      return '0'
     }
   }
 
