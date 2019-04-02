@@ -222,9 +222,6 @@ export default function App() {
             path="/"
             render={() => (
               <React.Fragment>
-                {showLogo ? (
-                  <WelcomeLogo showLogo={showLogo} setShowLogo={setShowLogo} />
-                ) : null}
                 <PageTitle
                   title={cards.length ? 'Not learned yet' : null}
                   status={cards.length ? 0 : ''}
