@@ -21,8 +21,8 @@ const StyledForm = styled.div`
 const StyledInput = styled.input`
   font-size: 14px;
   color: rgba(26, 26, 26, 0.57);
-  padding: 4px;
-  width: 40px;
+  padding: 4px 0;
+  max-width: 44px;
   border: none;
   border: 1px solid #e0e0e0;
   background: none;

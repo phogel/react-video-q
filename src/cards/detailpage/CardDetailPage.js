@@ -95,10 +95,10 @@ export default function CardsDetailPage(props) {
   }
 
   function onVideoStateChange(event) {
-    console.log(event.data)
     props.onVideoStateChange(event, card)
     event.data === 0 && setPlaying(false)
-    // event.data === 1 && setPlaying(true)
+    event.data === 1 && setPlaying(true)
+    event.data === 2 && setPlaying(false)
   }
   const [playing, setPlaying] = useState(false)
 
