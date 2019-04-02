@@ -96,9 +96,16 @@ export default function CardsDetailPage(props) {
 
   function onVideoStateChange(event) {
     props.onVideoStateChange(event, card)
+    // if (!isLoop) {
     event.data === 0 && setPlaying(false)
     event.data === 1 && setPlaying(true)
     event.data === 2 && setPlaying(false)
+    // }
+    // } else if (isLoop && event.data === 0) {
+    //   setTimeout(() => {
+    //     setPlaying(true)
+    //   }, 2000)
+    // }
   }
   const [playing, setPlaying] = useState(false)
 
