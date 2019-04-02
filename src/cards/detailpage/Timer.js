@@ -4,7 +4,7 @@ import { FaStopwatch } from 'react-icons/fa'
 import {
   MdPlayCircleFilled,
   MdPauseCircleFilled,
-  // MdRepeat,
+  MdRepeat,
 } from 'react-icons/md'
 
 const StyledForm = styled.div`
@@ -37,6 +37,9 @@ const StyledButton = styled.button`
   font-size: 14px;
   height: 24px;
   width: auto;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 `
 
 export default function Timer({
@@ -84,22 +87,23 @@ export default function Timer({
       sec's
       <StyledButton onClick={() => onGoClick()}>
         {playing ? (
-          <MdPauseCircleFilled color={'rgba(26, 26, 26, 0.57)'} size={'20px'} />
+          <MdPauseCircleFilled color="#fefefe" size="20px" />
         ) : (
-          <MdPlayCircleFilled color={'rgba(26, 26, 26, 0.57)'} size={'20px'} />
+          <MdPlayCircleFilled color="#fefefe" size="20px" />
         )}
       </StyledButton>
       <StyledButton onClick={() => onLoopClick()}>
-        {isLoop
-          ? // <MdRepeat onClick={() => onLoopClick()} color="#FF328B" size="20px" />
-            'UNLOOP'
-          : 'LOOP'
-        // <MdRepeat
-        //   onClick={() => onLoopClick()}
-        //   color="rgba(26, 26, 26, 0.57)"
-        //   size="20px"
-        // />
-        }
+        {isLoop ? (
+          <MdRepeat onClick={() => onLoopClick()} color="#fefefe" size="20px" />
+        ) : (
+          // 'UNLOOP'
+          // 'LOOP'
+          <MdRepeat
+            onClick={() => onLoopClick()}
+            color="rgba(26, 26, 26, 0.57)"
+            size="20px"
+          />
+        )}
       </StyledButton>
     </StyledForm>
   )

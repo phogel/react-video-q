@@ -21,7 +21,7 @@ const StyledSwitchButton = styled.div`
 
   @keyframes move-up {
     0% {
-      transform: translateY(80px);
+      transform: translateY(120px);
     }
     100% {
       transform: translateY(0);

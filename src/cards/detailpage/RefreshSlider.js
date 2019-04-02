@@ -28,7 +28,6 @@ const StyledLabel = styled.label`
     }
     ::-webkit-slider-thumb {
       appearance: none;
-      -webkit-appearance: none;
       border: none;
       border-radius: 50%;
       height: 3px;
@@ -51,7 +50,6 @@ export default function RefreshSlider({
   const [daysBeforeRefresh, setDaysBeforeRefresh] = useState(51)
   function checkForRefreshDate() {
     if (cardRefreshDate !== '') {
-      console.log(cardRefreshDate)
       return dayjs(cardRefreshDate).diff(dayjs(), 'second')
     }
     const refreshDate = dayjs().add(51, 'second')
