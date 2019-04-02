@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useRef } from 'react'
+import React, { useEffect, useRef } from 'react'
 import YouTube from 'react-youtube'
 import styled from 'styled-components'
 
@@ -28,40 +28,6 @@ export default function YouTubeVideo({
   setEnd,
   card,
 }) {
-  // useEffect(() => {
-  //   YouTubeIframeLoader.load(function(YT) {
-  //     new YT.Player('player', {
-  //       height: 'auto',
-  //       width: '100%',
-  //       host: 'https://www.youtube.com',
-  //       origin: 'http://localhost:3000',
-  //       videoId: videoId,
-  //       enablejsapi: 1,
-  //       showinfo: 0,
-  //       cc_load_policy: 0,
-  //       controls: 0,
-  //       disablekb: 0,
-  //       modestbranding: 1,
-  //       rel: 0,
-  //       playerVars: {
-  //         autoplay: Number(playing),
-  //         start: startSeconds,
-  //         end: endSeconds,
-  //         // loop: 1,
-  //       },
-  //       events: {
-  //         onReady: onPlayerReady,
-  //         onStateChange: onStateChange,
-  //       },
-  //     })
-  //   })
-  // }, [playing, startSeconds, endSeconds])
-
-  // function onPlayerReady(event) {
-  //   console.log('onPlayerReady', playing)
-  //   playing && event.target.playVideo(startSeconds)
-  // }
-
   const videoRef = useRef(null)
 
   useEffect(() => {
@@ -72,9 +38,7 @@ export default function YouTubeVideo({
   }, [playing])
 
   function onReady(event) {
-    // access to player in all event handlers via event.target
     videoRef.current = event.target
-    //playing && event.target.playVideo(startSeconds)
     startSeconds || setStart(card, 0)
     endSeconds || setEnd(card, videoRef.current.getDuration())
   }

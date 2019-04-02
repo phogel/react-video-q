@@ -34,19 +34,17 @@ export default function App() {
 
   useEffect(() => {
     saveCardsToStorage(cards)
-    console.log('App useEffect, cards changed')
   }, [cards])
 
   useEffect(() => {
     saveCardsToStorage(cards)
-    console.log('App useEffect, anything changed')
   }, [])
 
   function createCard(data) {
     setCards([...cards, data])
   }
 
-  function categoryClickHandler(id, status, startSeconds, endSeconds) {
+  function categoryClickHandler(id, status) {
     const card = cards.find(card => card.id === id)
     const index = cards.indexOf(card)
 
@@ -130,8 +128,6 @@ export default function App() {
   function videoStateChangeHandler(event, card) {
     if (event.data === 1) {
       const index = cards.indexOf(card)
-      console.log('1', event.data)
-
       if (index !== -1) {
         setCards([
           ...cards.slice(0, index),
@@ -146,7 +142,6 @@ export default function App() {
   }
 
   function checkIfRefresh() {
-    console.log('checkIfRefresh')
     cards.forEach(card => {
       if (card.refresh && dayjs().isAfter(card.refreshDate)) {
         changeCardStatusToRefresh(card)
@@ -182,18 +177,6 @@ export default function App() {
     ])
   }
 
-  function NavSelect(match) {
-    if (match.match.url === '/') {
-      return <Nav status={cards.length ? 0 : ''} />
-    } else if (match.match.url === '/learningqueue') {
-      return <Nav status={1} />
-    } else if (match.match.url === '/learned') {
-      return <Nav status={2} />
-    } else if (match.match.url === '/refreshqueue') {
-      return <Nav status={3} />
-    }
-  }
-
   return (
     <Router>
       <React.Fragment>
@@ -211,101 +194,82 @@ export default function App() {
         {showLogo ? (
           <WelcomeLogo showLogo={showLogo} setShowLogo={setShowLogo} />
         ) : null}
-        <Grid>
-          <Route
-            exact
-            path={['/', '/learningqueue', '/learned', '/refreshqueue']}
-            render={({ history }) => <Header history={history} cards={cards} />}
-          />
-          <Route
-            exact
-            path="/"
-            render={() => (
-              <React.Fragment>
-                <PageTitle
-                  title={cards.length ? 'Not learned yet' : null}
-                  status={cards.length ? 0 : ''}
+        <Route
+          exact
+          path="/"
+          render={({ history }) => (
+            <Grid>
+              <Header history={history} cards={cards} />
+              <PageTitle
+                title={cards.length ? 'Not learned yet' : null}
+                status={cards.length ? 0 : ''}
+              />
+              {cards.length ? (
+                <CardsContainer
+                  hasLink={true}
+                  checkIfRefresh={checkIfRefresh()}
+                  cards={cards.filter(card => card.status === 0)}
+                  showLogo={showLogo}
+                  setShowLogo={setShowLogo}
                 />
-                {cards.length ? (
-                  <CardsContainer
-                    hasLink={true}
-                    checkIfRefresh={checkIfRefresh()}
-                    cards={cards.filter(card => card.status === 0)}
-                    showLogo={showLogo}
-                    setShowLogo={setShowLogo}
-                  />
-                ) : (
-                  <NoCardsPage
-                    showLogo={showLogo}
-                    setShowLogo={setShowLogo}
-                    cards={cards}
-                  />
-                )}
-              </React.Fragment>
-            )}
-          />
+              ) : (
+                <NoCardsPage
+                  showLogo={showLogo}
+                  setShowLogo={setShowLogo}
+                  cards={cards}
+                />
+              )}
 
-          <Route
-            path="/learningqueue"
-            render={() => (
-              <React.Fragment>
-                <PageTitle title="Learning queue" status={1} />
-                <CardsContainer
-                  hasLink={true}
-                  checkIfRefresh={checkIfRefresh()}
-                  cards={cards.filter(card => card.status === 1)}
-                />
-              </React.Fragment>
-            )}
-          />
-          <Route
-            path="/learned"
-            render={() => (
-              <React.Fragment>
-                <PageTitle title="Learned" status={2} />
-                <CardsContainer
-                  hasLink={true}
-                  checkIfRefresh={checkIfRefresh()}
-                  cards={cards.filter(card => card.status === 2)}
-                />
-              </React.Fragment>
-            )}
-          />
-          <Route
-            path="/refreshqueue"
-            render={() => (
-              <React.Fragment>
-                <PageTitle title="Refresh Queue" status={3} />
-                <CardsContainer
-                  hasLink={true}
-                  checkIfRefresh={checkIfRefresh()}
-                  cards={cards.filter(card => card.status === 3)}
-                />
-              </React.Fragment>
-            )}
-          />
-          <Route
-            exact
-            path={['/', '/learningqueue', '/learned', '/refreshqueue']}
-            render={({ match }) => <NavSelect match={match} />}
-          />
-        </Grid>
-        <Route
-          path="/add/id"
-          render={({ history }) => (
-            <AddIdPage cards={cards} history={history} onSubmit={createCard} />
+              <Nav status={0} />
+            </Grid>
           )}
         />
         <Route
-          path="/add/playlist"
+          path="/learningqueue"
           render={({ history }) => (
-            <AddPlaylistPage
-              cards={cards}
-              setCards={setCards}
-              history={history}
-            />
+            <Grid>
+              <Header history={history} cards={cards} />
+              <PageTitle title="Learning queue" status={1} />
+              <CardsContainer
+                hasLink={true}
+                checkIfRefresh={checkIfRefresh()}
+                cards={cards.filter(card => card.status === 1)}
+              />
+              <Nav status={1} />
+            </Grid>
           )}
         />
+        <Route
+          path="/learned"
+          render={({ history }) => (
+            <Grid>
+              <Header history={history} cards={cards} />
+              <PageTitle title="Learned" status={2} />
+              <CardsContainer
+                hasLink={true}
+                checkIfRefresh={checkIfRefresh()}
+                cards={cards.filter(card => card.status === 2)}
+              />
+              <Nav status={2} />
+            </Grid>
+          )}
+        />
+        <Route
+          path="/refreshqueue"
+          render={({ history }) => (
+            <Grid>
+              <Header history={history} cards={cards} />
+              <PageTitle title="Refresh Queue" status={3} />
+              <CardsContainer
+                hasLink={true}
+                checkIfRefresh={checkIfRefresh()}
+                cards={cards.filter(card => card.status === 3)}
+              />
+              <Nav status={3} />
+            </Grid>
+          )}
+        />
+
         <Route
           path="/videos/:id"
           render={({ match }) => (
@@ -329,6 +293,22 @@ export default function App() {
               setPlayer={setPlayer}
               isLoop={isLoop}
               setIsLoop={setIsLoop}
+            />
+          )}
+        />
+        <Route
+          path="/add/id"
+          render={({ history }) => (
+            <AddIdPage cards={cards} history={history} onSubmit={createCard} />
+          )}
+        />
+        <Route
+          path="/add/playlist"
+          render={({ history }) => (
+            <AddPlaylistPage
+              cards={cards}
+              setCards={setCards}
+              history={history}
             />
           )}
         />
