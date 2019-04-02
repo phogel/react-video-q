@@ -14,7 +14,7 @@ const StyledLink = styled(Link)`
   justify-content: center;
   align-items: center;
   text-decoration: none;
-  transition: all 0.5s ease-in;
+  transition: all 0.2s ease-in;
   border-top: 3px solid ${p => p.topbordercolor};
 `
 

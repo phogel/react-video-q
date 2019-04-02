@@ -182,6 +182,18 @@ export default function App() {
     ])
   }
 
+  function NavSelect(match) {
+    if (match.match.url === '/') {
+      return <Nav status={cards.length ? 0 : ''} />
+    } else if (match.match.url === '/learningqueue') {
+      return <Nav status={1} />
+    } else if (match.match.url === '/learned') {
+      return <Nav status={2} />
+    } else if (match.match.url === '/refreshqueue') {
+      return <Nav status={3} />
+    }
+  }
+
   return (
     <Router>
       <React.Fragment>
@@ -196,66 +208,9 @@ export default function App() {
             rel="stylesheet"
           />
         </Helmet>
-        <Route
-          path="/add/id"
-          render={({ history }) => (
-            <AddIdPage cards={cards} history={history} onSubmit={createCard} />
-          )}
-        />
-        <Route
-          path="/add/playlist"
-          render={({ history }) => (
-            <AddPlaylistPage
-              cards={cards}
-              setCards={setCards}
-              history={history}
-            />
-          )}
-        />
-        <Route
-          path="/videos/:id"
-          render={({ match }) => (
-            <CardDetailPage
-              onCheckboxClick={checkboxClickHandler}
-              onSliderChange={sliderChangeHandler}
-              onCategoryClick={categoryClickHandler}
-              onVideoStateChange={videoStateChangeHandler}
-              onStartSecondsChange={startSecondsChangeHandler}
-              onEndSecondsChange={endSecondsChangeHandler}
-              status={
-                cards.find(card => card.id === match.params.id).status || null
-              }
-              id={match.params.id}
-              card={cards.find(card => card.id === match.params.id) || []}
-              onDeleteCardClick={deleteCardClickHandler}
-              onSaveCardClick={saveCardClickHandler}
-              cards={cards}
-              setCards={setCards}
-              player={player}
-              setPlayer={setPlayer}
-              isLoop={isLoop}
-              setIsLoop={setIsLoop}
-            />
-          )}
-        />
-        <Route
-          path="/search"
-          render={() => (
-            <Grid>
-              <HeaderSearchBar
-                searchString={searchString}
-                onSearchChange={onSearchChange}
-              />
-              <PageTitle title="All videos" status={''} />
-              <CardsContainer
-                hasLink={true}
-                checkIfRefresh={checkIfRefresh()}
-                cards={searchWithinAllCards()}
-              />
-              <Nav status={''} />
-            </Grid>
-          )}
-        />
+        {showLogo ? (
+          <WelcomeLogo showLogo={showLogo} setShowLogo={setShowLogo} />
+        ) : null}
         <Grid>
           <Route
             exact
@@ -335,9 +290,69 @@ export default function App() {
           <Route
             exact
             path={['/', '/learningqueue', '/learned', '/refreshqueue']}
-            render={() => <Nav status={3} />}
+            render={({ match }) => <NavSelect match={match} />}
           />
         </Grid>
+        <Route
+          path="/add/id"
+          render={({ history }) => (
+            <AddIdPage cards={cards} history={history} onSubmit={createCard} />
+          )}
+        />
+        <Route
+          path="/add/playlist"
+          render={({ history }) => (
+            <AddPlaylistPage
+              cards={cards}
+              setCards={setCards}
+              history={history}
+            />
+          )}
+        />
+        <Route
+          path="/videos/:id"
+          render={({ match }) => (
+            <CardDetailPage
+              onCheckboxClick={checkboxClickHandler}
+              onSliderChange={sliderChangeHandler}
+              onCategoryClick={categoryClickHandler}
+              onVideoStateChange={videoStateChangeHandler}
+              onStartSecondsChange={startSecondsChangeHandler}
+              onEndSecondsChange={endSecondsChangeHandler}
+              status={
+                cards.find(card => card.id === match.params.id).status || null
+              }
+              id={match.params.id}
+              card={cards.find(card => card.id === match.params.id) || []}
+              onDeleteCardClick={deleteCardClickHandler}
+              onSaveCardClick={saveCardClickHandler}
+              cards={cards}
+              setCards={setCards}
+              player={player}
+              setPlayer={setPlayer}
+              isLoop={isLoop}
+              setIsLoop={setIsLoop}
+            />
+          )}
+        />
+        <Route
+          path="/search"
+          render={() => (
+            <Grid>
+              <HeaderSearchBar
+                searchString={searchString}
+                onSearchChange={onSearchChange}
+              />
+              <PageTitle title="All videos" status={''} />
+              <CardsContainer
+                hasLink={true}
+                checkIfRefresh={checkIfRefresh()}
+                cards={searchWithinAllCards()}
+              />
+              <Nav status={''} />
+            </Grid>
+          )}
+        />
         <GlobalStyle />
       </React.Fragment>
     </Router>
