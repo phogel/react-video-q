@@ -199,7 +199,7 @@ export default function App() {
               <Header history={history} cards={cards} />
               <PageTitle
                 title={cards.length ? 'Not learned yet' : null}
-                status={cards.length ? 0 : ''}
+                status={cards.length ? 0 : null}
               />
               {cards.length ? (
                 <CardsContainer

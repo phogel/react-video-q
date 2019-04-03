@@ -51,8 +51,6 @@ export default function CardsDetailPage(props) {
     setCards,
     onStartSecondsChange,
     onEndSecondsChange,
-    player,
-    setPlayer,
     isLoop,
     setIsLoop,
   } = props
