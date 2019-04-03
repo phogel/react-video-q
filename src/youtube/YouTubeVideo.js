@@ -32,9 +32,6 @@ export default function YouTubeVideo({
 
   useEffect(() => {
     const video = videoRef.current
-    console.log('useEffect YT')
-    console.log(startSeconds)
-    console.log(video)
     if (video) {
       playing ? video.playVideo(startSeconds) : video.pauseVideo()
     }
@@ -44,7 +41,6 @@ export default function YouTubeVideo({
     videoRef.current = event.target
     startSeconds || setStart(card, 0)
     endSeconds || setEnd(card, videoRef.current.getDuration())
-    console.log('videoRef', videoRef.current)
   }
 
   const opts = {

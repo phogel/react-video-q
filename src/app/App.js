@@ -136,9 +136,6 @@ export default function App() {
         ])
       }
     }
-    if (isLoop && event.data === 0) {
-      player.seekTo(card.startSeconds).playVideo()
-    }
   }
 
   function checkIfRefresh() {
