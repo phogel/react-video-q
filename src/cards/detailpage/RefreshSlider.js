@@ -51,7 +51,6 @@ export default function RefreshSlider({
   const [firstRender, setFirstRender] = useState(true)
   const [daysBeforeRefresh, setDaysBeforeRefresh] = useState(51)
   function checkForRefreshDate() {
-    console.log('hallo')
     if (cardRefreshDate !== '') {
       return dayjs(cardRefreshDate).diff(dayjs(), 'second')
     }
