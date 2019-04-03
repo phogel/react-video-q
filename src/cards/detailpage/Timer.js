@@ -1,6 +1,11 @@
-import React, { useState } from 'react'
+import React from 'react'
 import styled from 'styled-components'
 import { FaStopwatch } from 'react-icons/fa'
+import {
+  MdPlayCircleFilled,
+  MdPauseCircleFilled,
+  MdRepeat,
+} from 'react-icons/md'
 
 const StyledForm = styled.div`
   display: flex;
@@ -10,13 +15,14 @@ const StyledForm = styled.div`
   color: rgba(26, 26, 26, 0.57);
   padding-bottom: 20px;
   border-bottom: 1px solid rgba(0, 0, 0, 0.06);
+  margin: 0 30px 0 30px;
 `
 
 const StyledInput = styled.input`
   font-size: 14px;
   color: rgba(26, 26, 26, 0.57);
-  padding: 4px;
-  width: 40px;
+  padding: 4px 0;
+  max-width: 44px;
   border: none;
   border: 1px solid #e0e0e0;
   background: none;
@@ -30,54 +36,75 @@ const StyledInput = styled.input`
 const StyledButton = styled.button`
   font-size: 14px;
   height: 24px;
-  width: 36px;
+  width: auto;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 `
 
-export default function Timer({ card, cards, setCards, setGo }) {
-  const [startTime, setStartTime] = useState(card.startSeconds)
-  const [endTime, setEndTime] = useState(card.endSeconds)
-
-  function onStartInputChange(event) {
-    setStartTime(event.target.value)
-  }
-
-  function onEndInputChange(event) {
-    setEndTime(event.target.value)
-  }
-
+export default function Timer({
+  card,
+  onStartSecondsChange,
+  onEndSecondsChange,
+  isLoop,
+  setIsLoop,
+  playing,
+  setPlaying,
+}) {
   function onGoClick() {
-    setGo(true)
-    const index = cards.indexOf(card)
-    setCards([
-      ...cards.slice(0, index),
-      {
-        ...card,
-        startSeconds: startTime,
-        endSeconds: endTime,
-      },
-      ...cards.slice(index + 1),
-    ])
+    setPlaying(!playing)
+  }
+
+  function onLoopClick() {
+    setIsLoop(!isLoop)
+  }
+
+  function onStartChangeHandler(event) {
+    onStartSecondsChange(card, event.target.value)
+  }
+
+  function onEndChangeHandler(event) {
+    onEndSecondsChange(card, event.target.value)
   }
 
   return (
     <StyledForm>
       <FaStopwatch color={'rgba(26, 26, 26, 0.57)'} size={'20px'} />
-      Practice from
+      Play from
       <StyledInput
         name="startSeconds"
         type="number"
-        onChange={onStartInputChange}
-        value={startTime}
+        value={card.startSeconds}
+        onChange={event => onStartChangeHandler(event)}
       />
       to
       <StyledInput
         name="endSeconds"
         type="number"
-        onChange={onEndInputChange}
-        value={endTime}
+        value={card.endSeconds}
+        onChange={event => onEndChangeHandler(event)}
       />
-      seconds
-      <StyledButton onClick={onGoClick}>GO</StyledButton>
+      sec's
+      <StyledButton onClick={() => onGoClick()}>
+        {playing ? (
+          <MdPauseCircleFilled color="#fefefe" size="20px" />
+        ) : (
+          <MdPlayCircleFilled color="#fefefe" size="20px" />
+        )}
+      </StyledButton>
+      <StyledButton onClick={() => onLoopClick()}>
+        {isLoop ? (
+          <MdRepeat onClick={() => onLoopClick()} color="#fefefe" size="20px" />
+        ) : (
+          // 'UNLOOP'
+          // 'LOOP'
+          <MdRepeat
+            onClick={() => onLoopClick()}
+            color="rgba(26, 26, 26, 0.57)"
+            size="20px"
+          />
+        )}
+      </StyledButton>
     </StyledForm>
   )
 }

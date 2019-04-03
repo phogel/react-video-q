@@ -20,21 +20,20 @@ const Container = styled.div`
   display: grid;
   grid-auto-rows: auto;
   grid-gap: 20px;
-  padding: 20px;
+  padding: 20px 37px 0 37px;
   position: sticky;
   top: 0;
   left: 0;
   margin: auto 0;
-  width: 100vw;
   z-index: 5;
   background: rgb(250, 250, 250);
-  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.6);
 `
 
 const StyledAbortLink = styled.div`
   display: flex;
   justify-content: center;
   color: #dcdcdc;
+  margin-top: 10px;
 `
 
 const Error = styled.div`
@@ -118,10 +117,10 @@ export default function AddPlaylistPage({ history, cards, setCards }) {
             onSubmit={onSubmitPlaylist}
             logout={logout}
           />
-          <StyledAbortLink onClick={() => history.push('/')}>
-            Cancel
-          </StyledAbortLink>
         </Container>
+        <StyledAbortLink onClick={() => history.push('/')}>
+          Cancel
+        </StyledAbortLink>
         <PlaylistCards playlistItems={playlistItems} />
       </Grid>
     )

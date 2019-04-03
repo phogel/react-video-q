@@ -42,7 +42,7 @@ export default createGlobalStyle`
     background: #FF328B;
     color: rgb(250, 250, 250);
     transition: background-color .3s;
-    :hover, :focus {
+    :hover, :active {
       background-color: rgb(255, 50, 139, 0.8);
       outline: 0;
     }

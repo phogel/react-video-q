@@ -29,25 +29,24 @@ export default function App() {
   const [cards, setCards] = useState(getCardsFromStorage())
   const [searchString, setSearchString] = useState('')
   const [showLogo, setShowLogo] = useState(true)
+  const [player, setPlayer] = useState(null)
+  const [isLoop, setIsLoop] = useState(false)
 
   useEffect(() => {
     saveCardsToStorage(cards)
   }, [cards])
 
+  useEffect(() => {
+    saveCardsToStorage(cards)
+  }, [])
+
   function createCard(data) {
     setCards([...cards, data])
   }
 
-  function clickHandler(id, status, startSeconds, endSeconds) {
+  function categoryClickHandler(id, status) {
     const card = cards.find(card => card.id === id)
     const index = cards.indexOf(card)
-    if (startSeconds !== card.startSeconds || endSeconds !== card.endSeconds) {
-      setCards([
-        ...cards.slice(0, index),
-        { ...card, status: 0, startSeconds, endSeconds },
-        ...cards.slice(index + 1),
-      ])
-    }
 
     if (status === card.status) {
       setCards([
@@ -101,34 +100,59 @@ export default function App() {
     setSearchString(event.target.value)
   }
 
-  function changeCardStatus(card) {
+  function startSecondsChangeHandler(card, startSeconds) {
     const index = cards.indexOf(card)
+
     setCards([
       ...cards.slice(0, index),
-      { ...card, status: 3, refresh: false, refreshDate: '' },
+      {
+        ...card,
+        startSeconds: startSeconds,
+      },
       ...cards.slice(index + 1),
     ])
   }
 
-  function videoStateChangeHandler(event, id) {
+  function endSecondsChangeHandler(card, endSeconds) {
+    const index = cards.indexOf(card)
+    setCards([
+      ...cards.slice(0, index),
+      {
+        ...card,
+        endSeconds: endSeconds,
+      },
+      ...cards.slice(index + 1),
+    ])
+  }
+
+  function videoStateChangeHandler(event, card) {
     if (event.data === 1) {
-      const date = dayjs()
-      const card = cards.find(card => card.id === id)
       const index = cards.indexOf(card)
-      setCards([
-        ...cards.slice(0, index),
-        { ...card, lastSeenTime: date },
-        ...cards.slice(index + 1),
-      ])
+      if (index !== -1) {
+        setCards([
+          ...cards.slice(0, index),
+          { ...card, lastSeenTime: dayjs() },
+          ...cards.slice(index + 1),
+        ])
+      }
     }
   }
 
   function checkIfRefresh() {
     cards.forEach(card => {
       if (card.refresh && dayjs().isAfter(card.refreshDate)) {
-        changeCardStatus(card)
+        changeCardStatusToRefresh(card)
       }
     })
+  }
+
+  function changeCardStatusToRefresh(card) {
+    const index = cards.indexOf(card)
+    setCards([
+      ...cards.slice(0, index),
+      { ...card, status: 3, refresh: false, refreshDate: '' },
+      ...cards.slice(index + 1),
+    ])
   }
 
   function deleteCardClickHandler(card) {
@@ -164,54 +188,20 @@ export default function App() {
             rel="stylesheet"
           />
         </Helmet>
-        <Route
-          path="/add/id"
-          render={({ history }) => (
-            <AddIdPage cards={cards} history={history} onSubmit={createCard} />
-          )}
-        />
-        <Route
-          path="/add/playlist"
-          render={({ history }) => (
-            <AddPlaylistPage
-              cards={cards}
-              setCards={setCards}
-              history={history}
-            />
-          )}
-        />
-        <Route
-          path="/search"
-          render={() => (
-            <Grid>
-              <HeaderSearchBar
-                searchString={searchString}
-                onSearchChange={onSearchChange}
-              />
-              <PageTitle title="All videos" status={''} />
-              <CardsContainer
-                hasLink={true}
-                checkIfRefresh={checkIfRefresh()}
-                cards={searchWithinAllCards()}
-              />
-              <Nav status={''} />
-            </Grid>
-          )}
-        />
+        {showLogo ? (
+          <WelcomeLogo showLogo={showLogo} setShowLogo={setShowLogo} />
+        ) : null}
         <Route
           exact
           path="/"
           render={({ history }) => (
             <Grid>
-              {showLogo ? (
-                <WelcomeLogo showLogo={showLogo} setShowLogo={setShowLogo} />
-              ) : null}
               <Header history={history} cards={cards} />
               <PageTitle
-                title={cards.length !== 0 ? 'Not learned yet' : null}
-                status={cards.length !== 0 ? 0 : ''}
+                title={cards.length ? 'Not learned yet' : null}
+                status={cards.length ? 0 : null}
               />
-              {cards.length !== 0 ? (
+              {cards.length ? (
                 <CardsContainer
                   hasLink={true}
                   checkIfRefresh={checkIfRefresh()}
@@ -281,11 +271,12 @@ export default function App() {
           path="/videos/:id"
           render={({ match }) => (
             <CardDetailPage
-              checkIfRefresh={checkIfRefresh()}
               onCheckboxClick={checkboxClickHandler}
               onSliderChange={sliderChangeHandler}
-              onClick={clickHandler}
+              onCategoryClick={categoryClickHandler}
               onVideoStateChange={videoStateChangeHandler}
+              onStartSecondsChange={startSecondsChangeHandler}
+              onEndSecondsChange={endSecondsChangeHandler}
               status={
                 cards.find(card => card.id === match.params.id).status || null
               }
@@ -295,7 +286,45 @@ export default function App() {
               onSaveCardClick={saveCardClickHandler}
               cards={cards}
               setCards={setCards}
+              player={player}
+              setPlayer={setPlayer}
+              isLoop={isLoop}
+              setIsLoop={setIsLoop}
             />
+          )}
+        />
+        <Route
+          path="/add/id"
+          render={({ history }) => (
+            <AddIdPage cards={cards} history={history} onSubmit={createCard} />
+          )}
+        />
+        <Route
+          path="/add/playlist"
+          render={({ history }) => (
+            <AddPlaylistPage
+              cards={cards}
+              setCards={setCards}
+              history={history}
+            />
+          )}
+        />
+        <Route
+          path="/search"
+          render={() => (
+            <Grid>
+              <HeaderSearchBar
+                searchString={searchString}
+                onSearchChange={onSearchChange}
+              />
+              <PageTitle title="All videos" status={''} />
+              <CardsContainer
+                hasLink={true}
+                checkIfRefresh={checkIfRefresh()}
+                cards={searchWithinAllCards()}
+              />
+              <Nav status={''} />
+            </Grid>
           )}
         />
         <GlobalStyle />

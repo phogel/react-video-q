@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react'
 import styled from 'styled-components'
-import { MdCloudUpload } from 'react-icons/md'
 import split from '../../utils.js'
+import qlogo from '../../images/refresh-queue-light.svg'
 
 const StyledForm = styled.form`
   display: grid;
@@ -26,7 +26,6 @@ const StyledButton = styled.button`
   display: flex;
   justify-content: center;
   align-items: center;
-  padding: 0;
   margin-top: 10px;
 `
 
@@ -132,12 +131,8 @@ export default function Form({ cards, history, onSubmit }) {
         <ErrorMessage />
       </div>
       <StyledButton>
-        Add to VIDE<strong>Q</strong>{' '}
-        <MdCloudUpload
-          color={'rgb(250, 250, 250)'}
-          size={'20px'}
-          style={{ marginLeft: '10px' }}
-        />
+          Add to VIDE
+          <img height="16px" alt="VIDEQ" src={qlogo} />
       </StyledButton>
     </StyledForm>
   )

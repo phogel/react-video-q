@@ -41,6 +41,15 @@ const StyledAddIcon = styled.div`
   position: absolute;
   right: 50%;
   transform: translateX(50%);
+
+  @keyframes rotation {
+    0% {
+      transform: rotate(0deg) translateX(50%);
+    }
+    100% {
+      transform: rotate(45deg) translateY(-29%) translateX(35%);
+    }
+  }
 `
 
 const StyledDashboardIcon = styled.div`
@@ -91,7 +100,7 @@ export default function Header({ history, cards }) {
         <StyledLogo to="/">
           <img src={logo} alt="VIDEQ" style={{ userSelect: 'none' }} />
         </StyledLogo>
-        <StyledAddIcon onClick={onAddClickHandler}>
+        <StyledAddIcon style={addClick ? {animation: 'rotation 0.8s forwards cubic-bezier(0.4, 0, 0.2, 1)'} : null } onClick={onAddClickHandler}>
           <MdAdd color={addClick ? '#FF328B' : '#fefdfd'} size="30px" />
         </StyledAddIcon>
         <StyledDashboardIcon onClick={onDashboardClickHandler}>

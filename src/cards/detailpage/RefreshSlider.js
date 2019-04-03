@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import styled from 'styled-components'
 import dayjs from 'dayjs'
 
@@ -28,7 +28,8 @@ const StyledLabel = styled.label`
     }
     ::-webkit-slider-thumb {
       appearance: none;
-      -webkit-appearance: none;
+      /* -webkit-appearance: none; */
+      left: 50%;
       border: none;
       border-radius: 50%;
       height: 3px;
@@ -45,18 +46,20 @@ export default function RefreshSlider({
   onSliderChange,
   disabled,
 }) {
+  useEffect(() => {}, [cardRefreshDate])
+
   const [firstRender, setFirstRender] = useState(true)
   const [daysBeforeRefresh, setDaysBeforeRefresh] = useState(51)
   function checkForRefreshDate() {
     if (cardRefreshDate !== '') {
-      return dayjs(cardRefreshDate).diff(dayjs(), 'day')
+      return dayjs(cardRefreshDate).diff(dayjs(), 'second')
     }
-    const refreshDate = dayjs().add(51, 'day')
+    const refreshDate = dayjs().add(51, 'second')
     return daysBeforeRefresh && onSliderChange(refreshDate)
   }
 
   function onSliderChangeHandler(event) {
-    const refreshDate = dayjs().add(event.target.value, 'day')
+    const refreshDate = dayjs().add(event.target.value, 'second')
     setDaysBeforeRefresh(event.target.value)
     setFirstRender(false)
     onSliderChange(refreshDate)
@@ -66,7 +69,7 @@ export default function RefreshSlider({
     <StyledLabel>
       Move video automatically to refresh queue in{' '}
       {disabled ? (
-        '50'
+        'X'
       ) : (
         <span style={{ fontWeight: 'bold', color: '#00cca9' }}>
           {firstRender ? checkForRefreshDate() : daysBeforeRefresh}

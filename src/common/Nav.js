@@ -14,7 +14,7 @@ const StyledLink = styled(Link)`
   justify-content: center;
   align-items: center;
   text-decoration: none;
-  transition: all 0.5s ease-in;
+  transition: all 0.2s ease-in;
   border-top: 3px solid ${p => p.topbordercolor};
 `
 
@@ -33,10 +33,10 @@ export default function Nav({ status }) {
       </StyledLink>
       <StyledLink
         to="/learningqueue"
-        topbordercolor={status === 1 ? '#EFA5D4' : 'transparent'}
+        topbordercolor={status === 1 ? '#FFBA49 ' : 'transparent'}
       >
         <Icon
-          fill={status === 1 ? '#EFA5D4' : '#8A8A8A'}
+          fill={status === 1 ? '#FFBA49 ' : '#8A8A8A'}
           height="25px"
           name="learning-queue"
         />

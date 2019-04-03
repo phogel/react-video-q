@@ -6,6 +6,27 @@ const StyledSwitchButton = styled.div`
   font-size: 15px;
   height: 0;
   margin-bottom: 48px;
+  animation: fade-in 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+
+  @keyframes fade-in {
+    0% {
+      opacity: 0;
+    }
+    100% {
+      opacity: 1;
+    }
+  }
+
+  animation: move-up 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+
+  @keyframes move-up {
+    0% {
+      transform: translateY(120px);
+    }
+    100% {
+      transform: translateY(0);
+    }
+  }
   .switch-input {
     display: none;
   }

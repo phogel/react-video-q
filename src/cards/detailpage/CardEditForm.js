@@ -127,8 +127,8 @@ export default function CardForm({ card, onSubmit, setIsEditable }) {
       <StyledButton>
         Save
         <MdSave
-          color={'rgb(250, 250, 250)'}
-          size={'20px'}
+          color="rgb(250, 250, 250)"
+          size="20px"
           style={{ position: 'absolute', left: '60%' }}
         />
       </StyledButton>

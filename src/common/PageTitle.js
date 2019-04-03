@@ -28,7 +28,7 @@ function bgColor(status) {
   if (status === 0) {
     return { background: '#2DDBE3' }
   } else if (status === 1) {
-    return { background: '#EFA5D4' }
+    return { background: '#FFBA49 ' }
   } else if (status === 2) {
     return { background: '#00CCA9' }
   } else if (status === 3) {
